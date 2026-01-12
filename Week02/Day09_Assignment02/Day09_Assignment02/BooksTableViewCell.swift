@@ -51,7 +51,7 @@ class BooksTableViewCell: UITableViewCell {
     
     func setTitleLabelDesign(label: UILabel) {
         label.textColor = .gray
-        label.font = .systemFont(ofSize: 10, weight: .regular)
+        label.font = .systemFont(ofSize: 12, weight: .bold)
     }
     
     func setContentLabelDesign(label: UILabel) {
@@ -72,7 +72,7 @@ class BooksTableViewCell: UITableViewCell {
         
         setBadgetDesign(label: bestsellerBadget)
         setLabelDesign(label: bookTitleLabel, colour: .black, fontSize: 20, fontWeight: .heavy)
-        setLabelDesign(label: genreLabel, colour: .black, fontSize: 14, fontWeight: .bold)
+        setLabelDesign(label: genreLabel, colour: .darkGray, fontSize: 14, fontWeight: .bold)
         setLabelDesign(label: authorNameLabel, colour: .gray, fontSize: 14, fontWeight: .bold)
         
         setTitleLabelDesign(label: priceLabel)

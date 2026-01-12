@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		93F4FD7D2F1525AB00AB664D /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 93F4FD7C2F1525AB00AB664D /* Toast */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		93FED8AB2F13670A001B01CD /* Day09_Assignment02.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Day09_Assignment02.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93F4FD7D2F1525AB00AB664D /* Toast in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +83,7 @@
 			);
 			name = Day09_Assignment02;
 			packageProductDependencies = (
+				93F4FD7C2F1525AB00AB664D /* Toast */,
 			);
 			productName = Day09_Assignment02;
 			productReference = 93FED8AB2F13670A001B01CD /* Day09_Assignment02.app */;
@@ -107,6 +113,9 @@
 			);
 			mainGroup = 93FED8A22F13670A001B01CD;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				93F4FD7B2F1525AB00AB664D /* XCRemoteSwiftPackageReference "Toast-Swift" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 93FED8AC2F13670A001B01CD /* Products */;
 			projectDirPath = "";
@@ -353,6 +362,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		93F4FD7B2F1525AB00AB664D /* XCRemoteSwiftPackageReference "Toast-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scalessec/Toast-Swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		93F4FD7C2F1525AB00AB664D /* Toast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 93F4FD7B2F1525AB00AB664D /* XCRemoteSwiftPackageReference "Toast-Swift" */;
+			productName = Toast;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 93FED8A32F13670A001B01CD /* Project object */;
 }
