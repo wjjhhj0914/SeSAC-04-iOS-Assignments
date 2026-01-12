@@ -27,6 +27,9 @@ class BooksTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        paginationView.isHidden = true
+        resultLabel.isHidden = true
+        
         textFieldView.layer.cornerRadius = 14
         searchTextField.layer.cornerRadius = 6
         searchTextField.clipsToBounds = true
@@ -35,7 +38,7 @@ class BooksTableViewController: UITableViewController {
         searchButton.layer.cornerRadius = 8
         
         resultLabel.textAlignment = .center
-        resultLabel.text = ""
+//        resultLabel.text = ""
         resultLabel.textColor = .lightGray
         resultLabel.font = .systemFont(ofSize: 14)
         
@@ -132,6 +135,9 @@ class BooksTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "BooksTableViewCell", for: indexPath) as! BooksTableViewCell
+        
+        resultLabel.isHidden = false
+        paginationView.isHidden = false
         
         // 처음 가지고 올 때 실행
         // 근데, searchedBookList는 사용자가 입력하기 전까지는 0
