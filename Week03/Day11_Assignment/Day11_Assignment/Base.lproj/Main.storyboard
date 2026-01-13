@@ -44,7 +44,7 @@
                                                     <buttonConfiguration key="configuration" style="plain"/>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4zW-wm-67d">
-                                                    <rect key="frame" x="8" y="102" width="353" height="32"/>
+                                                    <rect key="frame" x="0.0" y="102" width="361" height="32"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="32" id="L8g-Yf-THG"/>
                                                     </constraints>
@@ -62,12 +62,12 @@
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="4zW-wm-67d" secondAttribute="bottom" constant="16" id="0rN-zo-Uib"/>
                                                 <constraint firstItem="9Tp-d5-txO" firstAttribute="top" secondItem="7aa-Fu-K1o" secondAttribute="top" constant="12" id="6yY-TH-BUk"/>
+                                                <constraint firstItem="4zW-wm-67d" firstAttribute="leading" secondItem="7aa-Fu-K1o" secondAttribute="leading" id="9iH-04-YEL"/>
                                                 <constraint firstItem="xDr-dd-MR2" firstAttribute="leading" secondItem="7aa-Fu-K1o" secondAttribute="leading" id="FSG-xV-hOJ"/>
                                                 <constraint firstItem="xDr-dd-MR2" firstAttribute="top" secondItem="7aa-Fu-K1o" secondAttribute="top" id="Mw9-i5-M2h"/>
                                                 <constraint firstAttribute="trailing" secondItem="xDr-dd-MR2" secondAttribute="trailing" id="Rvj-Jw-HQU"/>
                                                 <constraint firstAttribute="bottom" secondItem="kvb-cA-ct5" secondAttribute="bottom" constant="16" id="UeP-ee-Eva"/>
                                                 <constraint firstAttribute="trailing" secondItem="kvb-cA-ct5" secondAttribute="trailing" id="WnT-81-Hj1"/>
-                                                <constraint firstItem="4zW-wm-67d" firstAttribute="leading" secondItem="7aa-Fu-K1o" secondAttribute="leading" constant="8" id="d0A-IL-HRw"/>
                                                 <constraint firstItem="kvb-cA-ct5" firstAttribute="top" secondItem="7aa-Fu-K1o" secondAttribute="top" id="hau-Ar-PK4"/>
                                                 <constraint firstItem="kvb-cA-ct5" firstAttribute="leading" secondItem="7aa-Fu-K1o" secondAttribute="leading" id="j8O-T3-wO4"/>
                                                 <constraint firstAttribute="trailing" secondItem="4zW-wm-67d" secondAttribute="trailing" id="kFF-ET-LcC"/>
@@ -104,6 +104,9 @@
                                     <segment title="Second"/>
                                     <segment title=""/>
                                 </segments>
+                                <connections>
+                                    <action selector="segmentedControlClicked:" destination="BYZ-38-t0r" eventType="valueChanged" id="1xd-VV-rBE"/>
+                                </connections>
                             </segmentedControl>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1zD-X0-rLG">
                                 <rect key="frame" x="0.0" y="115" width="393" height="1"/>

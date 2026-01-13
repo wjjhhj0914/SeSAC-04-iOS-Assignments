@@ -13,6 +13,8 @@ class TravelViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     // 인스턴스 생성
     let cityInformation = CityInfo()
+    
+    var filteredCityList: [City] = []
 
     @IBOutlet var headerTitleLabel: UILabel!
     @IBOutlet var headerDividerView: UIView!
@@ -21,9 +23,12 @@ class TravelViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         cityTableView.delegate = self
         cityTableView.dataSource = self
+        
+        filteredCityList = cityInformation.city
+//        print(list)
         
         headerTitleLabel.text = "인기 도시"
         headerTitleLabel.font = .systemFont(ofSize: 17, weight: .heavy)
@@ -36,21 +41,41 @@ class TravelViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cityInformation.city.count
+//        return cityInformation.city.count
+        return filteredCityList.count
+    }
+    
+    
+    @IBAction func segmentedControlClicked(_ sender: UISegmentedControl) {
+        if sender.selectedSegmentIndex == 0 {
+            filteredCityList = cityInformation.city
+        } else if sender.selectedSegmentIndex == 1 {
+            print("나 1번")
+            filteredCityList = cityInformation.domesticCities
+            print(filteredCityList)
+        } else if sender.selectedSegmentIndex == 2 {
+            print("나 2번")
+            filteredCityList = cityInformation.internationalCities
+            print(filteredCityList)
+        }
+        
+        cityTableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TravelTableViewCell", for: indexPath) as! TravelTableViewCell
         
-        let row = cityInformation.city[indexPath.row]
-        print(row)
+//        let row = cityInformation.city[indexPath.row]
+        let row = filteredCityList[indexPath.row]
+//        print(row)
         
         // 이미지 불러오기
-        let url = URL(string: cityInformation.city[indexPath.row].city_image)
+        let url = URL(string: row.city_image)
         cell.cityImageView.kf.setImage(with: url)
+        
+        cell.cityNameLabel.text = "\(row.city_name) | \(row.city_english_name)"
+        cell.cityExplainLabel.text = "  " + row.city_explain
         
         return cell
     }
-
-
 }

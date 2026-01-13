@@ -21,9 +21,9 @@ class TravelTableViewCell: UITableViewCell {
         cityNameLabel.font = .systemFont(ofSize: 24, weight: .bold)
         cityNameLabel.textColor = .white
         
-        cityExplainLabel.font = .systemFont(ofSize: 16)
-        cityExplainLabel.backgroundColor = .darkGray
-        cityExplainLabel.layer.opacity = 0.7
+        cityExplainLabel.font = .systemFont(ofSize: 14)
+        cityExplainLabel.backgroundColor = .black
+        cityExplainLabel.layer.opacity = 0.5
         cityExplainLabel.textColor = .white
         
     }
