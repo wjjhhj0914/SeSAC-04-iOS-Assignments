@@ -20,6 +20,7 @@ class TravelViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet var headerDividerView: UIView!
     @IBOutlet var headerSegmentedControl: UISegmentedControl!
     @IBOutlet var cityTableView: UITableView!
+    @IBOutlet var searchCityTextField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,24 +31,23 @@ class TravelViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let xib = UINib(nibName: TravelTableViewCell.identifier, bundle: nil)
         cityTableView.register(xib, forCellReuseIdentifier: TravelTableViewCell.identifier)
         
+        searchCityTextField.layer.cornerRadius = 8
+        searchCityTextField.layer.borderWidth = 2
+        searchCityTextField.layer.borderColor = UIColor.systemGray6.cgColor
+        searchCityTextField.clipsToBounds = true
+        searchCityTextField.placeholder = "도시를 검색하세요"
+        
         filteredCityList = cityInformation.city
-//        print(list)
-        
-        headerTitleLabel.text = "인기 도시"
-        headerTitleLabel.font = .systemFont(ofSize: 17, weight: .heavy)
-        
-        headerDividerView.backgroundColor = .systemGray6
-        
-        headerSegmentedControl.setTitle("도시", forSegmentAt: 0)
-        headerSegmentedControl.setTitle("국내", forSegmentAt: 1)
-        headerSegmentedControl.setTitle("해외", forSegmentAt: 2)
+
+        headerTitleLabel.setMainTitleLabel(titleText: "인기 도시")
+        headerDividerView.setDivider()
+        headerSegmentedControl.setSegmentTitle()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 //        return cityInformation.city.count
         return filteredCityList.count
     }
-    
     
     @IBAction func segmentedControlClicked(_ sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0 {
@@ -62,9 +62,20 @@ class TravelViewController: UIViewController, UITableViewDelegate, UITableViewDa
         cityTableView.reloadData()
     }
     
+    @IBAction func searchCityTextFieldClicked(_ sender: UITextField) {
+        let text = searchCityTextField.text
+
+        let result = cityInformation.city.filter { $0.city_name.contains(text!) || $0.city_english_name.contains(text!) || $0.city_explain.contains(text!)}
+        
+        filteredCityList.removeAll()
+        
+        filteredCityList.append(contentsOf: result)
+        print(filteredCityList)
+        cityTableView.reloadData()
+    }
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TravelTableViewCell.identifier, for: indexPath) as! TravelTableViewCell
-        
         let row = filteredCityList[indexPath.row]
         
         cell.configure(row: row)

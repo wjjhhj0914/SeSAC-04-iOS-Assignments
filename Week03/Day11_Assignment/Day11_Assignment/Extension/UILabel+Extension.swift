@@ -8,6 +8,11 @@
 import UIKit
 
 extension UILabel {
+    func setMainTitleLabel(titleText: String) {
+        self.text = titleText
+        self.font = .systemFont(ofSize: 17, weight: .heavy)
+    }
+    
     func setTitleLabel() {
         self.font = .systemFont(ofSize: 24, weight: .bold)
         self.textColor = .white

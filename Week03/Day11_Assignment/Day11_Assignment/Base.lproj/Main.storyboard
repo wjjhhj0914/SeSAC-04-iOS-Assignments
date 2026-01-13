@@ -17,8 +17,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="URn-qn-YC4">
-                                <rect key="frame" x="16" y="188" width="361" height="664"/>
+                                <rect key="frame" x="16" y="252" width="361" height="600"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="600" id="UWc-fW-UI5"/>
+                                </constraints>
                                 <sections/>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6vf-hx-wa3">
@@ -31,7 +34,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="z1W-Ob-HcW">
-                                <rect key="frame" x="16" y="140" width="361" height="33"/>
+                                <rect key="frame" x="16" y="200" width="361" height="33"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="32" id="5UA-VM-E8I"/>
                                 </constraints>
@@ -51,6 +54,17 @@
                                     <constraint firstAttribute="height" constant="1" id="j7D-1e-xdp"/>
                                 </constraints>
                             </view>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IQA-wo-U7e">
+                                <rect key="frame" x="16" y="136" width="361" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="qho-Jj-CX5"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="searchCityTextFieldClicked:" destination="BYZ-38-t0r" eventType="editingDidEndOnExit" id="mGr-gh-eCB"/>
+                                </connections>
+                            </textField>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -60,14 +74,17 @@
                             <constraint firstItem="1zD-X0-rLG" firstAttribute="top" secondItem="6vf-hx-wa3" secondAttribute="bottom" constant="1" id="Lm1-9h-7kb"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="URn-qn-YC4" secondAttribute="trailing" constant="16" id="N7i-F5-bTE"/>
                             <constraint firstAttribute="bottom" secondItem="URn-qn-YC4" secondAttribute="bottom" id="Ncm-Dt-Nfu"/>
-                            <constraint firstItem="URn-qn-YC4" firstAttribute="top" secondItem="z1W-Ob-HcW" secondAttribute="bottom" constant="16" id="OEN-8N-AHp"/>
                             <constraint firstItem="z1W-Ob-HcW" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="Rys-vL-ELw"/>
                             <constraint firstAttribute="bottom" secondItem="URn-qn-YC4" secondAttribute="bottom" id="WSM-EI-eq5"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="IQA-wo-U7e" secondAttribute="trailing" constant="16" id="cd4-1o-J66"/>
                             <constraint firstAttribute="trailing" secondItem="6vf-hx-wa3" secondAttribute="trailing" constant="16" id="dPr-iz-GJI"/>
-                            <constraint firstItem="z1W-Ob-HcW" firstAttribute="top" secondItem="1zD-X0-rLG" secondAttribute="bottom" constant="24" id="ifd-2L-Tjq"/>
+                            <constraint firstItem="IQA-wo-U7e" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="eMr-rw-dEe"/>
+                            <constraint firstItem="URn-qn-YC4" firstAttribute="top" secondItem="z1W-Ob-HcW" secondAttribute="bottom" constant="20" id="l8t-K8-bSp"/>
                             <constraint firstItem="6vf-hx-wa3" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="16" id="lT2-lX-spw"/>
+                            <constraint firstItem="z1W-Ob-HcW" firstAttribute="top" secondItem="IQA-wo-U7e" secondAttribute="bottom" constant="20" id="pgb-N1-BtB"/>
                             <constraint firstItem="6vf-hx-wa3" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="70" id="q5g-XR-2th"/>
                             <constraint firstItem="1zD-X0-rLG" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="qxs-4U-hV9"/>
+                            <constraint firstItem="IQA-wo-U7e" firstAttribute="top" secondItem="1zD-X0-rLG" secondAttribute="bottom" constant="20" id="r58-Gf-bm6"/>
                             <constraint firstItem="URn-qn-YC4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="vDa-Wz-qo8"/>
                         </constraints>
                     </view>
@@ -76,6 +93,7 @@
                         <outlet property="headerDividerView" destination="1zD-X0-rLG" id="3oT-r8-vyK"/>
                         <outlet property="headerSegmentedControl" destination="z1W-Ob-HcW" id="sgD-Lq-aAV"/>
                         <outlet property="headerTitleLabel" destination="6vf-hx-wa3" id="tce-3j-rXf"/>
+                        <outlet property="searchCityTextField" destination="IQA-wo-U7e" id="YU6-8r-q5p"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
