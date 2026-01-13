@@ -53,7 +53,7 @@ class ShoppingListsTableViewController: UITableViewController {
     }
     
     func updateDoneCount() {
-        let doneCount = shoppingLists.filter { $0.taskDone == true }.count
+        let doneCount = shoppingLists.filter { $0.taskDone }.count
         
         setResultLabelDesign(label: taskDoneCountLabel, title: "\(doneCount)개", fontSize: 17, fontWeight: .heavy, colour: .systemIndigo)
     }

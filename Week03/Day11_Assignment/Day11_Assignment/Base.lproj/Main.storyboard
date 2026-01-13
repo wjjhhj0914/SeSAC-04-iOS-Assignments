@@ -8,10 +8,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Travel View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Day11_Assignment" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="TravelViewController" customModule="Day11_Assignment" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -26,11 +26,11 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="URn-qn-YC4">
-                                <rect key="frame" x="0.0" y="204" width="393" height="648"/>
+                                <rect key="frame" x="0.0" y="196" width="393" height="656"/>
                                 <color key="backgroundColor" systemColor="systemMintColor"/>
                             </tableView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="z1W-Ob-HcW">
-                                <rect key="frame" x="16" y="148" width="361" height="33"/>
+                                <rect key="frame" x="16" y="140" width="361" height="33"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="32" id="5UA-VM-E8I"/>
                                 </constraints>
@@ -41,7 +41,7 @@
                                 </segments>
                             </segmentedControl>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1zD-X0-rLG">
-                                <rect key="frame" x="0.0" y="123" width="393" height="1"/>
+                                <rect key="frame" x="0.0" y="115" width="393" height="1"/>
                                 <color key="backgroundColor" systemColor="systemIndigoColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="j7D-1e-xdp"/>
@@ -56,7 +56,7 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="z1W-Ob-HcW" secondAttribute="trailing" constant="16" id="2JI-bB-gos"/>
                             <constraint firstItem="URn-qn-YC4" firstAttribute="top" secondItem="z1W-Ob-HcW" secondAttribute="bottom" constant="24" id="9jy-qY-u3i"/>
                             <constraint firstAttribute="trailing" secondItem="1zD-X0-rLG" secondAttribute="trailing" id="HQs-cr-xU8"/>
-                            <constraint firstItem="1zD-X0-rLG" firstAttribute="top" secondItem="6vf-hx-wa3" secondAttribute="bottom" constant="9" id="Lm1-9h-7kb"/>
+                            <constraint firstItem="1zD-X0-rLG" firstAttribute="top" secondItem="6vf-hx-wa3" secondAttribute="bottom" constant="1" id="Lm1-9h-7kb"/>
                             <constraint firstItem="z1W-Ob-HcW" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="Rys-vL-ELw"/>
                             <constraint firstItem="URn-qn-YC4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Sdc-EA-lLD"/>
                             <constraint firstAttribute="trailing" secondItem="6vf-hx-wa3" secondAttribute="trailing" constant="16" id="dPr-iz-GJI"/>
@@ -66,6 +66,12 @@
                             <constraint firstItem="1zD-X0-rLG" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="qxs-4U-hV9"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="cityTableView" destination="URn-qn-YC4" id="HSd-LR-DAr"/>
+                        <outlet property="headerDividerView" destination="1zD-X0-rLG" id="3oT-r8-vyK"/>
+                        <outlet property="headerSegmentedControl" destination="z1W-Ob-HcW" id="sgD-Lq-aAV"/>
+                        <outlet property="headerTitleLabel" destination="6vf-hx-wa3" id="tce-3j-rXf"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
