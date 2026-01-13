@@ -31,14 +31,7 @@ class TravelViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let xib = UINib(nibName: TravelTableViewCell.identifier, bundle: nil)
         cityTableView.register(xib, forCellReuseIdentifier: TravelTableViewCell.identifier)
         
-        searchCityTextField.layer.cornerRadius = 8
-        searchCityTextField.layer.borderWidth = 2
-        searchCityTextField.layer.borderColor = UIColor.systemGray6.cgColor
-        searchCityTextField.clipsToBounds = true
-        searchCityTextField.placeholder = "도시를 검색하세요"
-        
-        filteredCityList = cityInformation.city
-
+        searchCityTextField.setTextField(placeholderText: "도시를 검색하세요")
         headerTitleLabel.setMainTitleLabel(titleText: "인기 도시")
         headerDividerView.setDivider()
         headerSegmentedControl.setSegmentTitle()
