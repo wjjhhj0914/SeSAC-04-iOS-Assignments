@@ -7,31 +7,29 @@
 
 import UIKit
 
+import Kingfisher
+
 class TravelTableViewCell: UITableViewCell {
-    static let identifier = "TravelTableViewCell"
     
+    static let identifier = "TravelTableViewCell"
+
     @IBOutlet var cityNameLabel: UILabel!
     @IBOutlet var cityImageButton: UIButton!
-    @IBOutlet var cityExplainLabel: UILabel!
     @IBOutlet var cityImageView: UIImageView!
+    @IBOutlet var cityExplainLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        cityNameLabel.font = .systemFont(ofSize: 24, weight: .bold)
-        cityNameLabel.textColor = .white
-        
-        cityExplainLabel.font = .systemFont(ofSize: 14)
-        cityExplainLabel.backgroundColor = .black
-        cityExplainLabel.layer.opacity = 0.5
-        cityExplainLabel.textColor = .white
-        
+        cityNameLabel.setTitleLabel()
+        cityExplainLabel.setSubtitleLabel()
     }
-
-    override func prepareForReuse() {
-        super.prepareForReuse()
+    
+    func configure(row: City) {
+        let url = URL(string: row.city_image)
+        cityImageView.kf.setImage(with: url)
         
-        cityImageView.image = nil
+        cityNameLabel.text = "\(row.city_name) | \(row.city_english_name)"
+        cityExplainLabel.text = "  " + row.city_explain
     }
-
 }

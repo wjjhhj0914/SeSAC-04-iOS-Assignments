@@ -19,70 +19,6 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="URn-qn-YC4">
                                 <rect key="frame" x="16" y="188" width="361" height="664"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TravelTableViewCell" rowHeight="150" id="1s2-Fh-dQY" customClass="TravelTableViewCell" customModule="Day11_Assignment" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50.333333969116211" width="361" height="150"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1s2-Fh-dQY" id="7aa-Fu-K1o">
-                                            <rect key="frame" x="0.0" y="0.0" width="361" height="150"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xDr-dd-MR2">
-                                                    <rect key="frame" x="0.0" y="0.0" width="361" height="134"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="120" id="JH9-nW-qQG"/>
-                                                    </constraints>
-                                                </imageView>
-                                                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kvb-cA-ct5">
-                                                    <rect key="frame" x="0.0" y="0.0" width="361" height="134"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="120" id="Wqk-UH-dLM"/>
-                                                    </constraints>
-                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                    <state key="normal" title="Button" backgroundImage="getting-started-card.png"/>
-                                                    <buttonConfiguration key="configuration" style="plain"/>
-                                                </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4zW-wm-67d">
-                                                    <rect key="frame" x="0.0" y="102" width="361" height="32"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="32" id="L8g-Yf-THG"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Tp-d5-txO">
-                                                    <rect key="frame" x="307.66666666666669" y="11.999999999999998" width="41.333333333333314" height="20.333333333333329"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="4zW-wm-67d" secondAttribute="bottom" constant="16" id="0rN-zo-Uib"/>
-                                                <constraint firstItem="9Tp-d5-txO" firstAttribute="top" secondItem="7aa-Fu-K1o" secondAttribute="top" constant="12" id="6yY-TH-BUk"/>
-                                                <constraint firstItem="4zW-wm-67d" firstAttribute="leading" secondItem="7aa-Fu-K1o" secondAttribute="leading" id="9iH-04-YEL"/>
-                                                <constraint firstItem="xDr-dd-MR2" firstAttribute="leading" secondItem="7aa-Fu-K1o" secondAttribute="leading" id="FSG-xV-hOJ"/>
-                                                <constraint firstItem="xDr-dd-MR2" firstAttribute="top" secondItem="7aa-Fu-K1o" secondAttribute="top" id="Mw9-i5-M2h"/>
-                                                <constraint firstAttribute="trailing" secondItem="xDr-dd-MR2" secondAttribute="trailing" id="Rvj-Jw-HQU"/>
-                                                <constraint firstAttribute="bottom" secondItem="kvb-cA-ct5" secondAttribute="bottom" constant="16" id="UeP-ee-Eva"/>
-                                                <constraint firstAttribute="trailing" secondItem="kvb-cA-ct5" secondAttribute="trailing" id="WnT-81-Hj1"/>
-                                                <constraint firstItem="kvb-cA-ct5" firstAttribute="top" secondItem="7aa-Fu-K1o" secondAttribute="top" id="hau-Ar-PK4"/>
-                                                <constraint firstItem="kvb-cA-ct5" firstAttribute="leading" secondItem="7aa-Fu-K1o" secondAttribute="leading" id="j8O-T3-wO4"/>
-                                                <constraint firstAttribute="trailing" secondItem="4zW-wm-67d" secondAttribute="trailing" id="kFF-ET-LcC"/>
-                                                <constraint firstAttribute="trailing" secondItem="9Tp-d5-txO" secondAttribute="trailing" constant="12" id="n10-9P-9mU"/>
-                                                <constraint firstAttribute="bottom" secondItem="xDr-dd-MR2" secondAttribute="bottom" constant="16" id="yJU-tH-qkw"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="cityExplainLabel" destination="4zW-wm-67d" id="Fzc-xu-Jhd"/>
-                                            <outlet property="cityImageButton" destination="kvb-cA-ct5" id="pof-wM-bgg"/>
-                                            <outlet property="cityImageView" destination="xDr-dd-MR2" id="f80-Ra-MHn"/>
-                                            <outlet property="cityNameLabel" destination="9Tp-d5-txO" id="Ull-Fs-ezi"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </prototypes>
                                 <sections/>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6vf-hx-wa3">
@@ -148,7 +84,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="getting-started-card.png" width="500" height="275"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

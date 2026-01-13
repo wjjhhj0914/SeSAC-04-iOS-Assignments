@@ -27,6 +27,9 @@ class TravelViewController: UIViewController, UITableViewDelegate, UITableViewDa
         cityTableView.delegate = self
         cityTableView.dataSource = self
         
+        let xib = UINib(nibName: TravelTableViewCell.identifier, bundle: nil)
+        cityTableView.register(xib, forCellReuseIdentifier: TravelTableViewCell.identifier)
+        
         filteredCityList = cityInformation.city
 //        print(list)
         
@@ -52,29 +55,19 @@ class TravelViewController: UIViewController, UITableViewDelegate, UITableViewDa
         } else if sender.selectedSegmentIndex == 1 {
             print("나 1번")
             filteredCityList = cityInformation.domesticCities
-            print(filteredCityList)
         } else if sender.selectedSegmentIndex == 2 {
             print("나 2번")
             filteredCityList = cityInformation.internationalCities
-            print(filteredCityList)
         }
-        
         cityTableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TravelTableViewCell", for: indexPath) as! TravelTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: TravelTableViewCell.identifier, for: indexPath) as! TravelTableViewCell
         
-//        let row = cityInformation.city[indexPath.row]
         let row = filteredCityList[indexPath.row]
-//        print(row)
         
-        // 이미지 불러오기
-        let url = URL(string: row.city_image)
-        cell.cityImageView.kf.setImage(with: url)
-        
-        cell.cityNameLabel.text = "\(row.city_name) | \(row.city_english_name)"
-        cell.cityExplainLabel.text = "  " + row.city_explain
+        cell.configure(row: row)
         
         return cell
     }
