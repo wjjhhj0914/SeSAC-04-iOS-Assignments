@@ -8,16 +8,30 @@
 import UIKit
 
 class TravelTableViewCell: UITableViewCell {
-
+    static let identifier = "TravelTableViewCell"
+    
+    @IBOutlet var cityNameLabel: UILabel!
+    @IBOutlet var cityImageButton: UIButton!
+    @IBOutlet var cityExplainLabel: UILabel!
+    @IBOutlet var cityImageView: UIImageView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        cityNameLabel.font = .systemFont(ofSize: 24, weight: .bold)
+        cityNameLabel.textColor = .white
+        
+        cityExplainLabel.font = .systemFont(ofSize: 16)
+        cityExplainLabel.backgroundColor = .darkGray
+        cityExplainLabel.layer.opacity = 0.7
+        cityExplainLabel.textColor = .white
+        
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        cityImageView.image = nil
     }
 
 }
