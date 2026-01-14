@@ -3,7 +3,6 @@
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -22,6 +21,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="250" height="250"/>
                         <color key="backgroundColor" systemColor="systemPinkColor"/>
                         <constraints>
+                            <constraint firstAttribute="width" secondItem="9NO-VU-7Id" secondAttribute="height" multiplier="1:1" id="MbR-g8-7cZ"/>
                             <constraint firstAttribute="height" constant="250" id="dJ3-U0-Q3B"/>
                         </constraints>
                     </imageView>
@@ -38,31 +38,29 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jDa-B9-8jw">
-                        <rect key="frame" x="0.0" y="0.0" width="250" height="250"/>
-                        <color key="backgroundColor" systemColor="systemYellowColor"/>
-                        <constraints>
-                            <constraint firstAttribute="width" secondItem="jDa-B9-8jw" secondAttribute="height" multiplier="1:1" id="0Ei-3K-SIN"/>
-                        </constraints>
+                        <rect key="frame" x="0.0" y="0.0" width="250" height="350"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <state key="normal" title="Button"/>
                         <buttonConfiguration key="configuration" style="plain" title="Button"/>
                     </button>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
-            <color key="backgroundColor" name="AccentColor"/>
+            <color key="backgroundColor" systemColor="systemCyanColor"/>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="jDa-B9-8jw" secondAttribute="bottom" id="0tA-1m-8zo"/>
+                <constraint firstItem="Wh8-hY-ACV" firstAttribute="top" secondItem="9NO-VU-7Id" secondAttribute="bottom" constant="8" symbolic="YES" id="48Q-Tw-PuP"/>
                 <constraint firstItem="9NO-VU-7Id" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="9Fl-uD-c21"/>
                 <constraint firstAttribute="trailing" secondItem="zLK-iM-4u2" secondAttribute="trailing" id="If8-SS-IZu"/>
-                <constraint firstItem="Wh8-hY-ACV" firstAttribute="top" secondItem="jDa-B9-8jw" secondAttribute="bottom" constant="8" id="ZdO-vR-XEe"/>
+                <constraint firstItem="zLK-iM-4u2" firstAttribute="top" secondItem="Wh8-hY-ACV" secondAttribute="bottom" constant="16" id="QX1-Nj-fTT"/>
                 <constraint firstItem="jDa-B9-8jw" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="bdX-Uq-TWW"/>
                 <constraint firstItem="Wh8-hY-ACV" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="cj2-M5-J9o"/>
                 <constraint firstAttribute="trailing" secondItem="Wh8-hY-ACV" secondAttribute="trailing" id="dGP-As-YJF"/>
                 <constraint firstItem="zLK-iM-4u2" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="gd9-bp-vx5"/>
-                <constraint firstItem="Wh8-hY-ACV" firstAttribute="top" secondItem="9NO-VU-7Id" secondAttribute="bottom" constant="8" id="q3i-J5-Y0a"/>
+                <constraint firstAttribute="bottom" secondItem="zLK-iM-4u2" secondAttribute="bottom" constant="34" id="oBF-hm-Bep"/>
                 <constraint firstAttribute="trailing" secondItem="9NO-VU-7Id" secondAttribute="trailing" id="r9e-Uh-ss3"/>
                 <constraint firstAttribute="trailing" secondItem="jDa-B9-8jw" secondAttribute="trailing" id="rMv-HF-uA7"/>
                 <constraint firstItem="9NO-VU-7Id" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="ujl-fR-Ey6"/>
-                <constraint firstItem="zLK-iM-4u2" firstAttribute="top" secondItem="Wh8-hY-ACV" secondAttribute="bottom" constant="16" id="whm-Uw-zSd"/>
                 <constraint firstItem="jDa-B9-8jw" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="yyR-cG-ymb"/>
             </constraints>
             <size key="customSize" width="255" height="320"/>
@@ -74,14 +72,11 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <namedColor name="AccentColor">
-            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
+        <systemColor name="systemCyanColor">
+            <color red="0.1960784314" green="0.67843137249999996" blue="0.90196078430000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemPinkColor">
             <color red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemYellowColor">
-            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
