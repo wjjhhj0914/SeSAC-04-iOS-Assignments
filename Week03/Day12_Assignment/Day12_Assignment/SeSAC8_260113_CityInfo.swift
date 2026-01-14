@@ -13,11 +13,11 @@ struct CityInfo {
         // MARK: - 국내 도시 (Domestic - 12개)
         City(city_name: "서울", city_english_name: "Seoul", city_explain: "서울, 남산타워, 롯데타워, 경복궁", city_image: "https://images.unsplash.com/photo-1546874177-9e664107314e?w=800", domestic_travel: true),
         City(city_name: "부산", city_english_name: "Busan", city_explain: "부산, 해운대, 광안리, 감천문화마을", city_image: "https://images.unsplash.com/photo-1538485399081-7191377e8241?w=800", domestic_travel: true),
-        City(city_name: "제주", city_english_name: "Jeju", city_explain: "제주, 성산일출봉, 섭지코지, 우도", city_image: "https://images.unsplash.com/photo-1579169326371-33a5b7d2f6b3?w=800", domestic_travel: true),
-        City(city_name: "경주", city_english_name: "Gyeongju", city_explain: "경주, 불국사, 첨성대, 동궁과월지", city_image: "https://images.unsplash.com/photo-1592882595561-7f0cb1f6b9b2?w=800", domestic_travel: true),
-        City(city_name: "전주", city_english_name: "Jeonju", city_explain: "전주, 한옥마을, 경기전, 전동성당", city_image: "https://images.unsplash.com/photo-1578037571214-25e07ed4a795?w=800", domestic_travel: true),
-        City(city_name: "강릉", city_english_name: "Gangneung", city_explain: "강릉, 경포대, 안목해변, 정동진", city_image: "https://images.unsplash.com/photo-1596786232430-dfe3e0d04528?w=800", domestic_travel: true),
-        City(city_name: "여수", city_english_name: "Yeosu", city_explain: "여수, 오동도, 향일암, 여수밤바다", city_image: "https://images.unsplash.com/photo-1599576838688-8c0f4f95e0f4?w=800", domestic_travel: true),
+        City(city_name: "제주", city_english_name: "Jeju", city_explain: "제주, 성산일출봉, 섭지코지, 우도", city_image: "https://images.unsplash.com/photo-1622209018972-097984086b0b?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8JUVDJTg0JUIxJUVDJTgyJUIwJUVDJTlEJUJDJUVDJUI2JTlDJUVCJUI0JTg5fGVufDB8fDB8fHww", domestic_travel: true),
+        City(city_name: "경주", city_english_name: "Gyeongju", city_explain: "경주, 불국사, 첨성대, 동궁과월지", city_image: "https://images.unsplash.com/photo-1669764372822-3cb8476d4f47?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fCVFQSVCMiVCRCVFQyVBMyVCQyUyMCVFQiVCNiU4OCVFQSVCNSVBRCVFQyU4MiVBQ3xlbnwwfHwwfHx8MA%3D%3D", domestic_travel: true),
+        City(city_name: "전주", city_english_name: "Jeonju", city_explain: "전주, 한옥마을, 경기전, 전동성당", city_image: "https://images.unsplash.com/photo-1700580447235-454f48647952?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8JUVDJUEwJTg0JUVDJUEzJUJDfGVufDB8fDB8fHww", domestic_travel: true),
+        City(city_name: "강릉", city_english_name: "Gangneung", city_explain: "강릉, 경포대, 안목해변, 정동진", city_image: "https://images.unsplash.com/photo-1684042229029-8a899193a8e4?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", domestic_travel: true),
+        City(city_name: "여수", city_english_name: "Yeosu", city_explain: "여수, 오동도, 향일암, 여수밤바다", city_image: "https://images.unsplash.com/photo-1669824411409-0441046ce247?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fCVFQyU5NyVBQyVFQyU4OCU5OHxlbnwwfHwwfHx8MA%3D%3D", domestic_travel: true),
         City(city_name: "대전", city_english_name: "Daejeon", city_explain: "대전, 성심당, 대전엑스포, 계족산", city_image: "https://images.unsplash.com/photo-1548115184-bc6544d06a58?w=800", domestic_travel: true),
         City(city_name: "대구", city_english_name: "Daegu", city_explain: "대구, 동성로, 팔공산, 앞산전망대", city_image: "https://images.unsplash.com/photo-1517154421773-0529f29ea451?w=800", domestic_travel: true),
         City(city_name: "인천", city_english_name: "Incheon", city_explain: "인천, 차이나타운, 월미도, 송도", city_image: "https://images.unsplash.com/photo-1578271887552-5ac3a72752bc?w=800", domestic_travel: true),
@@ -44,9 +44,9 @@ struct CityInfo {
         
         // MARK: - 중국/홍콩/대만 (China/HK/Taiwan - 4개)
         City(city_name: "홍콩", city_english_name: "Hong Kong", city_explain: "홍콩, 빅토리아피크, 란콰이펑, 침사추이", city_image: "https://images.unsplash.com/photo-1536599018102-9f803c140fc1?w=800", domestic_travel: false),
-        City(city_name: "상하이", city_english_name: "Shanghai", city_explain: "상하이, 외탄, 동방명주, 난징루", city_image: "https://images.unsplash.com/photo-1537531383496-f4749b96d480?w=800", domestic_travel: false),
+        City(city_name: "상하이", city_english_name: "Shanghai", city_explain: "상하이, 외탄, 동방명주, 난징루", city_image: "https://images.unsplash.com/photo-1538428494232-9c0d8a3ab403?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", domestic_travel: false),
         City(city_name: "타이베이", city_english_name: "Taipei", city_explain: "타이베이, 타이베이101, 지우펀, 스린야시장", city_image: "https://images.unsplash.com/photo-1470004914212-05527e49370b?w=800", domestic_travel: false),
-        City(city_name: "마카오", city_english_name: "Macau", city_explain: "마카오, 세나도광장, 베네시안, 마카오타워", city_image: "https://images.unsplash.com/photo-1552912279-8faa47c35f76?w=800", domestic_travel: false),
+        City(city_name: "마카오", city_english_name: "Macau", city_explain: "마카오, 세나도광장, 베네시안, 마카오타워", city_image: "https://images.unsplash.com/photo-1634552952414-a4c7844aa458?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8JUVCJUE3JTg4JUVDJUI5JUI0JUVDJTk4JUE0fGVufDB8fDB8fHww", domestic_travel: false),
         
         // MARK: - 유럽 (Europe - 10개)
         City(city_name: "파리", city_english_name: "Paris", city_explain: "파리, 에펠탑, 루브르박물관, 샹젤리제", city_image: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800", domestic_travel: false),

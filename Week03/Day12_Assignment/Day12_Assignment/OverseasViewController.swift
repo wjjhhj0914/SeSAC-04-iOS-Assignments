@@ -16,7 +16,7 @@ class OverseasViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        overseasCityLabel.text = "해외 명소: \(clickedCityData?.city_name ?? "없음")"
+        overseasCityLabel.text = "해외 명소: \(clickedCityData?.city_name ?? "없음") | \(clickedCityData?.city_english_name ?? "없음")"
     }
     
 }

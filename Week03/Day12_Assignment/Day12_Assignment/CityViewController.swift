@@ -7,6 +7,8 @@
 
 import UIKit
 
+import Kingfisher
+
 class CityViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
     @IBOutlet var headerTitleLabel: UILabel!
@@ -42,9 +44,50 @@ class CityViewController: UIViewController, UICollectionViewDelegate, UICollecti
         cityCollectionView.collectionViewLayout = layout
     }
     
+    var cityDetails = CityInfo()
+    var filteredCityList: [City] = CityInfo().city
+    
+    func filterCity() {
+        if headerSegmentedControl.selectedSegmentIndex == 1 {
+            filteredCityList = cityDetails.domesticCities
+            print("국내: \(filteredCityList)")
+        } else if headerSegmentedControl.selectedSegmentIndex == 2 {
+            filteredCityList = cityDetails.internationalCities
+            print("해외: \(filteredCityList)")
+        } else {
+            filteredCityList = cityDetails.city
+        }
+        
+        cityCollectionView.reloadData()
+    }
+    
+    @IBAction func segmentedControlClicked(_ sender: UISegmentedControl) {
+        filterCity()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return filteredCityList.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CityCollectionViewCell.identifier, for: indexPath) as! CityCollectionViewCell
+        
+        cell.cityButton.tag = indexPath.item
+        cell.cityButton.addTarget(self, action: #selector(cityButtonClicked), for: .touchUpInside)
+        
+        let data = filteredCityList[indexPath.item]
+        cell.cityName.text = "\(data.city_name) | \(data.city_english_name)"
+        cell.locationLabel.text = data.city_explain
+        
+        let url = URL(string: data.city_image)
+        cell.cityImage.kf.setImage(with: url)
+        
+        return cell
+    }
+    
     @objc func cityButtonClicked(sender: UIButton) {
         let index = sender.tag
-        let selectedCity = CityInfo().city[index]
+        let selectedCity = filteredCityList[index]
 //        print("\(selectedCity.city_name) 클릭됨!!")
         
         let sb = UIStoryboard(name: "Main", bundle: nil)
@@ -54,35 +97,13 @@ class CityViewController: UIViewController, UICollectionViewDelegate, UICollecti
             let vc = sb.instantiateViewController(withIdentifier: "TouristViewController") as! TouristViewController
             
             vc.clickedCityData = selectedCity
-            
             navigationController?.pushViewController(vc, animated: true)
         } else {
             // 해외일 때
             let vc = sb.instantiateViewController(withIdentifier: "OverseasViewController") as! OverseasViewController
             
             vc.clickedCityData = selectedCity
-            
             present(vc, animated: true)
         }
-        
-        
     }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 50
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CityCollectionViewCell.identifier, for: indexPath) as! CityCollectionViewCell
-        
-        cell.cityButton.tag = indexPath.item
-        
-        cell.cityButton.addTarget(self, action: #selector(cityButtonClicked), for: .touchUpInside)
-        
-        return cell
-    }
-    
-
-
-
 }
