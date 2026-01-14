@@ -13,13 +13,11 @@ class CityCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet var cityName: UILabel!
     @IBOutlet var locationLabel: UILabel!
-
+    @IBOutlet var cityButton: UIButton!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        cityName.text = "서울"
-        locationLabel.text = "서울, 남산타워, 롯데타워, 경복궁"
-        
+
         cityName.font = .systemFont(ofSize: 20, weight: .heavy)
         cityName.textAlignment = .center
         locationLabel.font = .systemFont(ofSize: 12)

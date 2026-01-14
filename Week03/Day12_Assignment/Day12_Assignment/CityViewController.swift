@@ -42,6 +42,32 @@ class CityViewController: UIViewController, UICollectionViewDelegate, UICollecti
         cityCollectionView.collectionViewLayout = layout
     }
     
+    @objc func cityButtonClicked(sender: UIButton) {
+        let index = sender.tag
+        let selectedCity = CityInfo().city[index]
+//        print("\(selectedCity.city_name) 클릭됨!!")
+        
+        let sb = UIStoryboard(name: "Main", bundle: nil)
+        
+        // 국내
+        if selectedCity.domestic_travel {
+            let vc = sb.instantiateViewController(withIdentifier: "TouristViewController") as! TouristViewController
+            
+            vc.clickedCityData = selectedCity
+            
+            navigationController?.pushViewController(vc, animated: true)
+        } else {
+            // 해외일 때
+            let vc = sb.instantiateViewController(withIdentifier: "OverseasViewController") as! OverseasViewController
+            
+            vc.clickedCityData = selectedCity
+            
+            present(vc, animated: true)
+        }
+        
+        
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 50
     }
@@ -49,8 +75,14 @@ class CityViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CityCollectionViewCell.identifier, for: indexPath) as! CityCollectionViewCell
         
+        cell.cityButton.tag = indexPath.item
+        
+        cell.cityButton.addTarget(self, action: #selector(cityButtonClicked), for: .touchUpInside)
+        
         return cell
     }
+    
+
 
 
 }

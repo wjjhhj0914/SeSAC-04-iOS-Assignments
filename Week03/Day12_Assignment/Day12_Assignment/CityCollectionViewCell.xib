@@ -65,6 +65,7 @@
             </constraints>
             <size key="customSize" width="255" height="320"/>
             <connections>
+                <outlet property="cityButton" destination="jDa-B9-8jw" id="m8J-q7-m8T"/>
                 <outlet property="cityName" destination="Wh8-hY-ACV" id="wtx-CR-1Ow"/>
                 <outlet property="locationLabel" destination="zLK-iM-4u2" id="ZlQ-IR-Zhc"/>
             </connections>
