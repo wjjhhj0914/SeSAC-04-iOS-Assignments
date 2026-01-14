@@ -8,22 +8,24 @@
 import UIKit
 
 class CityViewController: UIViewController {
-
+    
+    @IBOutlet var headerTitleLabel: UILabel!
+    @IBOutlet var headerSegmentedControl: UISegmentedControl!
+    @IBOutlet var cityCollectionView: UICollectionView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        headerTitleLabel.text = "인기 도시"
+        headerTitleLabel.font = .systemFont(ofSize: 17, weight: .heavy)
+        headerTitleLabel.textAlignment = .center
+        
+        headerSegmentedControl.setTitle("모두", forSegmentAt: 0)
+        headerSegmentedControl.setTitle("국내", forSegmentAt: 1)
+        headerSegmentedControl.setTitle("해외", forSegmentAt: 2)
+        
 
-        // Do any additional setup after loading the view.
     }
-    
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
