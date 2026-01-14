@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CityViewController: UIViewController {
+class CityViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
     @IBOutlet var headerTitleLabel: UILabel!
     @IBOutlet var headerSegmentedControl: UISegmentedControl!
@@ -15,6 +15,12 @@ class CityViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        cityCollectionView.delegate = self
+        cityCollectionView.dataSource = self
+        
+        let xib = UINib(nibName: CityCollectionViewCell.identifier, bundle: nil)
+        cityCollectionView.register(xib, forCellWithReuseIdentifier: CityCollectionViewCell.identifier)
         
         headerTitleLabel.text = "인기 도시"
         headerTitleLabel.font = .systemFont(ofSize: 17, weight: .heavy)
@@ -24,7 +30,26 @@ class CityViewController: UIViewController {
         headerSegmentedControl.setTitle("국내", forSegmentAt: 1)
         headerSegmentedControl.setTitle("해외", forSegmentAt: 2)
         
-
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        
+        layout.itemSize = CGSize(width: 170, height: 270)
+        layout.sectionInset = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+        
+        layout.minimumLineSpacing = 10
+        layout.minimumInteritemSpacing = 10
+        
+        cityCollectionView.collectionViewLayout = layout
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 50
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CityCollectionViewCell.identifier, for: indexPath) as! CityCollectionViewCell
+        
+        return cell
     }
 
 
