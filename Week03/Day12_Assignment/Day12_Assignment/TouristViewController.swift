@@ -41,8 +41,6 @@ class TouristViewController: UIViewController {
         anotherCityButton.setTitle("다른 관광지 보러 가기", for: .normal)
         
         anotherCityButton.addTarget(self, action: #selector(anotherCityButtonPopped), for: .touchUpInside)
-        
-        
     }
 
     @objc func anotherCityButtonPopped() {

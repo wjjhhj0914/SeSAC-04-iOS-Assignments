@@ -50,10 +50,10 @@ class CityViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func filterCity() {
         if headerSegmentedControl.selectedSegmentIndex == 1 {
             filteredCityList = cityDetails.domesticCities
-            print("국내: \(filteredCityList)")
+//            print("국내: \(filteredCityList)")
         } else if headerSegmentedControl.selectedSegmentIndex == 2 {
             filteredCityList = cityDetails.internationalCities
-            print("해외: \(filteredCityList)")
+//            print("해외: \(filteredCityList)")
         } else {
             filteredCityList = cityDetails.city
         }
