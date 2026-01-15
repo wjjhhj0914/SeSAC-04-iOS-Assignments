@@ -36,8 +36,8 @@ class TouristViewController: UIViewController {
         touristLocationLabel.textAlignment = .center
         touristLocationLabel.textColor = .gray
         
-        anotherCityButton.backgroundColor = .systemBlue
-        anotherCityButton.tintColor = .white
+        anotherCityButton.backgroundColor =  UIColor(red: 221/255, green: 236/255, blue: 253/255, alpha: 1)
+        anotherCityButton.layer.cornerRadius = 20
         anotherCityButton.setTitle("다른 관광지 보러 가기", for: .normal)
         
         anotherCityButton.addTarget(self, action: #selector(anotherCityButtonPopped), for: .touchUpInside)
