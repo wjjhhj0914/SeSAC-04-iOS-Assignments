@@ -106,6 +106,14 @@ class CityViewController: UIViewController, UICollectionViewDelegate, UICollecti
         return cell
     }
     
+    @IBAction func hotPlacesBarButtonClicked(_ sender: UIBarButtonItem) {
+//        print("핫플레이스 클릭됨!!")
+        let sb = UIStoryboard(name: "Main", bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: "HotPlacesViewController") as! HotPlacesViewController
+        
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
     @IBAction func userBarButtonClicked(_ sender: UIBarButtonItem) {
 //        print(#function, "버튼 클릭됨!!")
         let sb = UIStoryboard(name: "Main", bundle: nil)

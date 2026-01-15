@@ -68,7 +68,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="0Wj-o4-KL1">
-                        <barButtonItem key="leftBarButtonItem" title="Item" id="sG9-pi-EFM"/>
+                        <barButtonItem key="leftBarButtonItem" title="Item" id="sG9-pi-EFM">
+                            <connections>
+                                <action selector="hotPlacesBarButtonClicked:" destination="BYZ-38-t0r" id="9J4-PO-w5F"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Item" image="user" id="lxm-DS-cv0">
                             <connections>
                                 <action selector="userBarButtonClicked:" destination="BYZ-38-t0r" id="WxA-9d-bKz"/>
@@ -256,6 +260,52 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Sq-sb-z2w" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1060" y="-566"/>
+        </scene>
+        <!--Hot Places View Controller-->
+        <scene sceneID="waR-NP-9C1">
+            <objects>
+                <viewController storyboardIdentifier="HotPlacesViewController" id="og5-fv-A9w" customClass="HotPlacesViewController" customModule="Day12_Assignment" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="mvd-PC-p8b">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="xgS-sl-py5">
+                                <rect key="frame" x="0.0" y="118" width="393" height="734"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="oBX-gG-UPr">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="jF3-HK-Sla" customClass="HotPlacesCollectionViewCell" customModule="Day12_Assignment" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="xxL-x1-Pll">
+                                            <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="xsr-Xd-TF1"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="xgS-sl-py5" firstAttribute="leading" secondItem="xsr-Xd-TF1" secondAttribute="leading" id="V90-Ur-1gK"/>
+                            <constraint firstItem="xgS-sl-py5" firstAttribute="top" secondItem="xsr-Xd-TF1" secondAttribute="top" id="mLn-We-YiU"/>
+                            <constraint firstItem="xgS-sl-py5" firstAttribute="trailing" secondItem="xsr-Xd-TF1" secondAttribute="trailing" id="neP-HV-7rA"/>
+                            <constraint firstAttribute="bottom" secondItem="xgS-sl-py5" secondAttribute="bottom" id="v2Q-Xh-0V5"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="hotPlacesCollectionView" destination="xgS-sl-py5" id="KJV-gA-whX"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JiJ-s1-YKw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1904.5801526717557" y="-566.19718309859161"/>
         </scene>
     </scenes>
     <resources>
