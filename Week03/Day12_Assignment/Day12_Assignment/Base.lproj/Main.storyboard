@@ -13,36 +13,16 @@
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="CityViewController" customModule="Day12_Assignment" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                    <view key="view" contentMode="scaleToFill" ambiguous="YES" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xOv-cq-sp8">
-                                <rect key="frame" x="16" y="70" width="361" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="zgY-ID-PUO"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="9CV-cU-Y3J">
-                                <rect key="frame" x="16" y="142" width="361" height="45"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="ks2-0i-McV"/>
-                                </constraints>
-                                <segments>
-                                    <segment title="First"/>
-                                    <segment title="Second"/>
-                                    <segment title=""/>
-                                </segments>
-                                <connections>
-                                    <action selector="segmentedControlClicked:" destination="BYZ-38-t0r" eventType="valueChanged" id="xrn-fw-ael"/>
-                                </connections>
-                            </segmentedControl>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="iCz-dc-RxG">
-                                <rect key="frame" x="0.0" y="202" width="393" height="650"/>
+                                <rect key="frame" x="0.0" y="252" width="393" height="570"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="570" id="PHY-ww-aF6"/>
+                                </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="kLV-jX-81A">
                                     <size key="itemSize" width="128" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -60,27 +40,46 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="9CV-cU-Y3J">
+                                <rect key="frame" x="20" y="192" width="353" height="41"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="CZd-bq-6V4"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="First"/>
+                                    <segment title="Second"/>
+                                    <segment title=""/>
+                                </segments>
+                                <connections>
+                                    <action selector="segmentedControlClicked:" destination="BYZ-38-t0r" eventType="valueChanged" id="xrn-fw-ael"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="iCz-dc-RxG" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="2Eh-8e-547"/>
-                            <constraint firstAttribute="trailing" secondItem="xOv-cq-sp8" secondAttribute="trailing" constant="16" id="4Tq-cv-cZT"/>
-                            <constraint firstItem="9CV-cU-Y3J" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="AkU-av-I1p"/>
+                            <constraint firstItem="9CV-cU-Y3J" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="E7i-Zd-SGl"/>
+                            <constraint firstItem="iCz-dc-RxG" firstAttribute="top" secondItem="9CV-cU-Y3J" secondAttribute="bottom" constant="20" id="NME-8C-BGr"/>
                             <constraint firstAttribute="bottom" secondItem="iCz-dc-RxG" secondAttribute="bottom" id="XO2-Gz-Wxr"/>
-                            <constraint firstItem="iCz-dc-RxG" firstAttribute="top" secondItem="9CV-cU-Y3J" secondAttribute="bottom" constant="16" id="cqe-Fe-0JH"/>
                             <constraint firstItem="iCz-dc-RxG" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="hpx-f0-JZu"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="9CV-cU-Y3J" secondAttribute="trailing" constant="16" id="kVW-GJ-6n3"/>
-                            <constraint firstItem="9CV-cU-Y3J" firstAttribute="top" secondItem="xOv-cq-sp8" secondAttribute="bottom" constant="28" id="oh6-Gm-2Jz"/>
-                            <constraint firstItem="xOv-cq-sp8" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="70" id="w2w-ac-J86"/>
-                            <constraint firstItem="xOv-cq-sp8" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="16" id="yFb-GM-OSG"/>
+                            <constraint firstItem="9CV-cU-Y3J" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="lts-gy-IcA"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="9CV-cU-Y3J" secondAttribute="trailing" constant="20" id="sU4-xN-NxS"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="0Wj-o4-KL1"/>
+                    <navigationItem key="navigationItem" id="0Wj-o4-KL1">
+                        <barButtonItem key="leftBarButtonItem" title="Item" id="sG9-pi-EFM"/>
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="user" id="lxm-DS-cv0">
+                            <connections>
+                                <action selector="userBarButtonClicked:" destination="BYZ-38-t0r" id="WxA-9d-bKz"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="cityCollectionView" destination="iCz-dc-RxG" id="4bb-hP-ETo"/>
                         <outlet property="headerSegmentedControl" destination="9CV-cU-Y3J" id="RS7-Bb-RJG"/>
-                        <outlet property="headerTitleLabel" destination="xOv-cq-sp8" id="Ye4-5L-CuN"/>
+                        <outlet property="hotPlacesBarButtonItem" destination="sG9-pi-EFM" id="uaL-S3-aA1"/>
+                        <outlet property="userBarButtonItem" destination="lxm-DS-cv0" id="mUx-hB-amy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -118,8 +117,8 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="55n-JD-7p8"/>
                                 </constraints>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Button"/>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="h58-mO-meh"/>
@@ -198,8 +197,69 @@
             </objects>
             <point key="canvasLocation" x="135.1145038167939" y="107.74647887323944"/>
         </scene>
+        <!--프로필 수정-->
+        <scene sceneID="p3B-QU-aHu">
+            <objects>
+                <tableViewController storyboardIdentifier="SetNicknameTableViewController" id="Hg0-kH-Kpv" customClass="SetNicknameTableViewController" customModule="Day12_Assignment" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="5Sb-uM-f9B">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <sections>
+                            <tableViewSection headerTitle="사용자 정보" footerTitle="사용하실 닉네임을 입력해주세요." id="flj-yg-U9n">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="XvW-bK-tmQ">
+                                        <rect key="frame" x="20" y="55.333332061767578" width="353" height="52"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XvW-bK-tmQ" id="8Xj-QT-lxr">
+                                            <rect key="frame" x="0.0" y="0.0" width="353" height="52"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Tfl-qb-ZyO">
+                                                    <rect key="frame" x="0.0" y="-1.6666666666666679" width="353" height="55.333333333333343"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="55" id="3t1-SJ-fON"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                    <connections>
+                                                        <action selector="nicknameTextFieldDidEndOnExit:" destination="Hg0-kH-Kpv" eventType="editingDidEndOnExit" id="a3d-Ue-sKP"/>
+                                                    </connections>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Tfl-qb-ZyO" firstAttribute="leading" secondItem="8Xj-QT-lxr" secondAttribute="leading" id="TvK-SN-h0j"/>
+                                                <constraint firstAttribute="trailing" secondItem="Tfl-qb-ZyO" secondAttribute="trailing" id="sfV-fr-rYz"/>
+                                                <constraint firstItem="Tfl-qb-ZyO" firstAttribute="centerY" secondItem="8Xj-QT-lxr" secondAttribute="centerY" id="zAU-on-8hV"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="Hg0-kH-Kpv" id="Nzd-pa-DYE"/>
+                            <outlet property="delegate" destination="Hg0-kH-Kpv" id="QZM-0j-RuG"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="프로필 수정" id="wfU-Vg-kmF">
+                        <barButtonItem key="rightBarButtonItem" title="완료" id="KBK-SB-DVJ">
+                            <connections>
+                                <action selector="doneBarButtonClicked:" destination="Hg0-kH-Kpv" id="zjD-g4-bA4"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="doneBarButtonItem" destination="KBK-SB-DVJ" id="NIR-g5-IAD"/>
+                        <outlet property="nicknameTextField" destination="Tfl-qb-ZyO" id="Lrd-3F-CEp"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1Sq-sb-z2w" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1060" y="-566"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="user" width="128" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

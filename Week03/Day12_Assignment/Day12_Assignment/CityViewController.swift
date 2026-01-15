@@ -11,9 +11,10 @@ import Kingfisher
 
 class CityViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
-    @IBOutlet var headerTitleLabel: UILabel!
     @IBOutlet var headerSegmentedControl: UISegmentedControl!
     @IBOutlet var cityCollectionView: UICollectionView!
+    @IBOutlet var userBarButtonItem: UIBarButtonItem!
+    @IBOutlet var hotPlacesBarButtonItem: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,9 +25,10 @@ class CityViewController: UIViewController, UICollectionViewDelegate, UICollecti
         let xib = UINib(nibName: CityCollectionViewCell.identifier, bundle: nil)
         cityCollectionView.register(xib, forCellWithReuseIdentifier: CityCollectionViewCell.identifier)
         
-        headerTitleLabel.text = "인기 도시"
-        headerTitleLabel.font = .systemFont(ofSize: 17, weight: .heavy)
-        headerTitleLabel.textAlignment = .center
+        navigationItem.title = "인기 도시"
+        
+        userBarButtonItem.image = UIImage(systemName: "person.fill")
+        hotPlacesBarButtonItem.image = UIImage(systemName: "flame.fill")
         
         headerSegmentedControl.setTitle("모두", forSegmentAt: 0)
         headerSegmentedControl.setTitle("국내", forSegmentAt: 1)
@@ -42,6 +44,18 @@ class CityViewController: UIViewController, UICollectionViewDelegate, UICollecti
         layout.minimumInteritemSpacing = 10
         
         cityCollectionView.collectionViewLayout = layout
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        let savedUserNickname = UserDefaults.standard.string(forKey: "nickname") ?? ""
+  
+        if savedUserNickname.isEmpty {
+            navigationItem.title = "인기 도시"
+        } else {
+            navigationItem.title = "\(savedUserNickname)님 환영합니다!"
+        }
     }
     
     var cityDetails = CityInfo()
@@ -83,6 +97,14 @@ class CityViewController: UIViewController, UICollectionViewDelegate, UICollecti
         cell.cityImage.kf.setImage(with: url)
         
         return cell
+    }
+    
+    @IBAction func userBarButtonClicked(_ sender: UIBarButtonItem) {
+//        print(#function, "버튼 클릭됨!!")
+        let sb = UIStoryboard(name: "Main", bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: "SetNicknameTableViewController") as! SetNicknameTableViewController
+        
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func cityButtonClicked(sender: UIButton) {
