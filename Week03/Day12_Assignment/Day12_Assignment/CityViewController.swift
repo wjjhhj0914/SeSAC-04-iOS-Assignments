@@ -34,6 +34,13 @@ class CityViewController: UIViewController, UICollectionViewDelegate, UICollecti
         headerSegmentedControl.setTitle("국내", forSegmentAt: 1)
         headerSegmentedControl.setTitle("해외", forSegmentAt: 2)
         
+        let savedSelectedSegmentIndex = UserDefaults.standard.integer(forKey: "selectedIndexOfSegmentedControl")
+        
+        // 0, 1, 2 중 선택된 세그먼트 호출
+        headerSegmentedControl.selectedSegmentIndex = savedSelectedSegmentIndex
+        // 선택된 세그먼트에 맞게 결과 보여주기
+        filterCity(selectedSegmentIndexNum: savedSelectedSegmentIndex)
+        
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         
@@ -61,14 +68,14 @@ class CityViewController: UIViewController, UICollectionViewDelegate, UICollecti
     var cityDetails = CityInfo()
     var filteredCityList: [City] = CityInfo().city
     
-    func filterCity() {
-        if headerSegmentedControl.selectedSegmentIndex == 1 {
+    func filterCity(selectedSegmentIndexNum: Int) {
+        UserDefaults.standard.set(selectedSegmentIndexNum, forKey: "selectedIndexOfSegmentedControl")
+        
+        if selectedSegmentIndexNum == 1 {
             filteredCityList = cityDetails.domesticCities
-//            print("국내: \(filteredCityList)")
-        } else if headerSegmentedControl.selectedSegmentIndex == 2 {
+        } else if selectedSegmentIndexNum == 2 {
             filteredCityList = cityDetails.internationalCities
-//            print("해외: \(filteredCityList)")
-        } else {
+        } else if selectedSegmentIndexNum == 0 {
             filteredCityList = cityDetails.city
         }
         
@@ -76,7 +83,7 @@ class CityViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     @IBAction func segmentedControlClicked(_ sender: UISegmentedControl) {
-        filterCity()
+        filterCity(selectedSegmentIndexNum: sender.selectedSegmentIndex)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
