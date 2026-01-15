@@ -18,6 +18,10 @@ class HotPlacesCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        let blue = UIColor(red: 221/255, green: 236/255, blue: 253/255, alpha: 1)
+        
+        setViewStyle(borderColour: blue, backgroundColour: blue)
+        
         placeNameLabel.textAlignment = .center
         cityNameLabel.textAlignment = .center
         
@@ -31,10 +35,5 @@ class HotPlacesCollectionViewCell: UICollectionViewCell {
         linkImageView.layer.borderColor = UIColor.white.cgColor
         linkImageView.layer.cornerRadius = linkImageView.frame.width / 2
         linkImageView.clipsToBounds = true
-        
-        contentView.layer.cornerRadius = 12
-        contentView.clipsToBounds = true
-        contentView.backgroundColor = UIColor(red: 221/255, green: 236/255, blue: 253/255, alpha: 1)
     }
-
 }
