@@ -15,4 +15,12 @@ extension UIView {
         self.layer.borderColor = borderColour.cgColor
         self.backgroundColor = backgroundColour
     }
+    
+    func setupChatView(cornerRadius: CGFloat, backgroundColour: UIColor, borderWidth: CGFloat = 1, borderColour: CGColor) {
+        self.layer.cornerRadius = cornerRadius
+        self.clipsToBounds = true
+        self.backgroundColor = backgroundColour
+        self.layer.borderWidth = borderWidth
+        self.layer.borderColor = borderColour
+    }
 }

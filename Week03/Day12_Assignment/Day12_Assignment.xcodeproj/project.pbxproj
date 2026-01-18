@@ -50,8 +50,8 @@
 		93F4FF432F17750200AB664D = {
 			isa = PBXGroup;
 			children = (
-				93F4FF4E2F17750200AB664D /* Day12_Assignment */,
 				93F4FF4D2F17750200AB664D /* Products */,
+				93F4FF4E2F17750200AB664D /* Day12_Assignment */,
 			);
 			sourceTree = "<group>";
 		};

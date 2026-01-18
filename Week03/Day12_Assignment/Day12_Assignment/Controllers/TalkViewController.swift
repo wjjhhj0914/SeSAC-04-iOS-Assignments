@@ -44,7 +44,6 @@ class TalkViewController: UIViewController {
         
         chatListCollectionView.collectionViewLayout = layout
     }
-
 }
 
 extension TalkViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -57,47 +56,19 @@ extension TalkViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         let data = chatList[indexPath.item]
         
-        var friendId = 0
-        // 0이 아닌 번호를 찾을 때까지 for문 돌리기
-        for id in data.participantIds {
-            if id != 0 {
-                friendId = id
-                break
-            }
-        }
-
-        for user in mockUsers {
-            if user.userId == friendId {
-                cell.nameLabel.text = user.userName
-                let url = URL(string: user.profileImage)
-                cell.profileImageView.kf.setImage(with: url)
-                break
-            }
-        }
-        
-        if data.messages.count > 0 {
-            let lastChat = data.messages[data.messages.count - 1]
-            cell.messageLabel.text = lastChat.content
-            
-            let formatter = DateFormatter()
-            formatter.dateFormat = "yy.MM.dd"
-            
-            cell.dateLabel.text = formatter.string(from: lastChat.timestamp)
-        }
+        cell.configure(data: data)
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("클릭됐니?")
+//        print("클릭됐니?")
         let sb = UIStoryboard(name: "Main", bundle: nil)
         let vc = sb.instantiateViewController(identifier: "ChattingViewController") as! ChattingViewController
         
-        navigationController?.pushViewController(vc, animated: true)
-        
-        print("네비게이션 확인 \(navigationController)")
-        
         let selectedChat = chatList[indexPath.item]
         vc.chatData = selectedChat
+        
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
