@@ -183,11 +183,11 @@
             </objects>
             <point key="canvasLocation" x="3686.2595419847326" y="107.74647887323944"/>
         </scene>
-        <!--Item-->
+        <!--도시-->
         <scene sceneID="DLS-zQ-QoJ">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="d70-C9-qal" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="x26-Jx-gDr"/>
+                    <tabBarItem key="tabBarItem" title="도시" image="globe.europe.africa.fill" catalog="system" id="x26-Jx-gDr"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="WJ7-k7-dZ1">
                         <rect key="frame" x="0.0" y="118" width="393" height="54"/>
@@ -402,6 +402,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="VPW-pV-W8d" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="t4a-Qb-giO">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
@@ -414,11 +415,11 @@
             </objects>
             <point key="canvasLocation" x="135.1145038167939" y="107.74647887323944"/>
         </scene>
-        <!--Item-->
+        <!--채팅-->
         <scene sceneID="3Ra-sX-WzY">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="KWE-tt-Ueg" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="tYp-Vy-jiM"/>
+                    <tabBarItem key="tabBarItem" title="채팅" image="ellipsis.message" catalog="system" id="tYp-Vy-jiM"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="IF2-Le-ttx">
                         <rect key="frame" x="0.0" y="118" width="393" height="54"/>
@@ -435,6 +436,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="ellipsis.message" catalog="system" width="128" height="106"/>
+        <image name="globe.europe.africa.fill" catalog="system" width="128" height="123"/>
         <image name="user" width="128" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
