@@ -27,7 +27,7 @@ class TalkViewController: UIViewController {
         
         configureLayout()
         
-        navigationItem.title = "채팅 화면"
+        navigationItem.title = "TRAVEL TALK"
 
         mainSearchBar.placeholder = "친구 이름을 검색해보세요"
     }
@@ -86,5 +86,18 @@ extension TalkViewController: UICollectionViewDelegate, UICollectionViewDataSour
         }
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("클릭됐니?")
+        let sb = UIStoryboard(name: "Main", bundle: nil)
+        let vc = sb.instantiateViewController(identifier: "ChattingViewController") as! ChattingViewController
+        
+        navigationController?.pushViewController(vc, animated: true)
+        
+        print("네비게이션 확인 \(navigationController)")
+        
+        let selectedChat = chatList[indexPath.item]
+        vc.chatData = selectedChat
     }
 }

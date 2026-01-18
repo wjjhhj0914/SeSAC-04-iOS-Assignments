@@ -8,10 +8,24 @@
 import UIKit
 
 class MyChatTableViewCell: UITableViewCell {
+    
+    @IBOutlet var myChatTimeLabel: UILabel!
+    @IBOutlet var myChatMessageView: UIView!
+    @IBOutlet var myChatMessageLabel: UILabel!
+    
+    static let identifier = "MyChatTableViewCell"
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        myChatMessageView.layer.cornerRadius = 8
+        myChatMessageView.clipsToBounds = true
+        myChatMessageView.backgroundColor = .systemGray6
+        myChatMessageView.layer.borderWidth = 1
+        myChatMessageView.layer.borderColor = UIColor.lightGray.cgColor
+        
+        myChatTimeLabel.font = .systemFont(ofSize: 12)
+        myChatMessageLabel.font = .systemFont(ofSize: 14)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
