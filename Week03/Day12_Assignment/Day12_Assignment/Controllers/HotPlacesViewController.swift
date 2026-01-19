@@ -13,6 +13,17 @@ class HotPlacesViewController: UIViewController, UICollectionViewDelegate, UICol
     
     let touristSpots = TouristSpotInfo()
     
+    @objc func hotPlacesButtonClicked(_ sender: UIButton) {
+        let vc = HotPlacesDetailsViewController()
+        
+        let selectedData = touristSpots.spots[sender.tag]
+        
+        // 바구니에 담기
+        vc.spot = selectedData
+        
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -64,6 +75,9 @@ class HotPlacesViewController: UIViewController, UICollectionViewDelegate, UICol
             return cell
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HotPlacesCollectionViewCell.identifier, for: indexPath) as! HotPlacesCollectionViewCell
+            
+            cell.linkButton.tag = indexPath.item
+            cell.linkButton.addTarget(self, action: #selector(hotPlacesButtonClicked), for: .touchUpInside)
             
             cell.placeNameLabel.text = locationInfo.koreanName
             cell.cityNameLabel.text = locationInfo.city

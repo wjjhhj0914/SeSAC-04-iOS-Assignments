@@ -62,6 +62,7 @@
             <size key="customSize" width="121" height="112"/>
             <connections>
                 <outlet property="cityNameLabel" destination="BAo-zV-3O2" id="Fs1-Uk-GkF"/>
+                <outlet property="linkButton" destination="V54-qv-CPe" id="lmH-jK-dEc"/>
                 <outlet property="linkImageView" destination="Y9B-S5-CND" id="ymy-Ap-t1q"/>
                 <outlet property="placeNameLabel" destination="vCt-u1-0tz" id="bKp-jk-NnR"/>
             </connections>

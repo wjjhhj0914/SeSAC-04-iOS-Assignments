@@ -14,6 +14,7 @@ class HotPlacesCollectionViewCell: UICollectionViewCell {
     @IBOutlet var placeNameLabel: UILabel!
     @IBOutlet var cityNameLabel: UILabel!
     @IBOutlet var linkImageView: UIImageView!
+    @IBOutlet var linkButton: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()
