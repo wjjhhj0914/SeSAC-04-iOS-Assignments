@@ -18,7 +18,7 @@ class FriendChatTableViewCell: UITableViewCell {
     @IBOutlet var chatRoomFriendMessageLabelView: UIView!
     @IBOutlet var chatRoomFriendMessageLabel: UILabel!
     @IBOutlet var chatRoomFriendTimeLabel: UILabel!
-    
+    @IBOutlet var friendImageButton: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()

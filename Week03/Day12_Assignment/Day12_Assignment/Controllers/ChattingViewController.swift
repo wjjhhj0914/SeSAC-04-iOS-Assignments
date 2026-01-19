@@ -15,6 +15,19 @@ class ChattingViewController: UIViewController {
     
     var chatData: ChatRoom?
     
+    @objc func friendImageButtonClicked() {
+        print(#function)
+        
+        let vc = FriendProfileViewController()
+        
+        if let friend = chatData?.otherUser {
+            vc.nickname = friend.userName
+            vc.profileImageUrl = friend.profileImage
+        }
+        
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -70,6 +83,9 @@ extension ChattingViewController: UITableViewDelegate, UITableViewDataSource {
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "FriendChatTableViewCell", for: indexPath) as! FriendChatTableViewCell
             cell.configure(friend: chatData?.otherUser, message: message, time: timeString)
+            
+            // 프로필 이미지 클릭하면 화면 전환
+            cell.friendImageButton.addTarget(self, action: #selector(friendImageButtonClicked), for: .touchUpInside)
             return cell
         }
     }
