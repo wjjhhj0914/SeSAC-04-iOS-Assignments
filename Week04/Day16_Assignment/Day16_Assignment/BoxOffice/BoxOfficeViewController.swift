@@ -19,6 +19,11 @@ class BoxOfficeViewController: UIViewController {
     lazy var tableView = {
         let boxOfficeTableView = UITableView()
         
+        boxOfficeTableView.backgroundColor = .clear
+        boxOfficeTableView.delegate = self
+        boxOfficeTableView.dataSource = self
+        boxOfficeTableView.register(BoxOfficeTableViewCell.self, forCellReuseIdentifier: BoxOfficeTableViewCell.identifier)
+        
         return boxOfficeTableView
     }()
 
@@ -28,6 +33,18 @@ class BoxOfficeViewController: UIViewController {
         configureHierarchy()
         configureLayout()
         configureView()
+    }
+}
+
+extension BoxOfficeViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: BoxOfficeTableViewCell.identifier, for: indexPath) as! BoxOfficeTableViewCell
+        
+        return cell
     }
 }
 
@@ -55,7 +72,7 @@ extension BoxOfficeViewController: ViewDesignProtocol {
             make.leading.equalToSuperview().offset(8)
             make.centerY.equalToSuperview()
             make.trailing.equalTo(searchBtn.snp.leading).offset(-12)
-            make.height.equalTo(40)
+            make.height.equalTo(44)
         }
         
         searchBtn.snp.makeConstraints { make in
@@ -72,6 +89,6 @@ extension BoxOfficeViewController: ViewDesignProtocol {
     }
     
     func configureView() {
-        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
     }
 }
