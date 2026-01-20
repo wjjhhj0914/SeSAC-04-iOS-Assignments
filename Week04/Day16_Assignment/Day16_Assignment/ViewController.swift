@@ -13,6 +13,16 @@ class ViewController: UIViewController {
     
     let imageBtn = EntryButton(titleStr: "이미지")
     let boxOfficeBtn = EntryButton(titleStr: "박스 오피스")
+    
+    @objc func imageBtnClicked() {
+        let vc = PicsumViewController()
+        present(vc, animated: true)
+    }
+    
+    @objc func boxOfficeBtnClicked() {
+        let vc = BoxOfficeTableViewController()
+        present(vc, animated: true)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +30,9 @@ class ViewController: UIViewController {
         configureHierarchy()
         configureLayout()
         configureView()
+        
+        imageBtn.addTarget(self, action: #selector(imageBtnClicked), for: .touchUpInside)
+        boxOfficeBtn.addTarget(self, action: #selector(boxOfficeBtnClicked), for: .touchUpInside)
     }
 }
 
