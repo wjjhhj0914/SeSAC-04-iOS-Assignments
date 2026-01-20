@@ -1,5 +1,5 @@
 //
-//  EntryButton.swift
+//  PicsumImageView.swift
 //  Day16_Assignment
 //
 //  Created by Hyojung Jang on 1/20/26.
@@ -7,21 +7,17 @@
 
 import UIKit
 
-class EntryButton: UIButton {
+class PicsumImageView: UIImageView {
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
     
-    init(titleStr: String) {
+    init() {
         super.init(frame: .zero)
-        
-        setTitle(titleStr, for: .normal)
-        backgroundColor = .systemOrange
-        layer.cornerRadius = 10
-        titleLabel?.font = .systemFont(ofSize: 16, weight: .heavy)
+        contentMode = .scaleAspectFill
+        clipsToBounds = true
     }
     
-        
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

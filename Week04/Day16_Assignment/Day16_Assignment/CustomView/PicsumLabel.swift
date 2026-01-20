@@ -1,5 +1,5 @@
 //
-//  EntryButton.swift
+//  PicsumLabel.swift
 //  Day16_Assignment
 //
 //  Created by Hyojung Jang on 1/20/26.
@@ -7,21 +7,17 @@
 
 import UIKit
 
-class EntryButton: UIButton {
+class PicsumLabel: UILabel {
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
     
-    init(titleStr: String) {
+    init(fontSize: CGFloat, textColour: UIColor = .black) {
         super.init(frame: .zero)
-        
-        setTitle(titleStr, for: .normal)
-        backgroundColor = .systemOrange
-        layer.cornerRadius = 10
-        titleLabel?.font = .systemFont(ofSize: 16, weight: .heavy)
+        font = .boldSystemFont(ofSize: fontSize)
+        textColor = textColour
     }
     
-        
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
