@@ -20,7 +20,7 @@ class ViewController: UIViewController {
     }
     
     @objc func boxOfficeBtnClicked() {
-        let vc = BoxOfficeTableViewController()
+        let vc = BoxOfficeViewController()
         present(vc, animated: true)
     }
 
