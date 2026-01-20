@@ -8,6 +8,7 @@
 import UIKit
 
 import SnapKit
+import Alamofire
 
 class BoxOfficeViewController: UIViewController {
     
@@ -26,6 +27,8 @@ class BoxOfficeViewController: UIViewController {
         
         return boxOfficeTableView
     }()
+    
+    var boxOfficeList: [BoxOfficeData] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,16 +36,41 @@ class BoxOfficeViewController: UIViewController {
         configureHierarchy()
         configureLayout()
         configureView()
+        
+        callRequest(targetDt: "20260120")
+    }
+    
+    func callRequest(targetDt: String) {
+        let url = "https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=bfb0425210cb990d573ab1e43a26fc39&targetDt=\(targetDt)"
+        AF.request(url, method: .get)
+            .responseDecodable(of: BoxOfficeResponse.self) { response in
+                switch response.result {
+                case .success(let value):
+                    self.boxOfficeList = value.boxOfficeResult.dailyBoxOfficeList
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                case .failure(let error):
+                    print(error)
+                }
+            }
     }
 }
 
 extension BoxOfficeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return boxOfficeList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: BoxOfficeTableViewCell.identifier, for: indexPath) as! BoxOfficeTableViewCell
+        
+        let movie = boxOfficeList[indexPath.row]
+        print(movie)
+        
+        cell.boxOfficeRankLabel.text = movie.rank
+        cell.movieTitleLabel.text = movie.movieNm
+        cell.dateLabel.text = movie.openDt
         
         return cell
     }

@@ -12,9 +12,9 @@ import SnapKit
 class BoxOfficeTableViewCell: UITableViewCell {
     static let identifier = "BoxOfficeTableViewCell"
     
-    let boxOfficeRankLabel = BoxOfficeLabel(textStr: "10", textColour: .black, fontSize: 16)
-    let movieTitleLabel = BoxOfficeLabel(textStr: "아바타: 불과 재", fontSize: 16)
-    let dateLabel = BoxOfficeLabel(textStr: "8888-88-88", fontSize: 12)
+    let boxOfficeRankLabel = BoxOfficeLabel(textColour: .black, fontSize: 16)
+    let movieTitleLabel = BoxOfficeLabel(fontSize: 16)
+    let dateLabel = BoxOfficeLabel(fontSize: 12)
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

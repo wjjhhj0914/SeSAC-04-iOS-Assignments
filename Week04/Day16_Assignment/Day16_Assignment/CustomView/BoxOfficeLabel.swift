@@ -12,9 +12,8 @@ class BoxOfficeLabel: UILabel {
         super.init(frame: frame)
     }
     
-    init(textStr: String, textColour: UIColor = .white, fontSize: CGFloat) {
+    init(textColour: UIColor = .white, fontSize: CGFloat) {
         super.init(frame: .zero)
-        text = textStr
         textColor = textColour
         font = .boldSystemFont(ofSize: fontSize)
     }
