@@ -29,6 +29,12 @@ class BoxOfficeViewController: UIViewController {
     }()
     
     var boxOfficeList: [BoxOfficeData] = []
+    
+//    func getYesterdayDate() -> String {
+//        // 1단계: 현재 날짜에서 하루를 뺀다.
+//        let today = Date()
+//        
+//    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +44,21 @@ class BoxOfficeViewController: UIViewController {
         configureView()
         
         callRequest(targetDt: "20260120")
+        
+        searchTextField.addTarget(self, action: #selector(searchTextFieldReturn), for: .editingDidEndOnExit)
+        searchBtn.addTarget(self, action: #selector(searchBtnClicked), for: .touchUpInside)
+    }
+    
+    @objc func searchBtnClicked() {
+        if let userInputText = searchTextField.text, !userInputText.isEmpty {
+            callRequest(targetDt: userInputText)
+        }
+        
+        view.endEditing(true)
+    }
+
+    @objc func searchTextFieldReturn() {
+        searchBtnClicked()
     }
     
     func callRequest(targetDt: String) {
@@ -118,5 +139,8 @@ extension BoxOfficeViewController: ViewDesignProtocol {
     
     func configureView() {
         tableView.separatorStyle = .none
+        tableView.allowsSelection = false
     }
 }
+
+

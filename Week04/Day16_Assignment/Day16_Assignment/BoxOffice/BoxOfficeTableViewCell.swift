@@ -47,6 +47,7 @@ extension BoxOfficeTableViewCell: ViewDesignProtocol {
         movieTitleLabel.snp.makeConstraints { make in
             make.leading.equalTo(boxOfficeRankLabel.snp.trailing).offset(20)
             make.centerY.equalToSuperview()
+            make.trailing.lessThanOrEqualTo(dateLabel.snp.leading).offset(-20)
             make.height.equalTo(24)
         }
         
