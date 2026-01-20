@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9367E2242F1FAC4A007B898D /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 9367E2232F1FAC4A007B898D /* Kingfisher */; };
 		93F403C62F1F692F00AB664D /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 93F403C52F1F692F00AB664D /* SnapKit */; };
 		93F403C92F1F694A00AB664D /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 93F403C82F1F694A00AB664D /* Alamofire */; };
 /* End PBXBuildFile section */
@@ -41,6 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9367E2242F1FAC4A007B898D /* Kingfisher in Frameworks */,
 				93F403C62F1F692F00AB664D /* SnapKit in Frameworks */,
 				93F403C92F1F694A00AB664D /* Alamofire in Frameworks */,
 			);
@@ -87,6 +89,7 @@
 			packageProductDependencies = (
 				93F403C52F1F692F00AB664D /* SnapKit */,
 				93F403C82F1F694A00AB664D /* Alamofire */,
+				9367E2232F1FAC4A007B898D /* Kingfisher */,
 			);
 			productName = Day16_Assignment;
 			productReference = 93F403A52F1F680F00AB664D /* Day16_Assignment.app */;
@@ -119,6 +122,7 @@
 			packageReferences = (
 				93F403C42F1F692F00AB664D /* XCRemoteSwiftPackageReference "SnapKit" */,
 				93F403C72F1F694A00AB664D /* XCRemoteSwiftPackageReference "Alamofire" */,
+				9367E2222F1FAC4A007B898D /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 93F403A62F1F680F00AB664D /* Products */;
@@ -180,7 +184,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = nonisolated;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
@@ -217,7 +221,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = nonisolated;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
@@ -370,6 +374,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		9367E2222F1FAC4A007B898D /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.6.2;
+			};
+		};
 		93F403C42F1F692F00AB664D /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -389,6 +401,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		9367E2232F1FAC4A007B898D /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9367E2222F1FAC4A007B898D /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
 		93F403C52F1F692F00AB664D /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 93F403C42F1F692F00AB664D /* XCRemoteSwiftPackageReference "SnapKit" */;

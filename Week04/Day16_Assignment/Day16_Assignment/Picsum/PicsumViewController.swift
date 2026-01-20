@@ -8,6 +8,8 @@
 import UIKit
 
 import SnapKit
+import Alamofire
+import Kingfisher
 
 class PicsumViewController: UIViewController {
     
@@ -15,17 +17,41 @@ class PicsumViewController: UIViewController {
     let renderImageView = PicsumImageView()
     let authorLabel = PicsumLabel(fontSize: 20)
     let screenResolutionLabel = PicsumLabel(fontSize: 14, textColour: .gray)
+    
+    @objc func randomImageBtnClicked() {
+        callRequest()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        renderImageView.image = UIImage(systemName: "person.circle.fill")
-        authorLabel.text = "작가: Alejandro Escamilla"
-        screenResolutionLabel.text = "해상도: 5,000 x 3,333"
-        
         configureHierarchy()
         configureLayout()
         configureView()
+        
+        randomImageBtn.addTarget(self, action: #selector(randomImageBtnClicked), for: .touchUpInside)
+        
+        callRequest()
+    }
+    
+    func callRequest() {
+        let url = "https://picsum.photos/id/\(Int.random(in: 0...100))/info"
+        AF.request(url, method: .get)
+            .responseDecodable(of: PicsumImage.self) { response in
+                switch response.result {
+                case .success(let value):
+                    dump(value)
+                    
+                    self.authorLabel.text = value.author
+                    self.screenResolutionLabel.text = "해상도: \(value.width) x \(value.height)"
+                    DispatchQueue.main.async {
+                        let kfUrl = URL(string: value.download_url)
+                        self.renderImageView.kf.setImage(with: kfUrl)
+                    }
+                case .failure(let error):
+                    print(error)
+                }
+            }
     }
 }
 
@@ -66,6 +92,4 @@ extension PicsumViewController: ViewDesignProtocol {
     func configureView() {
         view.backgroundColor = .white
     }
-    
-    
 }

@@ -14,7 +14,7 @@ class PicsumImageView: UIImageView {
     
     init() {
         super.init(frame: .zero)
-        contentMode = .scaleAspectFill
+        contentMode = .scaleAspectFit
         clipsToBounds = true
     }
     
