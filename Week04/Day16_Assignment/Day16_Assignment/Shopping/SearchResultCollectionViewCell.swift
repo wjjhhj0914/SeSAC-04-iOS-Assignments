@@ -53,7 +53,7 @@ extension SearchResultCollectionViewCell: ViewDesignProtocol {
         }
         
         mallNameLabel.snp.makeConstraints { make in
-            make.top.equalTo(productImageView.snp.bottom).offset(8)
+            make.top.equalTo(productImageView.snp.bottom).offset(10)
             make.horizontalEdges.equalToSuperview().inset(4)
         }
         
@@ -82,7 +82,7 @@ extension SearchResultCollectionViewCell: ViewDesignProtocol {
         productNameLabel.textColor = .white
         productNameLabel.numberOfLines = 2
         
-        productPriceLabel.font = .boldSystemFont(ofSize: 15)
+        productPriceLabel.font = .boldSystemFont(ofSize: 16)
         productPriceLabel.textColor = .white
         
         likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
