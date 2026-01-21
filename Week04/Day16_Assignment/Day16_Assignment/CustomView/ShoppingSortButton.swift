@@ -17,15 +17,26 @@ class ShoppingSortButton: UIButton {
         
         var myConfig = UIButton.Configuration.plain()
         
-        titleLabel?.font = .boldSystemFont(ofSize: 14)
+        self.setTitle(titleStr, for: .normal)
+        self.titleLabel?.font = .boldSystemFont(ofSize: 12)
         
-        myConfig.title = titleStr
-        myConfig.baseForegroundColor = .white
-        myConfig.background.cornerRadius = 8
-        myConfig.background.strokeWidth = 1
-        myConfig.background.strokeColor = .white
-        myConfig.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
-        self.configuration = myConfig
+        self.layer.cornerRadius = 8
+        self.layer.borderWidth = 1
+        self.layer.borderColor = UIColor.white.cgColor
+        
+        self.contentEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        
+        changeBtnDesign(isSelected: false)
+    }
+    
+    func changeBtnDesign(isSelected: Bool) {
+        if isSelected {
+            self.backgroundColor = .white
+            self.setTitleColor(.black, for: .normal)
+        } else {
+            self.backgroundColor = .black
+            self.setTitleColor(.white, for: .normal)
+        }
     }
     
     required init?(coder: NSCoder) {

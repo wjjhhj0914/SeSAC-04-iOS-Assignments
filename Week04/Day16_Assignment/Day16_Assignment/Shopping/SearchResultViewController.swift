@@ -44,6 +44,43 @@ class SearchResultViewController: UIViewController {
         navigationItem.title = searchKeyword
         
         callRequest(query: searchKeyword ?? "", sort: "sim")
+        
+        configureButtonActions()
+        
+        sortedByAccuracyBtn.isSelected = true
+        sortedByAccuracyBtn.changeBtnDesign(isSelected: true)
+    }
+    
+    func configureButtonActions() {
+        let buttons = [sortedByAccuracyBtn, sortedByDateBtn, sortedByHighPriceBtn, sortedByLowPriceBtn]
+        
+        buttons.forEach {
+            $0.addTarget(self, action: #selector(sortButtonClicked), for: .touchUpInside)
+        }
+    }
+    
+    @objc func sortButtonClicked(_ sender: ShoppingSortButton) {
+        let buttons = [sortedByAccuracyBtn, sortedByDateBtn, sortedByHighPriceBtn, sortedByLowPriceBtn]
+        
+        for btn in buttons {
+            btn.changeBtnDesign(isSelected: false)
+        }
+        
+        sender.changeBtnDesign(isSelected: true)
+        
+        var sortingType = ""
+        
+        if sender == sortedByAccuracyBtn {
+            sortingType = "sim"
+        } else if sender == sortedByDateBtn {
+            sortingType = "date"
+        } else if sender == sortedByHighPriceBtn {
+            sortingType = "dsc"
+        } else if sender == sortedByLowPriceBtn {
+            sortingType = "asc"
+        }
+        
+        callRequest(query: searchKeyword ?? "", sort: sortingType)
     }
     
     func callRequest(query: String, sort: String) {
