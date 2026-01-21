@@ -48,7 +48,6 @@ class SearchResultViewController: UIViewController {
         configureButtonActions()
         
         sortedByAccuracyBtn.isSelected = true
-        sortedByAccuracyBtn.changeBtnDesign(isSelected: true)
     }
     
     func configureButtonActions() {
@@ -63,10 +62,10 @@ class SearchResultViewController: UIViewController {
         let buttons = [sortedByAccuracyBtn, sortedByDateBtn, sortedByHighPriceBtn, sortedByLowPriceBtn]
         
         for btn in buttons {
-            btn.changeBtnDesign(isSelected: false)
+            btn.isSelected = false
         }
         
-        sender.changeBtnDesign(isSelected: true)
+        sender.isSelected = true
         
         var sortingType = ""
         
@@ -98,7 +97,6 @@ class SearchResultViewController: UIViewController {
                 case .failure(let error):
                     print(error)
                 }
-                
             }
     }
     

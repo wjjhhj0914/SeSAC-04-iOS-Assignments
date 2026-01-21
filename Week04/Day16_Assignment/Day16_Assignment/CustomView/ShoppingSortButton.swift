@@ -8,6 +8,12 @@
 import UIKit
 
 class ShoppingSortButton: UIButton {
+    override var isSelected: Bool {
+        didSet {
+            changeBtnDesign(isSelected: isSelected)
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -15,18 +21,14 @@ class ShoppingSortButton: UIButton {
     init(titleStr: String) {
         super.init(frame: .zero)
         
-        var myConfig = UIButton.Configuration.plain()
-        
         self.setTitle(titleStr, for: .normal)
         self.titleLabel?.font = .boldSystemFont(ofSize: 12)
-        
         self.layer.cornerRadius = 8
         self.layer.borderWidth = 1
         self.layer.borderColor = UIColor.white.cgColor
-        
         self.contentEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
         
-        changeBtnDesign(isSelected: false)
+        changeBtnDesign(isSelected: isSelected)
     }
     
     func changeBtnDesign(isSelected: Bool) {
