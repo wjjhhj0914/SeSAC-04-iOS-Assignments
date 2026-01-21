@@ -7,23 +7,41 @@
 
 import UIKit
 
+import SnapKit
+
 class ShoppingViewController: UIViewController {
+    
+    let shoppingSearchBar = UISearchBar()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationItem.title = "도봉러의 쇼핑쇼핑"
+        
+        configureHierarchy()
+        configureLayout()
+        configureView()
+    }
 
-        view.backgroundColor = .red
+}
+
+extension ShoppingViewController: ViewDesignProtocol {
+    func configureHierarchy() {
+        view.addSubview(shoppingSearchBar)
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func configureLayout() {
+        shoppingSearchBar.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(20)
+        }
     }
-    */
-
+    
+    func configureView() {
+        view.backgroundColor = .black
+        shoppingSearchBar.searchBarStyle = .minimal
+        shoppingSearchBar.placeholder = "브랜드, 상품, 프로필, 태그 등"
+    }
+    
+    
 }

@@ -24,12 +24,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let nav1 = UINavigationController(rootViewController: firstVC)
         let nav2 = UINavigationController(rootViewController: secondVC)
         
-        nav1.navigationBar.topItem?.title = "메인"
-        
         nav1.tabBarItem = UITabBarItem(title: "미디어", image: UIImage(systemName: "film"), tag: 0)
         nav2.tabBarItem = UITabBarItem(title: "쇼핑", image: UIImage(systemName: "cart"), tag: 1)
         
         tabBarVC.setViewControllers([nav1, nav2], animated: true)
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
         
         window?.rootViewController = tabBarVC
         window?.makeKeyAndVisible()
