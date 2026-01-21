@@ -62,7 +62,7 @@ class BoxOfficeViewController: UIViewController {
     }
     
     func callRequest(targetDt: String) {
-        let url = "https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=bfb0425210cb990d573ab1e43a26fc39&targetDt=\(targetDt)"
+        let url = "https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=\(APIKey.KOFIC)&targetDt=\(targetDt)"
         AF.request(url, method: .get)
             .responseDecodable(of: BoxOfficeResponse.self) { response in
                 switch response.result {
