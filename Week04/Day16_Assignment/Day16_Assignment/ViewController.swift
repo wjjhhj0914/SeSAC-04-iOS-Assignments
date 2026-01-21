@@ -61,6 +61,4 @@ extension ViewController: ViewDesignProtocol {
     func configureView() {
         view.backgroundColor = .white
     }
-    
-    
 }
