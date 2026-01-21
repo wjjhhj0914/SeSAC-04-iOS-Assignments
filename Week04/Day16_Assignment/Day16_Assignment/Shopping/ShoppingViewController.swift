@@ -25,6 +25,24 @@ class ShoppingViewController: UIViewController {
 
 }
 
+extension ShoppingViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        let userInputText = searchBar.text ?? ""
+        
+        if userInputText.count < 2 {
+            let alert = UIAlertController(title: "알림", message: "2글자 이상 입력해주세요", preferredStyle: .alert)
+            let ok = UIAlertAction(title: "확인", style: .default)
+            alert.addAction(ok)
+            present(alert, animated: true)
+        }
+        
+        let vc = SearchResultViewController()
+        vc.searchKeyword = userInputText
+        navigationController?.pushViewController(vc, animated: true)
+        searchBar.resignFirstResponder()
+    }
+}
+
 extension ShoppingViewController: ViewDesignProtocol {
     func configureHierarchy() {
         view.addSubview(shoppingSearchBar)
@@ -41,7 +59,6 @@ extension ShoppingViewController: ViewDesignProtocol {
         view.backgroundColor = .black
         shoppingSearchBar.searchBarStyle = .minimal
         shoppingSearchBar.placeholder = "브랜드, 상품, 프로필, 태그 등"
+        shoppingSearchBar.delegate = self
     }
-    
-    
 }
