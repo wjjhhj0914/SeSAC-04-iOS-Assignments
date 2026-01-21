@@ -19,14 +19,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let tabBarVC = UITabBarController()
         let firstVC = ViewController()
+        let secondVC = ShoppingViewController()
         
         let nav1 = UINavigationController(rootViewController: firstVC)
+        let nav2 = UINavigationController(rootViewController: secondVC)
         
         nav1.navigationBar.topItem?.title = "메인"
         
-        nav1.tabBarItem = UITabBarItem(title: "쇼핑", image: UIImage(systemName: "cart"), tag: 0)
+        nav1.tabBarItem = UITabBarItem(title: "미디어", image: UIImage(systemName: "film"), tag: 0)
+        nav2.tabBarItem = UITabBarItem(title: "쇼핑", image: UIImage(systemName: "cart"), tag: 1)
         
-        tabBarVC.setViewControllers([nav1], animated: true)
+        tabBarVC.setViewControllers([nav1, nav2], animated: true)
         
         window?.rootViewController = tabBarVC
         window?.makeKeyAndVisible()

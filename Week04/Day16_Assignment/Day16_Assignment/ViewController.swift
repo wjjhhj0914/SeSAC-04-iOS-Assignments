@@ -33,6 +33,8 @@ class ViewController: UIViewController {
         
         imageBtn.addTarget(self, action: #selector(imageBtnClicked), for: .touchUpInside)
         boxOfficeBtn.addTarget(self, action: #selector(boxOfficeBtnClicked), for: .touchUpInside)
+        
+        
     }
 }
 
