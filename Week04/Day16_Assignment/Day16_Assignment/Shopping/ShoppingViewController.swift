@@ -42,6 +42,23 @@ class ShoppingViewController: UIViewController {
         
         list = UserDefaultManager.searchHistory
     }
+    
+    @objc func deleteBtnClicked(_ sender: UIButton) {
+        let indexToDelete = sender.tag
+        
+        let currentList = self.list
+        
+        var newList: [String] = []
+        
+        for i in 0..<currentList.count {
+            if i != indexToDelete {
+                newList.append(currentList[i])
+            }
+        }
+        
+        UserDefaultManager.searchHistory = newList
+        self.list = newList
+    }
 }
 
 extension ShoppingViewController: UISearchBarDelegate {
@@ -85,6 +102,9 @@ extension ShoppingViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: RecentSearchKeywordTableViewCell.identifier) as! RecentSearchKeywordTableViewCell
         
         cell.resultLabel.text = list[indexPath.row]
+        
+        cell.deleteBtn.tag = indexPath.row
+        cell.deleteBtn.addTarget(self, action: #selector(deleteBtnClicked), for: .touchUpInside)
         
         return cell
     }
