@@ -82,6 +82,13 @@ class SearchResultViewController: UIViewController {
         callRequest(query: searchKeyword ?? "", sort: sortingType)
     }
     
+    func scrollToTop() {
+        // 보내주는 데이터가 있을 때만
+        if !self.shoppingList.isEmpty {
+            self.collectionView.setContentOffset(.zero, animated: true)
+        }
+    }
+    
     func callRequest(query: String, sort: String) {
         let url = "https://openapi.naver.com/v1/search/shop.json"
         let headers: HTTPHeaders = ["X-Naver-Client-Id": APIKey.NAVER_CLIENT_ID, "X-Naver-Client-Secret": APIKey.NAVER_CLIENT_SECRET]
@@ -94,6 +101,8 @@ class SearchResultViewController: UIViewController {
                     self.totalCountLabel.text = "\(value.total.formatted())개의 검색 결과"
                     self.shoppingList = value.items
                     self.collectionView.reloadData()
+                    self.scrollToTop()
+                    
                 case .failure(let error):
                     print(error)
                 }
