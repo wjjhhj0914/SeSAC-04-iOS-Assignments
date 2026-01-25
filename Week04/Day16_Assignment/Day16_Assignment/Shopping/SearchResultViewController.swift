@@ -33,13 +33,17 @@ class SearchResultViewController: BaseViewController {
 
     var searchKeyword: String?
     var shoppingList: [ShoppingItems] = []
+    
+    var page = 1
+    var isEnd = false
+    var currentSort = "sim"
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationItem.title = searchKeyword
         
-        callRequest(query: searchKeyword ?? "", sort: "sim")
+        callRequest(query: searchKeyword ?? "", sort: currentSort)
         
         configureButtonActions()
         
@@ -101,19 +105,15 @@ class SearchResultViewController: BaseViewController {
         
         sender.isSelected = true
         
-        var sortingType = ""
+        if sender == sortedByAccuracyBtn { currentSort = "sim" }
+        else if sender == sortedByDateBtn { currentSort = "date" }
+        else if sender == sortedByHighPriceBtn { currentSort = "dsc" }
+        else if sender == sortedByLowPriceBtn { currentSort = "asc" }
         
-        if sender == sortedByAccuracyBtn {
-            sortingType = "sim"
-        } else if sender == sortedByDateBtn {
-            sortingType = "date"
-        } else if sender == sortedByHighPriceBtn {
-            sortingType = "dsc"
-        } else if sender == sortedByLowPriceBtn {
-            sortingType = "asc"
-        }
-        
-        callRequest(query: searchKeyword ?? "", sort: sortingType)
+        // 정렬이 바뀌면 페이지1부터 다시 시작
+        page = 1
+        isEnd = false
+        callRequest(query: searchKeyword ?? "", sort: currentSort)
     }
     
     func scrollToTop() {
@@ -124,18 +124,32 @@ class SearchResultViewController: BaseViewController {
     }
     
     func callRequest(query: String, sort: String) {
+        let start = (page - 1) * 30 + 1
+        print(start)
+        
         let url = "https://openapi.naver.com/v1/search/shop.json"
         let headers: HTTPHeaders = ["X-Naver-Client-Id": APIKey.NAVER_CLIENT_ID, "X-Naver-Client-Secret": APIKey.NAVER_CLIENT_SECRET]
-        let parameters: Parameters = ["query": query, "display": 100, "sort": sort]
+        let parameters: Parameters = ["query": query, "display": 30, "start": start, "sort": sort]
+        
         AF.request(url, method: .get, parameters: parameters, headers: headers)
             .responseDecodable(of: ShoppingData.self) { response in
                 switch response.result {
                 case .success(let value):
-                    print(value)
+                    // 페이지1이면 갈아끼우고, 아니면 뒤에 붙이기
+                    if self.page == 1 {
+                        self.shoppingList = value.items
+                    } else {
+                        self.shoppingList.append(contentsOf: value.items)
+                    }
+                    
+                    if self.shoppingList.count >= value.total || start >= 1000 {
+                        self.isEnd = true
+                    }
+                    
                     self.totalCountLabel.text = "\(value.total.formatted())개의 검색 결과"
-                    self.shoppingList = value.items
                     self.collectionView.reloadData()
-                    self.scrollToTop()
+                    
+                    if self.page == 1 { self.scrollToTop() }
                     
                 case .failure(let error):
                     print(error)
@@ -186,5 +200,12 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
         }
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if indexPath.item == (shoppingList.count - 4) && isEnd == false {
+            page += 1
+            callRequest(query: searchKeyword ?? "", sort: currentSort)
+        }
     }
 }
