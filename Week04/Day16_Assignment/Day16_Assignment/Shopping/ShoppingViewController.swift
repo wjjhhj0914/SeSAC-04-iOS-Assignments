@@ -12,6 +12,7 @@ import SnapKit
 class ShoppingViewController: UIViewController {
     
     let shoppingSearchBar = UISearchBar()
+    let deleteAllBtn = UIButton()
     
     lazy var myTableView = {
         let recentSearchKeywordTableView = UITableView()
@@ -41,6 +42,14 @@ class ShoppingViewController: UIViewController {
         configureView()
         
         list = UserDefaultManager.searchHistory
+    }
+    
+    @objc func deleteAllBtnClicked(_ sender: UIButton) {
+        let emptyList: [String] = []
+        
+        UserDefaultManager.searchHistory = emptyList
+        
+        self.list = emptyList
     }
     
     @objc func deleteBtnClicked(_ sender: UIButton) {
@@ -114,6 +123,7 @@ extension ShoppingViewController: ViewDesignProtocol {
     func configureHierarchy() {
         view.addSubview(shoppingSearchBar)
         view.addSubview(myTableView)
+        view.addSubview(deleteAllBtn)
     }
     
     func configureLayout() {
@@ -122,8 +132,13 @@ extension ShoppingViewController: ViewDesignProtocol {
             make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(20)
         }
         
+        deleteAllBtn.snp.makeConstraints { make in
+            make.top.equalTo(shoppingSearchBar.snp.bottom).offset(8)
+            make.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
+        }
+        
         myTableView.snp.makeConstraints { make in
-            make.top.equalTo(shoppingSearchBar.snp.bottom).offset(12)
+            make.top.equalTo(deleteAllBtn.snp.bottom).offset(12)
             make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
         }
     }
@@ -133,5 +148,11 @@ extension ShoppingViewController: ViewDesignProtocol {
         shoppingSearchBar.searchBarStyle = .minimal
         shoppingSearchBar.placeholder = "브랜드, 상품, 프로필, 태그 등"
         shoppingSearchBar.delegate = self
+        
+        deleteAllBtn.setTitle("전체 삭제", for: .normal)
+        deleteAllBtn.setTitleColor(.gray, for: .normal)
+        deleteAllBtn.titleLabel?.font = .boldSystemFont(ofSize: 12)
+        
+        deleteAllBtn.addTarget(self, action: #selector(deleteAllBtnClicked), for: .touchUpInside)
     }
 }
