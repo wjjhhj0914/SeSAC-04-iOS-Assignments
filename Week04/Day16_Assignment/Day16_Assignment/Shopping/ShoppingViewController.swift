@@ -68,6 +68,27 @@ class ShoppingViewController: UIViewController {
         UserDefaultManager.searchHistory = newList
         self.list = newList
     }
+    
+    func updateSearchHistory(keyword: String) {
+        let currentHistory = UserDefaultManager.searchHistory
+        
+        var userSearchedList: [String] = [keyword]
+        
+        for searchedItem in currentHistory {
+            if searchedItem != keyword {
+                userSearchedList.append(searchedItem)
+            }
+        }
+        
+        UserDefaultManager.searchHistory = userSearchedList
+        list = userSearchedList
+    }
+    
+    func moveToSearchResultVC(keyword: String) {
+        let vc = SearchResultViewController()
+        vc.searchKeyword = keyword
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }
 
 extension ShoppingViewController: UISearchBarDelegate {
@@ -82,22 +103,8 @@ extension ShoppingViewController: UISearchBarDelegate {
             return
         }
         
-        let currentHistory = UserDefaultManager.searchHistory
-        
-        var userSearchedList: [String] = [userInputText]
-        
-        for searchedItem in currentHistory {
-            if searchedItem != userInputText {
-                userSearchedList.append(searchedItem)
-            }
-        }
-        
-        UserDefaultManager.searchHistory = userSearchedList
-        list = userSearchedList
-        
-        let vc = SearchResultViewController()
-        vc.searchKeyword = userInputText
-        navigationController?.pushViewController(vc, animated: true)
+        updateSearchHistory(keyword: userInputText)
+        moveToSearchResultVC(keyword: userInputText)
         searchBar.resignFirstResponder()
     }
 }
@@ -105,6 +112,15 @@ extension ShoppingViewController: UISearchBarDelegate {
 extension ShoppingViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return list.count
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedKeyword = list[indexPath.row]
+        
+        shoppingSearchBar.text = selectedKeyword
+        
+        updateSearchHistory(keyword: selectedKeyword)
+        moveToSearchResultVC(keyword: selectedKeyword)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
