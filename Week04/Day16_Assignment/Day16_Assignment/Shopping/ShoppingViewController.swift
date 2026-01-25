@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class ShoppingViewController: UIViewController {
+class ShoppingViewController: BaseViewController {
     
     let shoppingSearchBar = UISearchBar()
     let deleteAllBtn = UIButton()
@@ -36,27 +36,55 @@ class ShoppingViewController: UIViewController {
         super.viewDidLoad()
         
         navigationItem.title = "도봉러의 쇼핑쇼핑"
-        
-        configureHierarchy()
-        configureLayout()
-        configureView()
-        
         list = UserDefaultManager.searchHistory
+    }
+    
+    override func configureHierarchy() {
+        view.addSubview(shoppingSearchBar)
+        view.addSubview(myTableView)
+        view.addSubview(deleteAllBtn)
+    }
+    
+    override func configureLayout() {
+        shoppingSearchBar.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(20)
+        }
+        
+        deleteAllBtn.snp.makeConstraints { make in
+            make.top.equalTo(shoppingSearchBar.snp.bottom).offset(8)
+            make.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
+        }
+        
+        myTableView.snp.makeConstraints { make in
+            make.top.equalTo(deleteAllBtn.snp.bottom).offset(12)
+            make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+    }
+    
+    override func configureView() {
+        view.backgroundColor = .black
+        
+        shoppingSearchBar.searchBarStyle = .minimal
+        shoppingSearchBar.placeholder = "브랜드, 상품, 프로필, 태그 등"
+        shoppingSearchBar.delegate = self
+        
+        deleteAllBtn.setTitle("전체 삭제", for: .normal)
+        deleteAllBtn.setTitleColor(.gray, for: .normal)
+        deleteAllBtn.titleLabel?.font = .boldSystemFont(ofSize: 12)
+        
+        deleteAllBtn.addTarget(self, action: #selector(deleteAllBtnClicked), for: .touchUpInside)
     }
     
     @objc func deleteAllBtnClicked(_ sender: UIButton) {
         let emptyList: [String] = []
-        
         UserDefaultManager.searchHistory = emptyList
-        
         self.list = emptyList
     }
     
     @objc func deleteBtnClicked(_ sender: UIButton) {
         let indexToDelete = sender.tag
-        
         let currentList = self.list
-        
         var newList: [String] = []
         
         for i in 0..<currentList.count {
@@ -71,7 +99,6 @@ class ShoppingViewController: UIViewController {
     
     func updateSearchHistory(keyword: String) {
         let currentHistory = UserDefaultManager.searchHistory
-        
         var userSearchedList: [String] = [keyword]
         
         for searchedItem in currentHistory {
@@ -116,7 +143,6 @@ extension ShoppingViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedKeyword = list[indexPath.row]
-        
         shoppingSearchBar.text = selectedKeyword
         
         updateSearchHistory(keyword: selectedKeyword)
@@ -125,50 +151,10 @@ extension ShoppingViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: RecentSearchKeywordTableViewCell.identifier) as! RecentSearchKeywordTableViewCell
-        
         cell.resultLabel.text = list[indexPath.row]
-        
         cell.deleteBtn.tag = indexPath.row
         cell.deleteBtn.addTarget(self, action: #selector(deleteBtnClicked), for: .touchUpInside)
         
         return cell
-    }
-}
-
-extension ShoppingViewController: ViewDesignProtocol {
-    func configureHierarchy() {
-        view.addSubview(shoppingSearchBar)
-        view.addSubview(myTableView)
-        view.addSubview(deleteAllBtn)
-    }
-    
-    func configureLayout() {
-        shoppingSearchBar.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide)
-            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(20)
-        }
-        
-        deleteAllBtn.snp.makeConstraints { make in
-            make.top.equalTo(shoppingSearchBar.snp.bottom).offset(8)
-            make.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
-        }
-        
-        myTableView.snp.makeConstraints { make in
-            make.top.equalTo(deleteAllBtn.snp.bottom).offset(12)
-            make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
-        }
-    }
-    
-    func configureView() {
-        view.backgroundColor = .black
-        shoppingSearchBar.searchBarStyle = .minimal
-        shoppingSearchBar.placeholder = "브랜드, 상품, 프로필, 태그 등"
-        shoppingSearchBar.delegate = self
-        
-        deleteAllBtn.setTitle("전체 삭제", for: .normal)
-        deleteAllBtn.setTitleColor(.gray, for: .normal)
-        deleteAllBtn.titleLabel?.font = .boldSystemFont(ofSize: 12)
-        
-        deleteAllBtn.addTarget(self, action: #selector(deleteAllBtnClicked), for: .touchUpInside)
     }
 }

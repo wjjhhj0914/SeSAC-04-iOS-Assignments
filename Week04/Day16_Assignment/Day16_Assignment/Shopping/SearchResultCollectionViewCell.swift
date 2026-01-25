@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class SearchResultCollectionViewCell: UICollectionViewCell {
+class SearchResultCollectionViewCell: BaseCollectionViewCell {
     
     static let identifier = "SearchResultCollectionViewCell"
     
@@ -19,21 +19,7 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
     let productPriceLabel = UILabel()
     let likeButton = UIButton()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        configureHierarchy()
-        configureLayout()
-        configureView()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-extension SearchResultCollectionViewCell: ViewDesignProtocol {
-    func configureHierarchy() {
+    override func configureHierarchy() {
         contentView.addSubview(productImageView)
         contentView.addSubview(mallNameLabel)
         contentView.addSubview(productNameLabel)
@@ -41,7 +27,7 @@ extension SearchResultCollectionViewCell: ViewDesignProtocol {
         contentView.addSubview(likeButton)
     }
     
-    func configureLayout() {
+    override func configureLayout() {
         productImageView.snp.makeConstraints { make in
             make.top.horizontalEdges.equalToSuperview()
             make.height.equalTo(productImageView.snp.width)
@@ -69,7 +55,7 @@ extension SearchResultCollectionViewCell: ViewDesignProtocol {
         }
     }
     
-    func configureView() {
+    override func configureView() {
         productImageView.layer.cornerRadius = 12
         productImageView.clipsToBounds = true
         productImageView.contentMode = .scaleToFill

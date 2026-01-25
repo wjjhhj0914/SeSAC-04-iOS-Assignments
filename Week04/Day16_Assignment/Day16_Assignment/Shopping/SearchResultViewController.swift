@@ -11,7 +11,7 @@ import SnapKit
 import Alamofire
 import Kingfisher
 
-class SearchResultViewController: UIViewController {
+class SearchResultViewController: BaseViewController {
     
     let totalCountLabel = UILabel()
     let sortedByAccuracyBtn = ShoppingSortButton(titleStr: "정확도")
@@ -37,10 +37,6 @@ class SearchResultViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureHierarchy()
-        configureLayout()
-        configureView()
-        
         navigationItem.title = searchKeyword
         
         callRequest(query: searchKeyword ?? "", sort: "sim")
@@ -48,6 +44,44 @@ class SearchResultViewController: UIViewController {
         configureButtonActions()
         
         sortedByAccuracyBtn.isSelected = true
+    }
+    
+    override func configureHierarchy() {
+        view.addSubview(totalCountLabel)
+        view.addSubview(sortingStackView)
+        view.addSubview(collectionView)
+        
+        [sortedByAccuracyBtn, sortedByDateBtn, sortedByHighPriceBtn, sortedByLowPriceBtn].forEach {
+            sortingStackView.addArrangedSubview($0)
+        }
+    }
+    
+    override func configureLayout() {
+        totalCountLabel.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(12)
+            make.horizontalEdges.equalToSuperview().inset(16)
+        }
+        
+        sortingStackView.snp.makeConstraints { make in
+            make.top.equalTo(totalCountLabel.snp.bottom).offset(8)
+            make.leading.equalToSuperview().inset(12)
+        }
+        
+        collectionView.snp.makeConstraints { make in
+            make.top.equalTo(sortingStackView.snp.bottom).offset(12)
+            make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+    }
+    
+    override func configureView() {
+        view.backgroundColor = .black
+    
+        totalCountLabel.textColor = UIColor(red: 26/255, green: 190/255, blue: 88/255, alpha: 1)
+        totalCountLabel.font = .boldSystemFont(ofSize: 14)
+        
+        sortingStackView.axis = .horizontal
+        sortingStackView.spacing = 8
+        sortingStackView.distribution = .fillProportionally
     }
     
     func configureButtonActions() {
@@ -152,45 +186,5 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
         }
         
         return cell
-    }
-}
-
-extension SearchResultViewController: ViewDesignProtocol {
-    func configureHierarchy() {
-        view.addSubview(totalCountLabel)
-        view.addSubview(sortingStackView)
-        view.addSubview(collectionView)
-        
-        [sortedByAccuracyBtn, sortedByDateBtn, sortedByHighPriceBtn, sortedByLowPriceBtn].forEach {
-            sortingStackView.addArrangedSubview($0)
-        }
-    }
-    
-    func configureLayout() {
-        totalCountLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(12)
-            make.horizontalEdges.equalToSuperview().inset(16)
-        }
-        
-        sortingStackView.snp.makeConstraints { make in
-            make.top.equalTo(totalCountLabel.snp.bottom).offset(8)
-            make.leading.equalToSuperview().inset(12)
-        }
-        
-        collectionView.snp.makeConstraints { make in
-            make.top.equalTo(sortingStackView.snp.bottom).offset(12)
-            make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
-        }
-    }
-    
-    func configureView() {
-        view.backgroundColor = .black
-    
-        totalCountLabel.textColor = UIColor(red: 26/255, green: 190/255, blue: 88/255, alpha: 1)
-        totalCountLabel.font = .boldSystemFont(ofSize: 14)
-        
-        sortingStackView.axis = .horizontal
-        sortingStackView.spacing = 8
-        sortingStackView.distribution = .fillProportionally
     }
 }
