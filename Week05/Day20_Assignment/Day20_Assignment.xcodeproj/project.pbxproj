@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9367E5342F27A5C7007B898D /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 9367E5332F27A5C7007B898D /* .gitignore */; };
+		9367E5802F27B12C007B898D /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 9367E57F2F27B12C007B898D /* Alamofire */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9367E5802F27B12C007B898D /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,6 +86,7 @@
 			);
 			name = Day20_Assignment;
 			packageProductDependencies = (
+				9367E57F2F27B12C007B898D /* Alamofire */,
 			);
 			productName = Day20_Assignment;
 			productReference = 9367E51B2F277FD2007B898D /* Day20_Assignment.app */;
@@ -113,6 +116,9 @@
 			);
 			mainGroup = 9367E5122F277FD2007B898D;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				9367E57E2F27B12C007B898D /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 9367E51C2F277FD2007B898D /* Products */;
 			projectDirPath = "";
@@ -360,6 +366,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		9367E57E2F27B12C007B898D /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.11.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9367E57F2F27B12C007B898D /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9367E57E2F27B12C007B898D /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 9367E5132F277FD2007B898D /* Project object */;
 }
