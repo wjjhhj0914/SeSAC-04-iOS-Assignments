@@ -39,6 +39,24 @@ class ShoppingViewController: BaseViewController {
         list = UserDefaultManager.searchHistory
     }
     
+    func handleSearch(keyword: String) {
+        let currentHistory = UserDefaultManager.searchHistory
+        var userSearchedList: [String] = [keyword]
+        
+        for searchedItem in currentHistory {
+            if searchedItem != keyword {
+                userSearchedList.append(searchedItem)
+            }
+        }
+        
+        UserDefaultManager.searchHistory = userSearchedList
+        list = userSearchedList
+        
+        let vc = SearchResultViewController()
+        vc.searchKeyword = keyword
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
     override func configureHierarchy() {
         view.addSubview(shoppingSearchBar)
         view.addSubview(myTableView)
@@ -96,26 +114,6 @@ class ShoppingViewController: BaseViewController {
         UserDefaultManager.searchHistory = newList
         self.list = newList
     }
-    
-    func updateSearchHistory(keyword: String) {
-        let currentHistory = UserDefaultManager.searchHistory
-        var userSearchedList: [String] = [keyword]
-        
-        for searchedItem in currentHistory {
-            if searchedItem != keyword {
-                userSearchedList.append(searchedItem)
-            }
-        }
-        
-        UserDefaultManager.searchHistory = userSearchedList
-        list = userSearchedList
-    }
-    
-    func moveToSearchResultVC(keyword: String) {
-        let vc = SearchResultViewController()
-        vc.searchKeyword = keyword
-        navigationController?.pushViewController(vc, animated: true)
-    }
 }
 
 extension ShoppingViewController: UISearchBarDelegate {
@@ -130,8 +128,7 @@ extension ShoppingViewController: UISearchBarDelegate {
             return
         }
         
-        updateSearchHistory(keyword: userInputText)
-        moveToSearchResultVC(keyword: userInputText)
+        handleSearch(keyword: userInputText)
         searchBar.resignFirstResponder()
     }
 }
@@ -145,8 +142,7 @@ extension ShoppingViewController: UITableViewDelegate, UITableViewDataSource {
         let selectedKeyword = list[indexPath.row]
         shoppingSearchBar.text = selectedKeyword
         
-        updateSearchHistory(keyword: selectedKeyword)
-        moveToSearchResultVC(keyword: selectedKeyword)
+        handleSearch(keyword: selectedKeyword)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
