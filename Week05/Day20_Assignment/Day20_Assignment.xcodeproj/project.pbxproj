@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		9367E5342F27A5C7007B898D /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 9367E5332F27A5C7007B898D /* .gitignore */; };
 		9367E5802F27B12C007B898D /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 9367E57F2F27B12C007B898D /* Alamofire */; };
+		9367E5892F27B75B007B898D /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 9367E5882F27B75B007B898D /* SnapKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +44,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9367E5802F27B12C007B898D /* Alamofire in Frameworks */,
+				9367E5892F27B75B007B898D /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,6 +89,7 @@
 			name = Day20_Assignment;
 			packageProductDependencies = (
 				9367E57F2F27B12C007B898D /* Alamofire */,
+				9367E5882F27B75B007B898D /* SnapKit */,
 			);
 			productName = Day20_Assignment;
 			productReference = 9367E51B2F277FD2007B898D /* Day20_Assignment.app */;
@@ -118,6 +121,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				9367E57E2F27B12C007B898D /* XCRemoteSwiftPackageReference "Alamofire" */,
+				9367E5872F27B75B007B898D /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 9367E51C2F277FD2007B898D /* Products */;
@@ -376,6 +380,14 @@
 				minimumVersion = 5.11.0;
 			};
 		};
+		9367E5872F27B75B007B898D /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -383,6 +395,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9367E57E2F27B12C007B898D /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		9367E5882F27B75B007B898D /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9367E5872F27B75B007B898D /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
