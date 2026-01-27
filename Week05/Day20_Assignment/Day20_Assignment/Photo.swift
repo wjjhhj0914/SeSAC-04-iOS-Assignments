@@ -20,6 +20,7 @@ struct Photo: Decodable {
     let created_at: String
     let width: Int
     let height: Int
+    let color: String
     let urls: PhotoUrl
     let likes: Int
     let user: PhotoUser
