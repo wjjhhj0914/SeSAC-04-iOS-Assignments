@@ -18,6 +18,9 @@ class SearchPhotoViewController: BaseViewController {
     var totalPage = 0
     
     var colorChipsButtons: [UIButton] = []
+    var selectedColor: String? = nil // 현재 선택된 컬러 저장
+    
+    var sortByLatest = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +41,9 @@ class SearchPhotoViewController: BaseViewController {
         mainView.searchBar.delegate = self
         mainView.collectionView.delegate = self
         mainView.collectionView.dataSource = self
+        
+        mainView.sortButton.addTarget(self, action: #selector(sortButtonClicked), for: .touchUpInside)
+        
         setupColorChips()
     }
     
@@ -74,6 +80,7 @@ class SearchPhotoViewController: BaseViewController {
         
         if let koreanName = sender.currentTitle {
             if let englishName = colorDict[koreanName] {
+                self.selectedColor = englishName
                 if let query = mainView.searchBar.text, !query.isEmpty {
                     startPage = 1
                     callRequest(query: query, color: englishName)
@@ -88,18 +95,31 @@ class SearchPhotoViewController: BaseViewController {
         }
     }
     
+    @objc func sortButtonClicked() {
+        sortByLatest.toggle()
+        
+        let title = sortByLatest ? "최신순" : "관련순"
+        mainView.sortButton.setTitle(title, for: .normal)
+        
+        if let query = mainView.searchBar.text, !query.isEmpty {
+            startPage = 1
+            callRequest(query: query, color: selectedColor)
+        }
+    }
+    
     // 네트워크 통신
     // color는 선택사항이므로 옵셔널
     func callRequest(query: String, color: String? = nil) {
         let url = "https://api.unsplash.com/search/photos"
-        let headers: HTTPHeaders = [
-            "Authorization": "Client-ID \(APIKey.UNSPLASH_ACCESS)"
-        ]
+        let headers: HTTPHeaders = ["Authorization": "Client-ID \(APIKey.UNSPLASH_ACCESS)"]
+        let sort = sortByLatest ? "latest" : "relevant"
         var parameters: Parameters = [
             "query": query,
             "page": startPage,
-            "per_page": 20
+            "per_page": 20,
+            "order_by": sort
         ]
+        
         if let color = color {
             parameters["color"] = color
         }
@@ -149,7 +169,7 @@ extension SearchPhotoViewController: UISearchBarDelegate {
         }
         // 검색 시 페이지 1로 다시 초기화 및 네트워크 통신
         startPage = 1
-        callRequest(query: text)
+        callRequest(query: text, color: selectedColor)
         view.endEditing(true)
     }
 }
@@ -176,7 +196,7 @@ extension SearchPhotoViewController: UICollectionViewDelegate, UICollectionViewD
         // 그리고 현재 페이지가 전체 페이지보다 작을 때만 (<= 더 줄 사진이 없는데 네트워크 요청할 때를 방지하기 위함)
         if photoList.count - 2 == indexPath.item && startPage < totalPage {
             startPage += 1
-            callRequest(query: mainView.searchBar.text!)
+            callRequest(query: mainView.searchBar.text!, color: selectedColor)
         }
     }
 }

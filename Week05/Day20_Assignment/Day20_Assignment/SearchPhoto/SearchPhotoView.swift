@@ -12,6 +12,7 @@ class SearchPhotoView: BaseView {
     let searchBar = UISearchBar()
     let scrollView = UIScrollView()
     let stackView = UIStackView()
+    let sortButton = UIButton()
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: SearchPhotoView.layout())
     let noResultsLabel = UILabel()
     
@@ -30,6 +31,7 @@ class SearchPhotoView: BaseView {
         addSubview(searchBar)
         addSubview(scrollView)
         scrollView.addSubview(stackView)
+        addSubview(sortButton)
         addSubview(collectionView)
         addSubview(noResultsLabel)
     }
@@ -51,8 +53,14 @@ class SearchPhotoView: BaseView {
             make.height.equalTo(scrollView.frameLayoutGuide)
         }
         
+        sortButton.snp.makeConstraints { make in
+            make.top.equalTo(scrollView.snp.bottom).offset(5)
+            make.trailing.equalToSuperview().inset(20)
+            make.height.equalTo(30)
+        }
+        
         collectionView.snp.makeConstraints { make in
-            make.top.equalTo(scrollView.snp.bottom)
+            make.top.equalTo(sortButton.snp.bottom)
             make.horizontalEdges.bottom.equalTo(safeAreaLayoutGuide)
         }
         
@@ -64,14 +72,18 @@ class SearchPhotoView: BaseView {
     override func configureView() {
         searchBar.placeholder = "키워드 검색"
         searchBar.searchBarStyle = .minimal
-        collectionView.register(SearchResultCollectionViewCell.self, forCellWithReuseIdentifier: SearchResultCollectionViewCell.identifier)
         
+        stackView.spacing = 10
+        scrollView.contentInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        
+        collectionView.register(SearchResultCollectionViewCell.self, forCellWithReuseIdentifier: SearchResultCollectionViewCell.identifier)
         collectionView.isHidden = true
         noResultsLabel.isHidden = false
         noResultsLabel.text = "사진을 검색해 보세요."
         noResultsLabel.font = .systemFont(ofSize: 16, weight: .heavy)
         
-        stackView.spacing = 10
-        scrollView.contentInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        sortButton.setTitle("관련순", for: .normal)
+        sortButton.setTitleColor(.black, for: .normal)
+        sortButton.titleLabel?.font = .systemFont(ofSize: 14, weight: .heavy)
     }
 }
