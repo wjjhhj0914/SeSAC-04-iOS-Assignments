@@ -45,7 +45,7 @@ class SearchPhotoViewController: BaseViewController {
         ]
         let parameters: Parameters = [
             "query": query,
-            "page": 1,
+            "page": startPage,
             "per_page": 20
         ]
         
@@ -53,11 +53,17 @@ class SearchPhotoViewController: BaseViewController {
             .responseDecodable(of: PhotoSearchResponse.self) { response in
                 switch response.result {
                 case .success(let value):
-                    print(">>> 검색 결과 성공 >>>")
-                    print("전체 사진 개수: \(value.total)")
-                    self.photoList = value.results
+                    // 1페이지면 새로 갈아끼우고, 그 외에는 기존 리스트 뒤에 추가
+                    if self.startPage == 1 {
+                        self.photoList = value.results
+                        print("20개 먼저 보여줄게")
+                    } else {
+                        self.photoList.append(contentsOf: value.results)
+                        print("추가추가")
+                    }
+                    
                     self.mainView.collectionView.reloadData()
-                
+                    
                 case .failure(let error):
                     print(">>> 에러 발생 >>> 에러: \(error)")
                 }
@@ -96,5 +102,11 @@ extension SearchPhotoViewController: UICollectionViewDelegate, UICollectionViewD
         return cell
     }
     
-    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        // 마지막에서 두 번째 셀이 보일 때 다음 페이지 불러오기
+        if photoList.count - 2 == indexPath.item {
+            startPage += 1
+            callRequest(query: mainView.searchBar.text!)
+        }
+    }
 }
