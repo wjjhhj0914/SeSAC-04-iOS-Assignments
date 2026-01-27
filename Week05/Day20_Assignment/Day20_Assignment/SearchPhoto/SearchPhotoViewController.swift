@@ -15,6 +15,7 @@ class SearchPhotoViewController: BaseViewController {
     
     var photoList: [Photo] = []
     var startPage = 1
+    var totalPage = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,16 +54,30 @@ class SearchPhotoViewController: BaseViewController {
             .responseDecodable(of: PhotoSearchResponse.self) { response in
                 switch response.result {
                 case .success(let value):
-                    // 1페이지면 새로 갈아끼우고, 그 외에는 기존 리스트 뒤에 추가
-                    if self.startPage == 1 {
-                        self.photoList = value.results
-                        print("20개 먼저 보여줄게")
-                    } else {
-                        self.photoList.append(contentsOf: value.results)
-                        print("추가추가")
-                    }
                     
-                    self.mainView.collectionView.reloadData()
+                    // 검색어에 해당하는 사진의 페이지는 몇 개의 페이지가 있는지
+                    self.totalPage = value.total_pages
+                    let hasResults = value.total > 0
+                    
+                    if hasResults {
+                        // 결과가 있는 경우: "사진을 검색해 보세요" 레이블 숨기고 CV 표시
+                        self.mainView.collectionView.isHidden = false
+                        self.mainView.noResultsLabel.isHidden = true
+                        
+                        if self.startPage == 1 {
+                            self.photoList = value.results
+                            print("20개 먼저 보여줄게")
+                        } else {
+                            self.photoList.append(contentsOf: value.results)
+                            print("추가추가")
+                        }
+                        self.mainView.collectionView.reloadData()
+                    } else {
+                        // 결과가 하나도 없는 경우: "검색 결과가 없어요"로 레이블 텍스트 변경
+                        self.mainView.collectionView.isHidden = true
+                        self.mainView.noResultsLabel.isHidden = false
+                        self.mainView.noResultsLabel.text = "검색 결과가 없어요."
+                    }
                     
                 case .failure(let error):
                     print(">>> 에러 발생 >>> 에러: \(error)")
@@ -104,7 +119,8 @@ extension SearchPhotoViewController: UICollectionViewDelegate, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         // 마지막에서 두 번째 셀이 보일 때 다음 페이지 불러오기
-        if photoList.count - 2 == indexPath.item {
+        // 그리고 현재 페이지가 전체 페이지보다 작을 때만 (<= 더 줄 사진이 없는데 네트워크 요청할 때를 방지하기 위함)
+        if photoList.count - 2 == indexPath.item && startPage < totalPage {
             startPage += 1
             callRequest(query: mainView.searchBar.text!)
         }

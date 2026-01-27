@@ -11,6 +11,7 @@ import SnapKit
 class SearchPhotoView: BaseView {
     let searchBar = UISearchBar()
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: SearchPhotoView.layout())
+    let noResultsLabel = UILabel()
     
     static func layout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
@@ -27,16 +28,22 @@ class SearchPhotoView: BaseView {
     override func configureHierarchy() {
         addSubview(searchBar)
         addSubview(collectionView)
+        addSubview(noResultsLabel)
     }
     
     override func configureLayout() {
         searchBar.snp.makeConstraints { make in
-            make.top.horizontalEdges.equalTo(safeAreaLayoutGuide)
+            make.top.equalTo(safeAreaLayoutGuide)
+            make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(20)
         }
         
         collectionView.snp.makeConstraints { make in
             make.top.equalTo(searchBar.snp.bottom)
             make.horizontalEdges.bottom.equalTo(safeAreaLayoutGuide)
+        }
+        
+        noResultsLabel.snp.makeConstraints { make in
+            make.center.equalToSuperview()
         }
     }
     
@@ -44,5 +51,11 @@ class SearchPhotoView: BaseView {
         searchBar.placeholder = "키워드 검색"
         searchBar.searchBarStyle = .minimal
         collectionView.register(SearchResultCollectionViewCell.self, forCellWithReuseIdentifier: SearchResultCollectionViewCell.identifier)
+        
+        noResultsLabel.text = "사진을 검색해 보세요."
+        noResultsLabel.font = .systemFont(ofSize: 16, weight: .heavy)
+        noResultsLabel.isHidden = false
+        
+        collectionView.isHidden = true
     }
 }
