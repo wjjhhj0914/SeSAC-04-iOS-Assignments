@@ -13,6 +13,8 @@ class SearchPhotoViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationItem.title = "SEARCH PHOTO"
     }
     
     override func configureHierarchy() {
@@ -26,6 +28,20 @@ class SearchPhotoViewController: BaseViewController {
     }
     
     override func configureView() {
-        searchBar.placeholder = "사진을 검색해 보세요"
+        searchBar.placeholder = "키워드 검색"
+        searchBar.searchBarStyle = .minimal
+        searchBar.delegate = self
+    }
+}
+
+// 검색
+extension SearchPhotoViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let text = searchBar.text?.trimmingCharacters(in: .whitespaces), !text.isEmpty else {
+            showAlert(title: "알림", message: "검색어를 입력해 주세요!")
+            return
+        }
+        callRequest(query: text)
+        view.endEditing(true)
     }
 }
