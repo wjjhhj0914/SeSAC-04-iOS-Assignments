@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class SearcResultCollectionViewCell: BaseCollectionViewCell {
+class SearchResultCollectionViewCell: BaseCollectionViewCell {
     let photoImageView = UIImageView()
     
     override func configureHierarchy() {
