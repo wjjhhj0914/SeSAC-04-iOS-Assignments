@@ -17,6 +17,8 @@ class SearchPhotoViewController: BaseViewController {
     var startPage = 1
     var totalPage = 0
     
+    var colorChipsButtons: [UIButton] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "SEARCH PHOTO"
@@ -36,19 +38,71 @@ class SearchPhotoViewController: BaseViewController {
         mainView.searchBar.delegate = self
         mainView.collectionView.delegate = self
         mainView.collectionView.dataSource = self
+        setupColorChips()
+    }
+    
+    func setupColorChips() {
+        let colors = ["블랙", "화이트", "레드", "오렌지", "옐로우", "그린", "블루", "퍼플"]
+        
+        for color in colors {
+            let button = UIButton()
+            
+            button.setTitle(color, for: .normal)
+            button.backgroundColor = .systemGray6
+            button.setTitleColor(.black, for: .normal)
+            button.layer.cornerRadius = 20
+            button.titleLabel?.font = .boldSystemFont(ofSize: 14)
+            button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
+            button.addTarget(self, action: #selector(colorChipsClicked), for: .touchUpInside)
+            
+            colorChipsButtons.append(button)
+            
+            mainView.stackView.addArrangedSubview(button)
+        }
+    }
+    
+    @objc func colorChipsClicked(_ sender: UIButton) {
+        for button in colorChipsButtons {
+            button.backgroundColor = .systemGray6
+            button.setTitleColor(.black, for: .normal)
+        }
+        
+        sender.backgroundColor = .black
+        sender.setTitleColor(.white, for: .normal)
+        
+        let colorDict = ["블랙": "black", "화이트": "white", "레드": "red", "오렌지": "orange", "옐로우": "yellow", "그린": "green", "블루": "blue", "퍼플": "purple"]
+        
+        if let koreanName = sender.currentTitle {
+            if let englishName = colorDict[koreanName] {
+                if let query = mainView.searchBar.text, !query.isEmpty {
+                    startPage = 1
+                    callRequest(query: query, color: englishName)
+                } else {
+                    print("검색어 비었음")
+                }
+            } else {
+                print("없는 색상")
+            }
+        } else {
+            print("없음!")
+        }
     }
     
     // 네트워크 통신
-    func callRequest(query: String) {
+    // color는 선택사항이므로 옵셔널
+    func callRequest(query: String, color: String? = nil) {
         let url = "https://api.unsplash.com/search/photos"
         let headers: HTTPHeaders = [
             "Authorization": "Client-ID \(APIKey.UNSPLASH_ACCESS)"
         ]
-        let parameters: Parameters = [
+        var parameters: Parameters = [
             "query": query,
             "page": startPage,
             "per_page": 20
         ]
+        if let color = color {
+            parameters["color"] = color
+        }
         
         AF.request(url, method: .get, parameters: parameters, headers: headers)
             .responseDecodable(of: PhotoSearchResponse.self) { response in
