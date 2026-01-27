@@ -10,6 +10,7 @@
 		9367E5342F27A5C7007B898D /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 9367E5332F27A5C7007B898D /* .gitignore */; };
 		9367E5802F27B12C007B898D /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 9367E57F2F27B12C007B898D /* Alamofire */; };
 		9367E5892F27B75B007B898D /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 9367E5882F27B75B007B898D /* SnapKit */; };
+		9367E5F72F28DDE9007B898D /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 9367E5F62F28DDE9007B898D /* Kingfisher */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9367E5F72F28DDE9007B898D /* Kingfisher in Frameworks */,
 				9367E5802F27B12C007B898D /* Alamofire in Frameworks */,
 				9367E5892F27B75B007B898D /* SnapKit in Frameworks */,
 			);
@@ -90,6 +92,7 @@
 			packageProductDependencies = (
 				9367E57F2F27B12C007B898D /* Alamofire */,
 				9367E5882F27B75B007B898D /* SnapKit */,
+				9367E5F62F28DDE9007B898D /* Kingfisher */,
 			);
 			productName = Day20_Assignment;
 			productReference = 9367E51B2F277FD2007B898D /* Day20_Assignment.app */;
@@ -122,6 +125,7 @@
 			packageReferences = (
 				9367E57E2F27B12C007B898D /* XCRemoteSwiftPackageReference "Alamofire" */,
 				9367E5872F27B75B007B898D /* XCRemoteSwiftPackageReference "SnapKit" */,
+				9367E5F52F28DDE9007B898D /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 9367E51C2F277FD2007B898D /* Products */;
@@ -388,6 +392,14 @@
 				minimumVersion = 5.7.1;
 			};
 		};
+		9367E5F52F28DDE9007B898D /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.6.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -400,6 +412,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9367E5872F27B75B007B898D /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		9367E5F62F28DDE9007B898D /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9367E5F52F28DDE9007B898D /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
