@@ -14,6 +14,8 @@ class SearchPhotoViewController: BaseViewController {
     let mainView = SearchPhotoView()
     
     var photoList: [Photo] = []
+    var likeStatus: [String: Bool] = [:]
+    
     var startPage = 1
     var totalPage = 0
     
@@ -151,6 +153,14 @@ extension SearchPhotoViewController: UISearchBarDelegate {
     }
 }
 
+// 좋아요
+extension SearchPhotoViewController: PhotoDetailDelegate {
+    func updateLikeStatus(id: String, isLiked: Bool) {
+        likeStatus[id] = isLiked
+        mainView.collectionView.reloadData()
+    }
+}
+
 // CollectionView
 extension SearchPhotoViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -181,8 +191,11 @@ extension SearchPhotoViewController: UICollectionViewDelegate, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = PhotoDetailViewController()
+        let data = photoList[indexPath.item]
         
-        vc.photoData = photoList[indexPath.item]
+        vc.photoData = data
+        vc.delegate = self
+        vc.isLiked = likeStatus[data.id] ?? false
         
         navigationController?.pushViewController(vc, animated: true)
     }
