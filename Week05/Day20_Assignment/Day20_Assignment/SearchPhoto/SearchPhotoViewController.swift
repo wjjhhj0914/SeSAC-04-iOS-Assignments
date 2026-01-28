@@ -107,56 +107,33 @@ class SearchPhotoViewController: BaseViewController {
         }
     }
     
-    // 네트워크 통신
-    // color는 선택사항이므로 옵셔널
     func callRequest(query: String, color: String? = nil) {
-        let url = "https://api.unsplash.com/search/photos"
-        let headers: HTTPHeaders = ["Authorization": "Client-ID \(APIKey.UNSPLASH_ACCESS)"]
         let sort = sortByLatest ? "latest" : "relevant"
-        var parameters: Parameters = [
-            "query": query,
-            "page": startPage,
-            "per_page": 20,
-            "order_by": sort
-        ]
         
-        if let color = color {
-            parameters["color"] = color
-        }
-        
-        AF.request(url, method: .get, parameters: parameters, headers: headers)
-            .responseDecodable(of: PhotoSearchResponse.self) { response in
-                switch response.result {
-                case .success(let value):
-                    
-                    // 검색어에 해당하는 사진의 페이지는 몇 개의 페이지가 있는지
-                    self.totalPage = value.total_pages
-                    let hasResults = value.total > 0
-                    
-                    if hasResults {
-                        // 결과가 있는 경우: "사진을 검색해 보세요" 레이블 숨기고 CV 표시
-                        self.mainView.collectionView.isHidden = false
-                        self.mainView.noResultsLabel.isHidden = true
-                        
-                        if self.startPage == 1 {
-                            self.photoList = value.results
-                            print("20개 먼저 보여줄게")
-                        } else {
-                            self.photoList.append(contentsOf: value.results)
-                            print("추가추가")
-                        }
-                        self.mainView.collectionView.reloadData()
-                    } else {
-                        // 결과가 하나도 없는 경우: "검색 결과가 없어요"로 레이블 텍스트 변경
-                        self.mainView.collectionView.isHidden = true
-                        self.mainView.noResultsLabel.isHidden = false
-                        self.mainView.noResultsLabel.text = "검색 결과가 없어요."
-                    }
-                    
-                case .failure(let error):
-                    print(">>> 에러 발생 >>> 에러: \(error)")
+        NetworkManager.shared.callRequestPhoto(query: query, page: startPage, color: color, sort: sort) { value in
+            self.totalPage = value.total_pages
+            let hasResults = value.total > 0
+            
+            if hasResults {
+                // 결과가 있는 경우: "사진을 검색해 보세요" 레이블 숨기고 CV 표시
+                self.mainView.collectionView.isHidden = false
+                self.mainView.noResultsLabel.isHidden = true
+                
+                if self.startPage == 1 {
+                    self.photoList = value.results
+                    print("20개 먼저 보여줄게")
+                } else {
+                    self.photoList.append(contentsOf: value.results)
+                    print("추가추가")
                 }
+                self.mainView.collectionView.reloadData()
+            } else {
+                // 결과가 하나도 없는 경우: "검색 결과가 없어요"로 레이블 텍스트 변경
+                self.mainView.collectionView.isHidden = true
+                self.mainView.noResultsLabel.isHidden = false
+                self.mainView.noResultsLabel.text = "검색 결과가 없어요."
             }
+        }
     }
 }
 
@@ -200,5 +177,13 @@ extension SearchPhotoViewController: UICollectionViewDelegate, UICollectionViewD
             startPage += 1
             callRequest(query: mainView.searchBar.text!, color: selectedColor)
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = PhotoDetailViewController()
+        
+        vc.photoData = photoList[indexPath.item]
+        
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
