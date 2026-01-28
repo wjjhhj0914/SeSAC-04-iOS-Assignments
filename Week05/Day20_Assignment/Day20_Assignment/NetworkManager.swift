@@ -56,6 +56,22 @@ class NetworkManager {
             }
     }
     
+    func callRequestTopic(topicName: String, completionHandler: @escaping ([Photo]) -> Void) {
+        let url = "https://api.unsplash.com/topics/\(topicName)/photos"
+        let headers: HTTPHeaders = ["Authorization": "Client-ID \(APIKey.UNSPLASH_ACCESS)"]
+        
+        AF.request(url, method: .get, headers: headers)
+            .validate(statusCode: 200..<300)
+            .responseDecodable(of: [Photo].self) { response in
+                switch response.result {
+                case .success(let value):
+                    completionHandler(value)
+                case .failure(let error):
+                    print(">>> 토픽 통신 에러 발생 >>> 에러: \(error)")
+                }
+            }
+    }
+    
     
 
 }
