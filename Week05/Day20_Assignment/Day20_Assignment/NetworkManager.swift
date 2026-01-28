@@ -41,7 +41,7 @@ class NetworkManager {
     }
     
     func callRequestStatistics(id: String, completionHandler: @escaping (PhotoStatistics) -> Void) {
-        let url = "https://api.unsplash.com/search/photos\(id)/statistics"
+        let url = "https://api.unsplash.com/photos/\(id)/statistics"
         let headers: HTTPHeaders = ["Authorization": "Client-ID \(APIKey.UNSPLASH_ACCESS)"]
         
         AF.request(url, method: .get, headers: headers)
