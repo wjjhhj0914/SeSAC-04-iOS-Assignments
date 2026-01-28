@@ -37,3 +37,14 @@ struct PhotoUrl: Decodable {
 struct PhotoUser: Decodable {
     let name: String
 }
+
+// 통계 결과
+struct PhotoStatistics: Decodable {
+    let id: String
+    let views: StatInfo
+    let downloads: StatInfo
+}
+
+struct StatInfo: Decodable {
+    let total: Int
+}
