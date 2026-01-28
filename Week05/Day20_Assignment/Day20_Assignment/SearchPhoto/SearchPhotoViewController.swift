@@ -188,6 +188,8 @@ extension SearchPhotoViewController: UICollectionViewDelegate, UICollectionViewD
             cell.photoImageView.kf.setImage(with: url)
         }
         
+        cell.likesLabel.text = data.likes.formatted()
+        
         return cell
     }
     
