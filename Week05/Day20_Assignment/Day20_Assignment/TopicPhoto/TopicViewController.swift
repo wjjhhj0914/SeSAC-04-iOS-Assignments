@@ -7,23 +7,36 @@
 
 import UIKit
 
-class TopicViewController: UIViewController {
+class TopicViewController: BaseViewController {
+    
+    var goldenHourList: [Photo] = []
+    var businessList: [Photo] = []
+    var architectureList: [Photo] = []
+    
+    let topics = ["golden-hour", "business-work", "architecture-interior"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        fetchData()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func fetchData() {
+        NetworkManager.shared.callRequestTopic(topicName: topics[0]) { photos in
+            self.goldenHourList = photos
+            print("Golden hour data arrived!!!")
+        }
+        
+        NetworkManager.shared.callRequestTopic(topicName: topics[1]) { photos in
+            self.businessList = photos
+            print("Business data arrived ~")
+        }
+        
+        NetworkManager.shared.callRequestTopic(topicName: topics[2]) { photos in
+            self.architectureList = photos
+            print("Architecture interior data arrived!!")
+        }
     }
-    */
+    
 
 }
