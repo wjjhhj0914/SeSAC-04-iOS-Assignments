@@ -9,7 +9,15 @@ import UIKit
 import SnapKit
 import Kingfisher
 
+protocol PhotoDetailDelegate {
+    func updateLikeStatus(id: String, isLiked: Bool)
+}
+
 class PhotoDetailViewController: BaseViewController {
+    var delegate: PhotoDetailDelegate?
+    var isLiked: Bool = false
+    
+    let likeButton = UIButton()
     
     var photoData: Photo?
     
@@ -30,13 +38,32 @@ class PhotoDetailViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        likeButton.addTarget(self, action: #selector(likeButtonClicked), for: .touchUpInside)
+    }
+    
+    @objc func likeButtonClicked() {
+        isLiked.toggle()
+        updateLikeUI()
+        
+        if let data = photoData {
+            delegate?.updateLikeStatus(id: data.id, isLiked: isLiked)
+        }
+        
+        print("좋아요 눌렀어요~")
+    }
+    
+    func updateLikeUI() {
+        let imageName = isLiked ? "heart.fill" : "heart"
+        let image = UIImage(systemName: imageName)
+        likeButton.setImage(image, for: .normal)
+        likeButton.tintColor = isLiked ? .systemRed : .systemGray
     }
     
     override func configureHierarchy() {
         [nameLabel, dateLabel, mainImageView, infoTitleLabel,
          sizeTitleLabel, viewsTitleLabel, downloadsTitleLabel,
-         sizeValueLabel, viewsValueLabel, downloadsValueLabel]
-            .forEach { view.addSubview($0) }
+         sizeValueLabel, viewsValueLabel, downloadsValueLabel,
+         likeButton].forEach { view.addSubview($0) }
     }
     
     override func configureLayout() {
@@ -91,9 +118,17 @@ class PhotoDetailViewController: BaseViewController {
             make.centerY.equalTo(downloadsTitleLabel)
             make.trailing.equalTo(sizeValueLabel)
         }
+        
+        likeButton.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(10)
+            make.trailing.equalToSuperview().inset(20)
+            make.size.equalTo(40)
+        }
     }
     
     override func configureView() {
+        super.configureView()
+        
         nameLabel.font = .systemFont(ofSize: 14)
         dateLabel.font = .boldSystemFont(ofSize: 12)
         infoTitleLabel.text = "정보"
@@ -112,6 +147,8 @@ class PhotoDetailViewController: BaseViewController {
         
         mainImageView.contentMode = .scaleAspectFill
         mainImageView.clipsToBounds = true
+        
+        updateLikeUI()
         
         if let data = photoData {
             nameLabel.text = data.user.name
