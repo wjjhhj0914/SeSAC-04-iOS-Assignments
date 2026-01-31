@@ -46,6 +46,7 @@ class SearchResultCollectionViewCell: BaseCollectionViewCell {
     
     override func configureView() {
         photoImageView.contentMode = .scaleAspectFill
+        photoImageView.layer.cornerRadius = 12
         photoImageView.clipsToBounds = true
         photoImageView.backgroundColor = .darkGray
         
