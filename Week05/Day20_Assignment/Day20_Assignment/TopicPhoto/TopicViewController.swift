@@ -12,6 +12,7 @@ import Kingfisher
 class TopicViewController: BaseViewController {
     let mainView = TopicView()
     
+    var likeStatus: [String: Bool] = [:]
     var goldenHourList: [Photo] = []
     var businessList: [Photo] = []
     var architectureList: [Photo] = []
@@ -58,6 +59,16 @@ class TopicViewController: BaseViewController {
             self.mainView.architectureCollectionView.reloadData()
         }
     }
+    
+    private func getPhoto(collectionView: UICollectionView, index: Int) -> Photo {
+        if collectionView == mainView.goldenCollectionView {
+            return goldenHourList[index]
+        } else if collectionView == mainView.businessCollectionView {
+            return businessList[index]
+        } else {
+            return architectureList[index]
+        }
+    }
 }
 
 extension TopicViewController: UICollectionViewDataSource, UICollectionViewDelegate {
@@ -70,14 +81,7 @@ extension TopicViewController: UICollectionViewDataSource, UICollectionViewDeleg
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchResultCollectionViewCell.identifier, for: indexPath) as! SearchResultCollectionViewCell
         
-        let data: Photo
-        if collectionView == mainView.goldenCollectionView {
-            data = goldenHourList[indexPath.item]
-        } else if collectionView == mainView.businessCollectionView {
-            data = businessList[indexPath.item]
-        } else {
-            data = architectureList[indexPath.item]
-        }
+        let data = getPhoto(collectionView: collectionView, index: indexPath.item)
         
         if let url = URL(string: data.urls.thumb) {
             cell.photoImageView.kf.setImage(with: url)
@@ -85,5 +89,24 @@ extension TopicViewController: UICollectionViewDataSource, UICollectionViewDeleg
         cell.likesLabel.text = data.likes.formatted()
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = PhotoDetailViewController()
+        let data = getPhoto(collectionView: collectionView, index: indexPath.item)
+        
+        vc.photoData = data
+        vc.delegate = self
+        vc.isLiked = likeStatus[data.id] ?? false
+        navigationController?.pushViewController(vc, animated: true)
+    }
+}
+
+extension TopicViewController: PhotoDetailDelegate {
+    func updateLikeStatus(id: String, isLiked: Bool) {
+        likeStatus[id] = isLiked
+        mainView.goldenCollectionView.reloadData()
+        mainView.businessCollectionView.reloadData()
+        mainView.architectureCollectionView.reloadData()
     }
 }
