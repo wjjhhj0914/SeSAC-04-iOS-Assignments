@@ -45,6 +45,7 @@ class TopicViewController: BaseViewController {
     
     func fetchData() {
         let group = DispatchGroup()
+        var hasErrorOccured = false
         
         group.enter()
         NetworkManager.shared.callRequestTopic(topicName: topics[0]) { photos in
@@ -52,6 +53,7 @@ class TopicViewController: BaseViewController {
                 self.goldenHourList = photos!
                 print("통신 성공")
             } else {
+                hasErrorOccured = true
                 print("통신 실패")
             }
             group.leave()
@@ -78,6 +80,9 @@ class TopicViewController: BaseViewController {
         }
         
         group.notify(queue: .main) {
+            if hasErrorOccured {
+                self.showAlert(title: "알림", message: "데이터를 불러오는 데 실패했습니다.")
+            }
             self.mainView.goldenCollectionView.reloadData()
             self.mainView.businessCollectionView.reloadData()
             self.mainView.architectureCollectionView.reloadData()
