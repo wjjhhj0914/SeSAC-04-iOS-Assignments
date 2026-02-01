@@ -38,8 +38,8 @@ class TopicViewController: BaseViewController {
         [mainView.goldenCollectionView, mainView.businessCollectionView, mainView.architectureCollectionView].forEach {
             $0.delegate = self
             $0.dataSource = self
-            $0.register(SearchResultCollectionViewCell.self,
-                        forCellWithReuseIdentifier: SearchResultCollectionViewCell.identifier)
+            $0.register(TopicCollectionViewCell.self,
+                        forCellWithReuseIdentifier: TopicCollectionViewCell.identifier)
         }
     }
     
@@ -103,7 +103,7 @@ extension TopicViewController: UICollectionViewDataSource, UICollectionViewDeleg
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchResultCollectionViewCell.identifier, for: indexPath) as! SearchResultCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TopicCollectionViewCell.identifier, for: indexPath) as! TopicCollectionViewCell
         
         let data = getPhoto(collectionView: collectionView, index: indexPath.item)
         
