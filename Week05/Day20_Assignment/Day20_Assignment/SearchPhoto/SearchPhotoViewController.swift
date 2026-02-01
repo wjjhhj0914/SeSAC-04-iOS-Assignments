@@ -156,8 +156,9 @@ extension SearchPhotoViewController: UISearchBarDelegate {
 // 좋아요
 extension SearchPhotoViewController: PhotoDetailDelegate {
     func updateLikeStatus(id: String, isLiked: Bool) {
-        likeStatus[id] = isLiked
+        UserDefaults.standard.set(isLiked, forKey: id)
         mainView.collectionView.reloadData()
+        print("좋아요 저장")
     }
 }
 
@@ -171,6 +172,12 @@ extension SearchPhotoViewController: UICollectionViewDelegate, UICollectionViewD
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchResultCollectionViewCell.identifier, for: indexPath) as! SearchResultCollectionViewCell
         
         let data = photoList[indexPath.row]
+        
+        let isLiked = UserDefaults.standard.bool(forKey: data.id)
+        
+        cell.likeButton.isHidden = !isLiked
+        cell.likeButton.isSelected = true
+        
         if let url = URL(string: data.urls.thumb) {
             cell.photoImageView.kf.setImage(with: url)
         }
@@ -195,7 +202,7 @@ extension SearchPhotoViewController: UICollectionViewDelegate, UICollectionViewD
         
         vc.photoData = data
         vc.delegate = self
-        vc.isLiked = likeStatus[data.id] ?? false
+        vc.isLiked = UserDefaults.standard.bool(forKey: data.id)
         
         navigationController?.pushViewController(vc, animated: true)
     }

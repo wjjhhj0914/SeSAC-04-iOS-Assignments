@@ -16,6 +16,7 @@ protocol PhotoDetailDelegate {
 class PhotoDetailViewController: BaseViewController {
     var delegate: PhotoDetailDelegate?
     var isLiked: Bool = false
+    var initialState: Bool = false
     
     let likeButton = UIButton()
     
@@ -38,6 +39,7 @@ class PhotoDetailViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        initialState = isLiked
         likeButton.addTarget(self, action: #selector(likeButtonClicked), for: .touchUpInside)
     }
     
@@ -45,11 +47,22 @@ class PhotoDetailViewController: BaseViewController {
         isLiked.toggle()
         updateLikeUI()
         
-        if let data = photoData {
-            delegate?.updateLikeStatus(id: data.id, isLiked: isLiked)
-        }
+        print("좋아요 눌렀어요~ \(isLiked)")
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         
-        print("좋아요 눌렀어요~")
+        if initialState != isLiked {
+            if photoData != nil {
+                delegate?.updateLikeStatus(id: photoData!.id, isLiked: isLiked)
+                print("성공")
+            } else {
+                print("실패")
+            }
+        } else {
+            print("처음 상태와 동일!")
+        }
     }
     
     func updateLikeUI() {

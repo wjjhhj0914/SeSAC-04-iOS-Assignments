@@ -14,9 +14,20 @@ class SearchResultCollectionViewCell: BaseCollectionViewCell {
     let starImageView = UIImageView()
     let likesLabel = UILabel()
     
+    let likeButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "heart"), for: .normal)
+        button.setImage(UIImage(systemName: "heart.fill"), for: .selected)
+        button.tintColor = .systemRed
+        button.backgroundColor = UIColor(white: 1, alpha: 0.5)
+        button.layer.cornerRadius = 15
+        return button
+    }()
+    
     override func configureHierarchy() {
         contentView.addSubview(photoImageView)
         contentView.addSubview(likesContainerView)
+        contentView.addSubview(likeButton)
         likesContainerView.addSubview(starImageView)
         likesContainerView.addSubview(likesLabel)
     }
@@ -41,6 +52,11 @@ class SearchResultCollectionViewCell: BaseCollectionViewCell {
             make.centerY.equalToSuperview()
             make.leading.equalTo(starImageView.snp.trailing).offset(4)
             make.trailing.equalToSuperview().inset(8)
+        }
+        
+        likeButton.snp.makeConstraints { make in
+            make.trailing.bottom.equalToSuperview().inset(10)
+            make.size.equalTo(30)
         }
     }
     
