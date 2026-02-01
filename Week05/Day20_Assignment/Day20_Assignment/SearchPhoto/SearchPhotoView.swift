@@ -18,12 +18,12 @@ class SearchPhotoView: BaseView {
     
     static func layout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
-        let spacing: CGFloat = 16
+        let spacing: CGFloat = 1
         let width = (UIScreen.main.bounds.width - (spacing * 3)) / 2
-        layout.itemSize = CGSize(width: width, height: width * 1.65)
+        layout.itemSize = CGSize(width: width, height: width * 1.5)
         layout.minimumLineSpacing = spacing
         layout.minimumInteritemSpacing = spacing
-        layout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
+        layout.sectionInset = UIEdgeInsets(top: spacing, left: 0, bottom: spacing, right: 0)
         return layout
     }
     
