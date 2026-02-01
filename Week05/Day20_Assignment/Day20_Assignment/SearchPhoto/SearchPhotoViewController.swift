@@ -53,34 +53,27 @@ class SearchPhotoViewController: BaseViewController {
         let colors = ["블랙", "화이트", "레드", "오렌지", "옐로우", "그린", "블루", "퍼플"]
         
         for color in colors {
-            let button = UIButton()
-            
-            button.setTitle(color, for: .normal)
-            button.backgroundColor = .systemGray6
-            button.setTitleColor(.black, for: .normal)
-            button.layer.cornerRadius = 20
-            button.titleLabel?.font = .boldSystemFont(ofSize: 14)
-            button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
+            let button = ColorChipButton()
+            button.configure(title: color)
             button.addTarget(self, action: #selector(colorChipsClicked), for: .touchUpInside)
             
             colorChipsButtons.append(button)
-            
             mainView.stackView.addArrangedSubview(button)
         }
     }
     
-    @objc func colorChipsClicked(_ sender: UIButton) {
+    @objc func colorChipsClicked(_ sender: ColorChipButton) {
         for button in colorChipsButtons {
-            button.backgroundColor = .systemGray6
-            button.setTitleColor(.black, for: .normal)
+            button.configuration?.baseBackgroundColor = .systemGray6
+            button.configuration?.baseForegroundColor = .black
         }
         
-        sender.backgroundColor = .black
-        sender.setTitleColor(.white, for: .normal)
+        sender.configuration?.baseBackgroundColor = .black
+        sender.configuration?.baseForegroundColor = .white
         
         let colorDict = ["블랙": "black", "화이트": "white", "레드": "red", "오렌지": "orange", "옐로우": "yellow", "그린": "green", "블루": "blue", "퍼플": "purple"]
         
-        if let koreanName = sender.currentTitle {
+        if let koreanName = sender.configuration?.title {
             if let englishName = colorDict[koreanName] {
                 self.selectedColor = englishName
                 if let query = mainView.searchBar.text, !query.isEmpty {
