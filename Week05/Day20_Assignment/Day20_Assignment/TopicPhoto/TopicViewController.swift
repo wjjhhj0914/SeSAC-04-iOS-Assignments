@@ -12,7 +12,6 @@ import Kingfisher
 class TopicViewController: BaseViewController {
     let mainView = TopicView()
     
-    var likeStatus: [String: Bool] = [:]
     var goldenHourList: [Photo] = []
     var businessList: [Photo] = []
     var architectureList: [Photo] = []
@@ -126,14 +125,14 @@ extension TopicViewController: UICollectionViewDataSource, UICollectionViewDeleg
         
         vc.photoData = data
         vc.delegate = self
-        vc.isLiked = likeStatus[data.id] ?? false
+        vc.isLiked = UserDefaults.standard.bool(forKey: data.id)
         navigationController?.pushViewController(vc, animated: true)
     }
 }
 
 extension TopicViewController: PhotoDetailDelegate {
     func updateLikeStatus(id: String, isLiked: Bool) {
-        likeStatus[id] = isLiked
+        UserDefaults.standard.set(isLiked, forKey: id)
         mainView.goldenCollectionView.reloadData()
         mainView.businessCollectionView.reloadData()
         mainView.architectureCollectionView.reloadData()
