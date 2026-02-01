@@ -44,18 +44,42 @@ class TopicViewController: BaseViewController {
     }
     
     func fetchData() {
+        let group = DispatchGroup()
+        
+        group.enter()
         NetworkManager.shared.callRequestTopic(topicName: topics[0]) { photos in
-            self.goldenHourList = photos
-            self.mainView.goldenCollectionView.reloadData()
+            if photos != nil {
+                self.goldenHourList = photos!
+                print("통신 성공")
+            } else {
+                print("통신 실패")
+            }
+            group.leave()
         }
         
+        group.enter()
         NetworkManager.shared.callRequestTopic(topicName: topics[1]) { photos in
-            self.businessList = photos
-            self.mainView.businessCollectionView.reloadData()
+            if photos != nil {
+                self.businessList = photos!
+            } else {
+                print("통신 실패")
+            }
+            group.leave()
         }
         
+        group.enter()
         NetworkManager.shared.callRequestTopic(topicName: topics[2]) { photos in
-            self.architectureList = photos
+            if photos != nil {
+                self.architectureList = photos!
+            } else {
+                print("통신 실패")
+            }
+            group.leave()
+        }
+        
+        group.notify(queue: .main) {
+            self.mainView.goldenCollectionView.reloadData()
+            self.mainView.businessCollectionView.reloadData()
             self.mainView.architectureCollectionView.reloadData()
         }
     }

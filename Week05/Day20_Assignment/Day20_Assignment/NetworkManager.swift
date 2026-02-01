@@ -56,7 +56,7 @@ class NetworkManager {
             }
     }
     
-    func callRequestTopic(topicName: String, completionHandler: @escaping ([Photo]) -> Void) {
+    func callRequestTopic(topicName: String, completionHandler: @escaping ([Photo]?) -> Void) {
         let url = "https://api.unsplash.com/topics/\(topicName)/photos"
         let headers: HTTPHeaders = ["Authorization": "Client-ID \(APIKey.UNSPLASH_ACCESS)"]
         
@@ -68,6 +68,7 @@ class NetworkManager {
                     completionHandler(value)
                 case .failure(let error):
                     print(">>> 토픽 통신 에러 발생 >>> 에러: \(error)")
+                    completionHandler(nil) // 통신 실패 시에도 leave 호출을 하기 위해 nil 전달
                 }
             }
     }
