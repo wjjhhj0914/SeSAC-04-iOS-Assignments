@@ -142,18 +142,18 @@ class PhotoDetailViewController: BaseViewController {
     override func configureView() {
         super.configureView()
         
-        nameLabel.font = .systemFont(ofSize: 14)
-        dateLabel.font = .boldSystemFont(ofSize: 12)
-        infoTitleLabel.text = "정보"
-        infoTitleLabel.font = .boldSystemFont(ofSize: 20)
+        setupLabel(label: nameLabel, fontSize: 14, weight: .regular)
+        setupLabel(label: dateLabel, fontSize: 12)
+        setupLabel(label: infoTitleLabel, fontSize: 20)
         
         [sizeTitleLabel, viewsTitleLabel, downloadsTitleLabel].forEach {
-            $0.font = .boldSystemFont(ofSize: 14)
+            setupLabel(label: $0, fontSize: 14)
         }
         [sizeValueLabel, viewsValueLabel, downloadsValueLabel].forEach {
-            $0.font = .systemFont(ofSize: 14)
+            setupLabel(label: $0, fontSize: 14, weight: .regular)
         }
         
+        infoTitleLabel.text = "정보"
         sizeTitleLabel.text = "크기"
         viewsTitleLabel.text = "조회수"
         downloadsTitleLabel.text = "다운로드"
