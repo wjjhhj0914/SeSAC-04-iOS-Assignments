@@ -13,66 +13,17 @@ class NetworkManager {
     
     private init() {}
     
-    func callRequestPhoto(query: String, page: Int, color: String?, sort: String, completionHandler: @escaping (PhotoSearchResponse) -> Void) {
-        let url = "https://api.unsplash.com/search/photos"
-        let headers: HTTPHeaders = ["Authorization": "Client-ID \(APIKey.UNSPLASH_ACCESS)"]
-        var parameters: Parameters = [
-            "query": query,
-            "page": page,
-            "per_page": 20,
-            "order_by": sort
-        ]
-        
-        if let color = color {
-            parameters["color"] = color
-        }
-        
-        AF.request(url, method: .get, parameters: parameters, headers: headers)
+    func fetch<T: Decodable>(api: PhotoRouter, type: T.Type, completionHandler: @escaping (T) -> Void, failureHandler: @escaping () -> Void) {
+        AF.request(api.endpoint, method: api.method, parameters: api.parameters, headers: api.headers)
             .validate(statusCode: 200..<300)
-            .responseDecodable(of: PhotoSearchResponse.self) { response in
-                switch response.result {
-                case .success(let value):
-                    completionHandler(value)
-                    
-                case .failure(let error):
-                    print(">>> 에러 발생 >>> 에러: \(error)")
-                }
-            }
-    }
-    
-    func callRequestStatistics(id: String, completionHandler: @escaping (PhotoStatistics) -> Void) {
-        let url = "https://api.unsplash.com/photos/\(id)/statistics"
-        let headers: HTTPHeaders = ["Authorization": "Client-ID \(APIKey.UNSPLASH_ACCESS)"]
-        
-        AF.request(url, method: .get, headers: headers)
-            .validate(statusCode: 200..<300)
-            .responseDecodable(of: PhotoStatistics.self) { response in
+            .responseDecodable(of: T.self) { response in
                 switch response.result {
                 case .success(let value):
                     completionHandler(value)
                 case .failure(let error):
                     print(">>> 에러 발생 >>> 에러: \(error)")
+                    failureHandler()
                 }
             }
     }
-    
-    func callRequestTopic(topicName: String, completionHandler: @escaping ([Photo]?) -> Void) {
-        let url = "https://api.unsplash.com/topics/\(topicName)/photos"
-        let headers: HTTPHeaders = ["Authorization": "Client-ID \(APIKey.UNSPLASH_ACCESS)"]
-        
-        AF.request(url, method: .get, headers: headers)
-            .validate(statusCode: 200..<300)
-            .responseDecodable(of: [Photo].self) { response in
-                switch response.result {
-                case .success(let value):
-                    completionHandler(value)
-                case .failure(let error):
-                    print(">>> 토픽 통신 에러 발생 >>> 에러: \(error)")
-                    completionHandler(nil) // 통신 실패 시에도 leave 호출을 하기 위해 nil 전달
-                }
-            }
-    }
-    
-    
-
 }

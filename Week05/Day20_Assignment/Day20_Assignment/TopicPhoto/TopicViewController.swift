@@ -46,36 +46,18 @@ class TopicViewController: BaseViewController {
         let group = DispatchGroup()
         var hasErrorOccured = false
         
-        group.enter()
-        NetworkManager.shared.callRequestTopic(topicName: topics[0]) { photos in
-            if photos != nil {
-                self.goldenHourList = photos!
-                print("통신 성공")
-            } else {
+        for (index, topicName) in topics.enumerated() {
+            group.enter()
+            NetworkManager.shared.fetch(api: .topics(topicName: topicName), type: [Photo].self) { photos in
+                if index == 0 { self.goldenHourList = photos }
+                else if index == 1 { self.businessList = photos }
+                else { self.architectureList = photos }
+                group.leave()
+            } failureHandler: {
                 hasErrorOccured = true
+                group.leave()
                 print("통신 실패")
             }
-            group.leave()
-        }
-        
-        group.enter()
-        NetworkManager.shared.callRequestTopic(topicName: topics[1]) { photos in
-            if photos != nil {
-                self.businessList = photos!
-            } else {
-                print("통신 실패")
-            }
-            group.leave()
-        }
-        
-        group.enter()
-        NetworkManager.shared.callRequestTopic(topicName: topics[2]) { photos in
-            if photos != nil {
-                self.architectureList = photos!
-            } else {
-                print("통신 실패")
-            }
-            group.leave()
         }
         
         group.notify(queue: .main) {

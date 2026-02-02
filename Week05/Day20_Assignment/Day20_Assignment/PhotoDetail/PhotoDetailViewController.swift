@@ -173,9 +173,11 @@ class PhotoDetailViewController: BaseViewController {
                 mainImageView.kf.setImage(with: url)
             }
             
-            NetworkManager.shared.callRequestStatistics(id: data.id) { stats in
+            NetworkManager.shared.fetch(api: .statistics(id: data.id), type: PhotoStatistics.self) { stats in
                 self.viewsValueLabel.text = stats.views.total.formatted()
                 self.downloadsValueLabel.text = stats.downloads.total.formatted()
+            } failureHandler: {
+                print("통계 정보 가져오기 실패")
             }
         }
     }

@@ -105,7 +105,7 @@ class SearchPhotoViewController: BaseViewController {
     func callRequest(query: String, color: String? = nil) {
         let sort = sortByLatest ? "latest" : "relevant"
         
-        NetworkManager.shared.callRequestPhoto(query: query, page: startPage, color: color, sort: sort) { value in
+        NetworkManager.shared.fetch(api: .search(query: query, page: startPage, color: color, sort: sort), type: PhotoSearchResponse.self, completionHandler: { value in
             self.totalPage = value.total_pages
             let hasResults = value.total > 0
             
@@ -128,7 +128,10 @@ class SearchPhotoViewController: BaseViewController {
                 self.mainView.noResultsLabel.isHidden = false
                 self.mainView.noResultsLabel.text = "검색 결과가 없어요."
             }
+        }, failureHandler: {
+            self.showAlert(title: "알림", message: "데이터를 불러오는 데 실패했습니다.")
         }
+        )
     }
 }
 
