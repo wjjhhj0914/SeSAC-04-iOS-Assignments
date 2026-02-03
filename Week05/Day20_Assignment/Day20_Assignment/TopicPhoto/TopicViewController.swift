@@ -10,6 +10,7 @@ import SnapKit
 
 final class TopicViewController: BaseViewController {
     private let mainView = TopicView()
+    private let profileButton = UIButton()
     
     private var goldenHourList: [Photo] = []
     private var businessList: [Photo] = []
@@ -18,6 +19,7 @@ final class TopicViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         fetchData()
     }
     
@@ -29,16 +31,31 @@ final class TopicViewController: BaseViewController {
         mainView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        
+        profileButton.snp.makeConstraints { make in
+            make.size.equalTo(40)
+        }
     }
     
     override func configureView() {
         super.configureView()
+
+        profileButton.setImage(UIImage(systemName: "person.circle.fill"), for: .normal)
+        profileButton.tintColor = .systemGray
+        profileButton.addTarget(self, action: #selector(profileButtonTapped), for: .touchUpInside)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: profileButton)
+        
         [mainView.goldenCollectionView, mainView.businessCollectionView, mainView.architectureCollectionView].forEach {
             $0.delegate = self
             $0.dataSource = self
             $0.register(TopicCollectionViewCell.self,
                         forCellWithReuseIdentifier: TopicCollectionViewCell.identifier)
         }
+    }
+    
+    @objc private func profileButtonTapped() {
+        let vc = ProfileViewController()
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     private func fetchData() {
