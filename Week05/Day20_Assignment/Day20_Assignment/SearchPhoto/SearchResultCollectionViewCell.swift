@@ -7,14 +7,16 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
-class SearchResultCollectionViewCell: BaseCollectionViewCell {
-    let photoImageView = UIImageView()
-    let likesContainerView = UIView()
-    let starImageView = UIImageView()
-    let likesLabel = UILabel()
+final class SearchResultCollectionViewCell: BaseCollectionViewCell {
     
-    let likeButton: UIButton = {
+    private let photoImageView = UIImageView()
+    private let likesContainerView = UIView()
+    private let starImageView = UIImageView()
+    private let likesLabel = UILabel()
+    
+    private let likeButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "heart"), for: .normal)
         button.setImage(UIImage(systemName: "heart.fill"), for: .selected)
@@ -23,6 +25,19 @@ class SearchResultCollectionViewCell: BaseCollectionViewCell {
         button.layer.cornerRadius = 15
         return button
     }()
+    
+    func configure(data: Photo) {
+        if let url = URL(string: data.urls.thumb) {
+            photoImageView.kf.setImage(with: url)
+        }
+        
+        likesLabel.text = data.likes.formatted()
+        
+        let isLiked = UserDefaults.standard.bool(forKey: data.id)
+        
+        likeButton.isHidden = !isLiked
+        likeButton.isSelected = true
+    }
     
     override func configureHierarchy() {
         contentView.addSubview(photoImageView)

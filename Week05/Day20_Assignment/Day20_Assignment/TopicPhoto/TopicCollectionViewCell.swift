@@ -7,12 +7,21 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
-class TopicCollectionViewCell: BaseCollectionViewCell {
-    let photoImageView = UIImageView()
-    let likesContainerView = UIView()
-    let starImageView = UIImageView()
-    let likesLabel = UILabel()
+final class TopicCollectionViewCell: BaseCollectionViewCell {
+    private let photoImageView = UIImageView()
+    private let likesContainerView = UIView()
+    private let starImageView = UIImageView()
+    private let likesLabel = UILabel()
+    
+    func configure(data: Photo) {
+        if let url = URL(string: data.urls.thumb) {
+            photoImageView.kf.setImage(with: url)
+        }
+        
+        likesLabel.text = data.likes.formatted()
+    }
     
     override func configureHierarchy() {
         contentView.addSubview(photoImageView)
@@ -45,6 +54,8 @@ class TopicCollectionViewCell: BaseCollectionViewCell {
     }
     
     override func configureView() {
+        super.configureView()
+        
         photoImageView.contentMode = .scaleAspectFill
         photoImageView.layer.cornerRadius = 12
         photoImageView.clipsToBounds = true

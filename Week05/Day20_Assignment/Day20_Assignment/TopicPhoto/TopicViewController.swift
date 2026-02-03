@@ -7,15 +7,14 @@
 
 import UIKit
 import SnapKit
-import Kingfisher
 
-class TopicViewController: BaseViewController {
-    let mainView = TopicView()
+final class TopicViewController: BaseViewController {
+    private let mainView = TopicView()
     
-    var goldenHourList: [Photo] = []
-    var businessList: [Photo] = []
-    var architectureList: [Photo] = []
-    let topics = ["golden-hour", "business-work", "architecture-interior"]
+    private var goldenHourList: [Photo] = []
+    private var businessList: [Photo] = []
+    private var architectureList: [Photo] = []
+    private let topics = ["golden-hour", "business-work", "architecture-interior"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,21 +41,26 @@ class TopicViewController: BaseViewController {
         }
     }
     
-    func fetchData() {
+    private func fetchData() {
         let group = DispatchGroup()
         var hasErrorOccured = false
         
         for (index, topicName) in topics.enumerated() {
             group.enter()
-            NetworkManager.shared.fetch(api: .topics(topicName: topicName), type: [Photo].self) { photos in
-                if index == 0 { self.goldenHourList = photos }
-                else if index == 1 { self.businessList = photos }
-                else { self.architectureList = photos }
+            
+            NetworkManager.shared.fetch(api: .topics(topicName: topicName), type: [Photo].self) { result in
+                
+                switch result {
+                case .success(let photos):
+                    if index == 0 { self.goldenHourList = photos }
+                    else if index == 1 { self.businessList = photos }
+                    else { self.architectureList = photos }
+                case .failure(let error):
+                    hasErrorOccured = true
+                    print(error.localizedDescription)
+                }
+                
                 group.leave()
-            } failureHandler: {
-                hasErrorOccured = true
-                group.leave()
-                print("통신 실패")
             }
         }
         
@@ -93,10 +97,7 @@ extension TopicViewController: UICollectionViewDataSource, UICollectionViewDeleg
         
         let data = getPhoto(collectionView: collectionView, index: indexPath.item)
         
-        if let url = URL(string: data.urls.thumb) {
-            cell.photoImageView.kf.setImage(with: url)
-        }
-        cell.likesLabel.text = data.likes.formatted()
+        cell.configure(data: data)
         
         return cell
     }

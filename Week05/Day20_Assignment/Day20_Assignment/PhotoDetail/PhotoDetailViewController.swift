@@ -13,28 +13,25 @@ protocol PhotoDetailDelegate {
     func updateLikeStatus(id: String, isLiked: Bool)
 }
 
-class PhotoDetailViewController: BaseViewController {
+final class PhotoDetailViewController: BaseViewController {
     var delegate: PhotoDetailDelegate?
     var isLiked: Bool = false
-    var initialState: Bool = false
-    
-    let likeButton = UIButton()
-    
     var photoData: Photo?
     
-    let nameLabel = UILabel()
-    let dateLabel = UILabel()
-    let mainImageView = UIImageView()
+    private var initialState: Bool = false
+    private let likeButton = UIButton()
+    private let nameLabel = UILabel()
+    private let dateLabel = UILabel()
+    private let mainImageView = UIImageView()
+    private let infoTitleLabel = UILabel()
     
-    let infoTitleLabel = UILabel()
+    private let sizeTitleLabel = UILabel()
+    private let viewsTitleLabel = UILabel()
+    private let downloadsTitleLabel = UILabel()
     
-    let sizeTitleLabel = UILabel()
-    let viewsTitleLabel = UILabel()
-    let downloadsTitleLabel = UILabel()
-    
-    let sizeValueLabel = UILabel()
-    let viewsValueLabel = UILabel()
-    let downloadsValueLabel = UILabel()
+    private let sizeValueLabel = UILabel()
+    private let viewsValueLabel = UILabel()
+    private let downloadsValueLabel = UILabel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,7 +40,7 @@ class PhotoDetailViewController: BaseViewController {
         likeButton.addTarget(self, action: #selector(likeButtonClicked), for: .touchUpInside)
     }
     
-    @objc func likeButtonClicked() {
+    @objc private func likeButtonClicked() {
         isLiked.toggle()
         updateLikeUI()
         
@@ -65,11 +62,21 @@ class PhotoDetailViewController: BaseViewController {
         }
     }
     
-    func updateLikeUI() {
+    private func updateLikeUI() {
         let imageName = isLiked ? "heart.fill" : "heart"
         let image = UIImage(systemName: imageName)
         likeButton.setImage(image, for: .normal)
         likeButton.tintColor = isLiked ? .systemRed : .systemGray
+    }
+    
+    private func formatDate(dateString: String) {
+        let isoFormatter = ISO8601DateFormatter()
+        if let date = isoFormatter.date(from: dateString) {
+            let myFormatter = DateFormatter()
+            myFormatter.dateFormat = "yyyy년 M월 d일"
+            let result = myFormatter.string(from: date)
+            dateLabel.text = "\(result) 게시됨"
+        }
     }
     
     override func configureHierarchy() {
@@ -173,23 +180,16 @@ class PhotoDetailViewController: BaseViewController {
                 mainImageView.kf.setImage(with: url)
             }
             
-            NetworkManager.shared.fetch(api: .statistics(id: data.id), type: PhotoStatistics.self) { stats in
-                self.viewsValueLabel.text = stats.views.total.formatted()
-                self.downloadsValueLabel.text = stats.downloads.total.formatted()
-            } failureHandler: {
-                print("통계 정보 가져오기 실패")
+            NetworkManager.shared.fetch(api: .statistics(id: data.id), type: PhotoStatistics.self) { result in
+                
+                switch result {
+                case .success(let stats):
+                    self.viewsValueLabel.text = stats.views.total.formatted()
+                    self.downloadsValueLabel.text = stats.downloads.total.formatted()
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
             }
         }
     }
-    
-    func formatDate(dateString: String) {
-        let isoFormatter = ISO8601DateFormatter()
-        if let date = isoFormatter.date(from: dateString) {
-            let myFormatter = DateFormatter()
-            myFormatter.dateFormat = "yyyy년 M월 d일"
-            let result = myFormatter.string(from: date)
-            dateLabel.text = "\(result) 게시됨"
-        }
-    }
-
 }
