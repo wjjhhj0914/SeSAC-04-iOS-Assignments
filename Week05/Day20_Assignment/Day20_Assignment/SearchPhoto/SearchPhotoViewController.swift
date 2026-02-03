@@ -10,6 +10,20 @@ import SnapKit
 import Alamofire
 import Kingfisher
 
+enum SearchError: Error, LocalizedError {
+    case isEmpty
+    case tooShort
+    
+    var errorDescription: String? {
+        switch self {
+        case .isEmpty:
+            return "검색어를 입력해 주세요"
+        case .tooShort:
+            return "두 글자 이상 입력해 주세요"
+        }
+    }
+}
+
 class SearchPhotoViewController: BaseViewController {
     let mainView = SearchPhotoView()
     
@@ -43,7 +57,7 @@ class SearchPhotoViewController: BaseViewController {
         mainView.searchBar.delegate = self
         mainView.collectionView.delegate = self
         mainView.collectionView.dataSource = self
-        
+        mainView.searchBar.enablesReturnKeyAutomatically = false
         mainView.sortButton.addTarget(self, action: #selector(sortButtonClicked), for: .touchUpInside)
         
         setupColorChips()
@@ -138,14 +152,21 @@ class SearchPhotoViewController: BaseViewController {
 // 검색
 extension SearchPhotoViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let text = searchBar.text?.trimmingCharacters(in: .whitespaces), !text.isEmpty else {
-            showAlert(title: "알림", message: "검색어를 입력해 주세요!")
-            return
+        do {
+            let text = searchBar.text ?? ""
+            if text.isEmpty {
+                throw SearchError.isEmpty
+            }
+            if text.count < 2 {
+                throw SearchError.tooShort
+            }
+            
+            startPage = 1
+            callRequest(query: text, color: selectedColor)
+            view.endEditing(true)
+        } catch {
+            showAlert(title: "알림", message: error.localizedDescription)
         }
-        // 검색 시 페이지 1로 다시 초기화 및 네트워크 통신
-        startPage = 1
-        callRequest(query: text, color: selectedColor)
-        view.endEditing(true)
     }
 }
 
