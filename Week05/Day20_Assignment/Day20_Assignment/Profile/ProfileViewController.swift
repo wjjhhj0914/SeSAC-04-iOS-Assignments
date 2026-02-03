@@ -38,6 +38,44 @@ final class ProfileViewController: BaseViewController {
         navigationItem.title = "프로필 설정"
     }
     
+    private func validateUserInput() throws(ValidationError) -> Bool {
+        let yearUserInput = yearTextField.text ?? ""
+        let monthUserInput = monthTextField.text ?? ""
+        let dayUserInput = dayTextField.text ?? ""
+        
+        guard yearUserInput.count == 4, let validYear = Int(yearUserInput), (1900...2026).contains(validYear) else {
+            throw .invalidYear
+        }
+        
+        guard monthUserInput.count < 3, let validMonth = Int(monthUserInput), (1...12).contains(validMonth) else {
+            throw .invalidMonth
+        }
+        
+        guard dayUserInput.count < 3, let validDay = Int(dayUserInput), (1...31).contains(validDay) else {
+            throw .invalidDay
+        }
+        
+        return true
+    }
+    
+    @objc private func allSetButtonTapped() {
+        do {
+            let result = try validateUserInput()
+            
+            allSetButton.setTitle("생년월일이 정상적으로 저장되었습니다!", for: .normal)
+            allSetButton.titleLabel?.font = .systemFont(ofSize: 12)
+            allSetButton.backgroundColor = .systemBlue
+            view.endEditing(true)
+        } catch {
+            switch error {
+            case .invalidYear, .invalidMonth, .invalidDay:
+                allSetButton.setTitle(error.localizedDescription, for: .normal)
+            }
+            allSetButton.backgroundColor = .systemRed
+            allSetButton.titleLabel?.font = .systemFont(ofSize: 12)
+        }
+    }
+    
     override func configureHierarchy() {
         [yearTextField, monthTextField, dayTextField, allSetButton].forEach {
             view.addSubview($0)
@@ -75,7 +113,13 @@ final class ProfileViewController: BaseViewController {
         
         [yearTextField, monthTextField, dayTextField].forEach {
             $0.keyboardType = .numberPad
-            $0.borderStyle = .roundedRect
+            $0.borderStyle = .none
+            $0.layer.borderWidth = 1
+            $0.layer.borderColor = UIColor.systemGray6.cgColor
+            $0.layer.cornerRadius = 12
+            $0.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 0))
+            $0.leftViewMode = .always
+            $0.font = .systemFont(ofSize: 14)
         }
         
         yearTextField.placeholder = "태어난 연도를 입력하세요 (ex: 90년생이면 1990)"
@@ -86,9 +130,5 @@ final class ProfileViewController: BaseViewController {
         allSetButton.backgroundColor = .lightGray
         allSetButton.layer.cornerRadius = 12
         allSetButton.addTarget(self, action: #selector(allSetButtonTapped), for: .touchUpInside)
-    }
-    
-    @objc private func allSetButtonTapped() {
-        
     }
 }
