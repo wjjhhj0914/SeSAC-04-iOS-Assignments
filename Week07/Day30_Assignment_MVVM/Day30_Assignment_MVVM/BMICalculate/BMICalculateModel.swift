@@ -32,6 +32,11 @@ class BMICalculateModel {
     
     var textAction: (() -> Void)?
     
+    init() {
+        print("viewModel init")
+        calculateBmi()
+    }
+    
     private func calculateBmi() {
         // 1) 빈 값
         guard !heightInputField.isEmpty, !weightInputField.isEmpty else {

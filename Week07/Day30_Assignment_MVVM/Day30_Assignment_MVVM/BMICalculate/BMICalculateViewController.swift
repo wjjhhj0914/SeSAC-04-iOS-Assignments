@@ -38,6 +38,7 @@ class BMIViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("viewController viewDidLoad")
         
         viewModel.textAction = {
             print("viewModel textAction")
