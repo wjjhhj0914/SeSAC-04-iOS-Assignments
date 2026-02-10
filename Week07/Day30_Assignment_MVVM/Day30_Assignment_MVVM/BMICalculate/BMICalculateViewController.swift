@@ -38,6 +38,12 @@ class BMIViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        viewModel.textAction = {
+            print("viewModel textAction")
+            self.resultLabel.text = self.viewModel.outputText
+        }
+        
         configureUI()
         configureConstraints()
         configureActions()
