@@ -12,23 +12,27 @@ class BMICalculateModel {
     var heightInputField = "" {
         didSet {
             print("heightInputField", heightInputField)
+            calculateBmi()
         }
     }
     
     var weightInputField = "" {
         didSet {
             print("weightInputField", weightInputField)
+            calculateBmi()
         }
     }
     
     var outputText = "" {
         didSet {
             print("outputText", outputText)
+            textAction?()
         }
     }
     
+    var textAction: (() -> Void)?
+    
     private func calculateBmi() {
-        
         // 1) 빈 값
         guard !heightInputField.isEmpty, !weightInputField.isEmpty else {
             outputText = "키와 몸무게를 입력해주세요"
