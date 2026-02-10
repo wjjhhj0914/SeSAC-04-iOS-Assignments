@@ -40,22 +40,10 @@ class BMIViewController: UIViewController {
         super.viewDidLoad()
         print("viewController viewDidLoad")
         
-        let a = Observable(text: "고래밥")
-        
-        a.text = "칙촉"
-        
-        a.text = "hello"
-        
-        a.playAction {
-            print("playAction 메서드 실행됨", a.text)
-            self.navigationItem.title = a.text
+        viewModel.outputText.playAction {
+            print("viewModel outputText playAction")
+            self.resultLabel.text = self.viewModel.outputText.text
         }
-        
-        viewModel.textAction = {
-            print("viewModel textAction")
-            self.resultLabel.text = self.viewModel.outputText
-        }
-        viewModel.textAction?()
         
         configureUI()
         configureConstraints()
@@ -73,8 +61,9 @@ class BMIViewController: UIViewController {
     }
     
     private func calculate() {
-        viewModel.heightInputField = heightTextField.text!
-        viewModel.weightInputField = weightTextField.text!
+        print(#function)
+        viewModel.heightInputField.text = heightTextField.text!
+        viewModel.weightInputField.text = weightTextField.text!
     }
 }
 

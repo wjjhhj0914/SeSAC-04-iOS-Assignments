@@ -29,4 +29,10 @@ class Observable {
         self.action = action
         print(#function, "END")
     }
+    
+    func lazyAction(action: @escaping () -> Void) {
+        print(#function, "START")
+        self.action = action
+        print(#function, "END")
+    }
 }
