@@ -44,6 +44,7 @@ class BMIViewController: UIViewController {
             print("viewModel textAction")
             self.resultLabel.text = self.viewModel.outputText
         }
+        viewModel.textAction?()
         
         configureUI()
         configureConstraints()
