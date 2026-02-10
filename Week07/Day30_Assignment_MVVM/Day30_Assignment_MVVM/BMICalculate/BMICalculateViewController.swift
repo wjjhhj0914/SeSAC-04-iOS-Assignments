@@ -40,6 +40,17 @@ class BMIViewController: UIViewController {
         super.viewDidLoad()
         print("viewController viewDidLoad")
         
+        let a = Observable(text: "고래밥")
+        
+        a.text = "칙촉"
+        
+        a.text = "hello"
+        
+        a.playAction {
+            print("playAction 메서드 실행됨", a.text)
+            self.navigationItem.title = a.text
+        }
+        
         viewModel.textAction = {
             print("viewModel textAction")
             self.resultLabel.text = self.viewModel.outputText
