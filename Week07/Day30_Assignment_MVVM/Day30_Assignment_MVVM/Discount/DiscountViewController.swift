@@ -39,6 +39,11 @@ class DiscountViewController: UIViewController {
         configureUI()
         configureConstraints()
         configureActions()
+        
+        viewModel.textAction = {
+            print("viewModel textAction")
+            self.resultLabel.text = self.viewModel.outputText
+        }
     }
     
     @objc private func priceChanged() {
