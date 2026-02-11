@@ -12,12 +12,14 @@ class WordCountViewModel {
     var inputTextView = "" {
         didSet {
             print("inputTextView", inputTextView)
+            self.update()
         }
     }
     
     var outputCountLabel = "" {
         didSet {
             print("outputCountLabel", outputCountLabel)
+            textAction?()
         }
     }
     

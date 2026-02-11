@@ -70,7 +70,7 @@ class WordCountViewController: UIViewController {
     }
      
     private func updateCharacterCount() {
-        
+        viewModel.inputTextView = textView.text
     }
 }
  
