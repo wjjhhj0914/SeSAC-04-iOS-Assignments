@@ -19,8 +19,11 @@ class CurrencyModel {
     var outputText = "" {
         didSet {
             print("outputText", outputText)
+            textAction?()
         }
     }
+    
+    var textAction: (() -> Void)?
     
     private func convert() {
         guard let amount = Double(inputField) else {
