@@ -16,10 +16,10 @@ class PasswordStrengthViewModel {
     var textAction: (() -> Void)?
     
     init() {
-        print("viewModel Init")
+//        print("viewModel Init")
         
         inputPasswordField.bind {
-            print("inputPasswordField.bind")
+//            print("inputPasswordField.bind")
             self.validate()
         }
     }

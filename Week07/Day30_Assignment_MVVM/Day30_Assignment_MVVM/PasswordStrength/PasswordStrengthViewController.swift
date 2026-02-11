@@ -36,18 +36,18 @@ class PasswordStrengthViewController: UIViewController {
      
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("viewDidLoad")
+//        print("viewDidLoad")
         configureUI()
         configureConstraints()
         configureActions()
         
         viewModel.outputStrengthLabel.bind {
-            print("viewModel.outputStrengthLabel.bind")
+//            print("viewModel.outputStrengthLabel.bind")
             self.strengthLabel.text = self.viewModel.outputStrengthLabel.value
         }
         
         viewModel.outputLevelLabel.bind {
-            print("viewModel.outputLevelLabel.bind")
+//            print("viewModel.outputLevelLabel.bind")
             self.levelLabel.text = self.viewModel.outputLevelLabel.value
         }
     }
