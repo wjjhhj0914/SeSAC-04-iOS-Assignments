@@ -41,16 +41,20 @@ class PasswordStrengthViewController: UIViewController {
         configureConstraints()
         configureActions()
         
-        viewModel.textAction = {
-            print("viewModel textAction")
-            self.strengthLabel.text = self.viewModel.outputStrengthLabel
-            self.levelLabel.text = self.viewModel.outputLevelLabel
+        viewModel.outputStrengthLabel.bind {
+            print("viewModel.outputStrengthLabel.bind")
+            self.strengthLabel.text = self.viewModel.outputStrengthLabel.value
+        }
+        
+        viewModel.outputLevelLabel.bind {
+            print("viewModel.outputLevelLabel.bind")
+            self.levelLabel.text = self.viewModel.outputLevelLabel.value
         }
     }
     
     @objc private func passwordChanged() {
 //        print(#function)
-        viewModel.inputPasswordField = passwordTextField.text!
+        viewModel.inputPasswordField.value = passwordTextField.text!
     }
 }
 
