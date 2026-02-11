@@ -30,6 +30,11 @@ class DiscountViewModel {
     
     var textAction: (() -> Void)?
     
+    init() {
+        print("viewModel Init")
+        calculate()
+    }
+    
     private func calculate() {
         
         // 1) 빈 값
