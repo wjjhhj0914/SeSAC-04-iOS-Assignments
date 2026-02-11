@@ -12,18 +12,21 @@ class PasswordStrengthViewModel {
     var inputPasswordField = "" {
         didSet {
             print("inputPasswordField", inputPasswordField)
+            self.validate()
         }
     }
     
     var outputStrengthLabel = "" {
         didSet {
             print("outputStrengthLabel", outputStrengthLabel)
+            textAction?()
         }
     }
     
     var outputLevelLabel = "" {
         didSet {
             print("outputLevelLabel", outputLevelLabel)
+            textAction?()
         }
     }
     

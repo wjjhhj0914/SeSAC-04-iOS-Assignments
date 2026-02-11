@@ -36,6 +36,7 @@ class PasswordStrengthViewController: UIViewController {
      
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("viewDidLoad")
         configureUI()
         configureConstraints()
         configureActions()
@@ -48,8 +49,8 @@ class PasswordStrengthViewController: UIViewController {
     }
     
     @objc private func passwordChanged() {
-        print(#function)
-        
+//        print(#function)
+        viewModel.inputPasswordField = passwordTextField.text!
     }
 }
 
