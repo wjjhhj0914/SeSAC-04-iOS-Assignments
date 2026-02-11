@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BMICalculateModel {
+class BMICalculateViewModel {
     // 처음에는 실행 X
     var heightInputField = Observable(value: "")
     var weightInputField = Observable(value: "")

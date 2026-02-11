@@ -7,7 +7,7 @@
 
 import Foundation
 
-class CurrencyModel {
+class CurrencyViewModel {
     
     var inputField = Observable(value: "")
     

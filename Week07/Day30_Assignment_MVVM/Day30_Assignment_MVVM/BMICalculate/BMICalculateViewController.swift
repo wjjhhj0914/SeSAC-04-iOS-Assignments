@@ -34,7 +34,7 @@ class BMIViewController: UIViewController {
         return label
     }()
     
-    let viewModel = BMICalculateModel()
+    let viewModel = BMICalculateViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()

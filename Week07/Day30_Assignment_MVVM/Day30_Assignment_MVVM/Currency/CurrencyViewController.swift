@@ -46,7 +46,7 @@ class CurrencyViewController: UIViewController {
         return label
     }()
     
-    let viewModel = CurrencyModel()
+    let viewModel = CurrencyViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
