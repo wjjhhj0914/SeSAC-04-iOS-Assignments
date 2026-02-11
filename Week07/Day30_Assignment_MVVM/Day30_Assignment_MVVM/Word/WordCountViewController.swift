@@ -28,6 +28,8 @@ class WordCountViewController: UIViewController {
         label.textColor = .systemBlue
         return label
     }()
+    
+    let viewModel = WordCountViewModel()
      
     override func viewDidLoad() {
         super.viewDidLoad()
