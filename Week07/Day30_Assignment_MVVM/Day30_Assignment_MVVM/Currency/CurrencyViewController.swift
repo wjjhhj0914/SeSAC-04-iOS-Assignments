@@ -50,14 +50,14 @@ class CurrencyViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("viewController viewDidLoad")
+//        print("viewController viewDidLoad")
         
         setupUI()
         setupConstraints()
         setupActions()
         
         viewModel.outputText.bind {
-            print("viewModel textAction")
+//            print("viewModel textAction")
             self.resultLabel.text = self.viewModel.outputText.value
         }
     }

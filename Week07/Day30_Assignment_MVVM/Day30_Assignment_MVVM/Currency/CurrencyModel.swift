@@ -16,10 +16,10 @@ class CurrencyModel {
     var textAction: (() -> Void)?
     
     init() {
-        print("viewModel Init")
+//        print("viewModel Init")
         
         inputField.bind {
-            print(">>> inputField.bind")
+//            print(">>> inputField.bind")
             self.convert()
         }
     }
