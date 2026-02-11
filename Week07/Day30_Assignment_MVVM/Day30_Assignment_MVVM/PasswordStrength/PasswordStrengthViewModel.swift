@@ -27,6 +27,8 @@ class PasswordStrengthViewModel {
         }
     }
     
+    var textAction: (() -> Void)?
+    
     private func validate() {
         
         // 1) 빈 값
