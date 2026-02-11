@@ -40,9 +40,13 @@ class BMIViewController: UIViewController {
         super.viewDidLoad()
         print("viewController viewDidLoad")
         
-        viewModel.outputText.playAction {
+        viewModel.outputText.bind {
             print("viewModel outputText playAction")
-            self.resultLabel.text = self.viewModel.outputText.text
+            self.resultLabel.text = self.viewModel.outputText.value
+        }
+        
+        viewModel.outputColour.bind {
+            self.resultLabel.backgroundColor = self.viewModel.outputColour.value
         }
         
         configureUI()
@@ -62,8 +66,8 @@ class BMIViewController: UIViewController {
     
     private func calculate() {
         print(#function)
-        viewModel.heightInputField.text = heightTextField.text!
-        viewModel.weightInputField.text = weightTextField.text!
+        viewModel.heightInputField.value = heightTextField.text!
+        viewModel.weightInputField.value = weightTextField.text!
     }
 }
 

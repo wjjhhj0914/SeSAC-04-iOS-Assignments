@@ -7,32 +7,24 @@
 
 import Foundation
 
-class Observable {
+class Observable<T> {
     
     private var action: (() -> Void)?
     
-    var text: String {
+    var value: T {
         didSet {
-            print("Observable didSet", text)
+            print("Observable didSet", value)
             action?()
         }
     }
     
-    init(text: String) {
+    init(value: T) {
         print("Observable Init")
-        self.text = text
+        self.value = value
     }
     
-    func playAction(action: @escaping () -> Void) {
-        print(#function, "START")
-        action() // 초기값 지정 시 액션 동작을 원하는 경우
+    func bind(action: @escaping () -> Void) {
+        action()
         self.action = action
-        print(#function, "END")
-    }
-    
-    func lazyAction(action: @escaping () -> Void) {
-        print(#function, "START")
-        self.action = action
-        print(#function, "END")
     }
 }
