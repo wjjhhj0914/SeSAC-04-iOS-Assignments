@@ -41,47 +41,7 @@ class PasswordStrengthViewController: UIViewController {
     
     @objc private func passwordChanged() {
         print(#function)
-        guard let pw = passwordTextField.text else {
-            return
-        }
         
-        // 1) 빈 값
-        guard !pw.isEmpty else {
-            strengthLabel.text = "비밀번호를 입력해주세요"
-            levelLabel.text = "0단계"
-            return
-        }
-        
-        // 2) 조건 체크
-        var score = 0
-        
-        if pw.count >= 6 { score += 1 }   // 길이
-        if pw.count >= 10 { score += 1 }   // 긴 길이
-        
-        let hasNumber = pw.contains(where: { $0.isNumber })
-        if hasNumber { score += 1 }         // 숫자 포함
-        
-        let hasSpecial = pw.contains(where: { "!@#$%^&*".contains($0) })
-        if hasSpecial { score += 1 }        // 특수문자 포함
-        
-        // 3) 단계별 판정
-        switch score {
-        case 0:
-            strengthLabel.text = "⚠️ 너무 짧습니다"
-            levelLabel.text = "0단계"
-        case 1:
-            strengthLabel.text = "🔴 약함"
-            levelLabel.text = "1단계"
-        case 2:
-            strengthLabel.text = "🟡 보통"
-            levelLabel.text = "2단계"
-        case 3:
-            strengthLabel.text = "🟢 강함"
-            levelLabel.text = "3단계"
-        default:
-            strengthLabel.text = "💪 매우 강함"
-            levelLabel.text = "3단계"
-        }
     }
 }
 
