@@ -63,8 +63,7 @@ class WordCountViewController: UIViewController {
     }
      
     private func updateCharacterCount() {
-        let count = textView.text.count
-        countLabel.text = "현재까지 \(count)글자 작성중"
+        
     }
 }
  
