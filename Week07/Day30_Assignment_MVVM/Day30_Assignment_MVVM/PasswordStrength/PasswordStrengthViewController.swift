@@ -31,6 +31,8 @@ class PasswordStrengthViewController: UIViewController {
         label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         return label
     }()
+    
+    let viewModel = PasswordStrengthViewModel()
      
     override func viewDidLoad() {
         super.viewDidLoad()
