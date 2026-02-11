@@ -37,25 +37,31 @@ class DiscountViewController: UIViewController {
     let viewModel = DiscountViewModel()
      
     override func viewDidLoad() {
-        super.viewDidLoad() 
+        super.viewDidLoad()
+        print("viewDidLoad")
         configureUI()
         configureConstraints()
         configureActions()
         
-        viewModel.textAction = {
+        viewModel.outputText.bind {
             print("viewModel textAction")
-            self.resultLabel.text = self.viewModel.outputText
+            self.resultLabel.text = self.viewModel.outputText.value
         }
     }
     
     @objc private func priceChanged() {
         print(#function)
-        viewModel.inputPriceTextField = priceTextField.text!
+        viewModel.inputPriceTextField.value = priceTextField.text!
+        
+        viewModel.outputColour.bind {
+            print("viewModel outputColour.bind")
+            self.view.backgroundColor = self.viewModel.outputColour.value
+        }
     }
     
     @objc private func percentChanged() {
         print(#function)
-        viewModel.inputPercentageTextField = percentTextField.text!
+        viewModel.inputPercentageTextField.value = percentTextField.text!
     }
 }
 
