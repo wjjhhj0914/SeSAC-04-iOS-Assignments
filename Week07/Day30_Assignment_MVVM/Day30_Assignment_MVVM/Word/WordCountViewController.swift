@@ -36,6 +36,11 @@ class WordCountViewController: UIViewController {
         setupUI()
         setupConstraints()
         setupTextView()
+        
+        viewModel.textAction = {
+            print("viewModel textAction")
+            self.countLabel.text = self.viewModel.outputCountLabel
+        }
     }
      
     private func setupUI() {
