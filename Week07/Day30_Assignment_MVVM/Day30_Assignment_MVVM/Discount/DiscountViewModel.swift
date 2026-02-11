@@ -17,15 +17,15 @@ class DiscountViewModel {
     var textAction: (() -> Void)?
     
     init() {
-        print("viewModel Init")
+//        print("viewModel Init")
         
         inputPriceTextField.bind {
-            print(">>> inputPriceTextField.bind")
+//            print(">>> inputPriceTextField.bind")
             self.calculate()
         }
         
         inputPercentageTextField.bind {
-            print(">>> inputPercentageTextField.bind")
+//            print(">>> inputPercentageTextField.bind")
             self.calculate()
         }
     }
