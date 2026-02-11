@@ -60,6 +60,8 @@ class CurrencyViewController: UIViewController {
             print("viewModel textAction")
             self.resultLabel.text = self.viewModel.outputText
         }
+        
+        viewModel.textAction?()
     }
      
     private func setupUI() {
