@@ -23,6 +23,11 @@ class WordCountViewModel {
     
     var textAction: (() -> Void)?
     
+    init() {
+        print("viewModel Init")
+        update()
+    }
+    
     private func update() {
         let count = inputTextView.count
         outputCountLabel = "현재까지 \(count)글자 작성중"
