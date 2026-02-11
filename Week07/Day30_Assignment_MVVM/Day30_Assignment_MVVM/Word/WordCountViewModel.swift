@@ -9,29 +9,22 @@ import Foundation
 
 class WordCountViewModel {
     
-    var inputTextView = "" {
-        didSet {
-            print("inputTextView", inputTextView)
-            self.update()
-        }
-    }
-    
-    var outputCountLabel = "" {
-        didSet {
-            print("outputCountLabel", outputCountLabel)
-            textAction?()
-        }
-    }
+    var inputTextView = Observable(value: "")
+    var outputCountLabel = Observable(value: "")
     
     var textAction: (() -> Void)?
     
     init() {
         print("viewModel Init")
-        update()
+        
+        inputTextView.bind {
+            print("inputTextView.bind")
+            self.update()
+        }
     }
     
     private func update() {
-        let count = inputTextView.count
-        outputCountLabel = "현재까지 \(count)글자 작성중"
+        let count = inputTextView.value.count
+        outputCountLabel.value = "현재까지 \(count)글자 작성중"
     }
 }
