@@ -17,8 +17,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(windowScene: windowScene)
         
-        window?.rootViewController = UINavigationController(rootViewController: BMIViewController())
+        let tabBarController = UITabBarController()
         
+        let BMICalculateVC = BMIViewController()
+        let currencyVC = CurrencyViewController()
+        let discountVC = DiscountViewController()
+        let passwordStrengthVC = PasswordStrengthViewController()
+        let wordCountVC = WordCountViewController()
+        
+        BMICalculateVC.tabBarItem = UITabBarItem(title: "BMI", image: UIImage(systemName: "eraser"), tag: 0)
+        currencyVC.tabBarItem = UITabBarItem(title: "Currency", image: UIImage(systemName: "eraser"), tag: 1)
+        discountVC.tabBarItem = UITabBarItem(title: "Discount", image: UIImage(systemName: "eraser"), tag: 2)
+        passwordStrengthVC.tabBarItem = UITabBarItem(title: "Password", image: UIImage(systemName: "eraser"), tag: 3)
+        wordCountVC.tabBarItem = UITabBarItem(title: "Word", image: UIImage(systemName: "eraser"), tag: 4)
+        
+        tabBarController.viewControllers = [BMICalculateVC, currencyVC, discountVC, passwordStrengthVC, wordCountVC]
+        
+        window?.rootViewController = UINavigationController(rootViewController: tabBarController)
         window?.makeKeyAndVisible()
     }
 
