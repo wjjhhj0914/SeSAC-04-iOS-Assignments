@@ -38,10 +38,10 @@ class BMIViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("viewController viewDidLoad")
+//        print("viewController viewDidLoad")
         
         viewModel.outputText.bind {
-            print("viewModel outputText playAction")
+//            print("viewModel outputText playAction")
             self.resultLabel.text = self.viewModel.outputText.value
         }
         
@@ -55,17 +55,17 @@ class BMIViewController: UIViewController {
     }
     
     @objc private func heightChanged() {
-        print(#function)
+//        print(#function)
         calculate()
     }
     
     @objc private func weightChanged() {
-        print(#function)
+//        print(#function)
         calculate()
     }
     
     private func calculate() {
-        print(#function)
+//        print(#function)
         viewModel.heightInputField.value = heightTextField.text!
         viewModel.weightInputField.value = weightTextField.text!
     }

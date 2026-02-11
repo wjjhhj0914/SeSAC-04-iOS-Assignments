@@ -17,15 +17,15 @@ class BMICalculateModel {
     var textAction: (() -> Void)?
     
     init() {
-        print("viewModel init")
+//        print("viewModel init")
         
         heightInputField.bind {
-            print(">> heightInputField.playAction")
+//            print(">> heightInputField.playAction")
             self.calculateBmi()
         }
         
         weightInputField.bind {
-            print(">> heightInputField.playAction")
+//            print(">> heightInputField.playAction")
             self.calculateBmi()
         }
     }

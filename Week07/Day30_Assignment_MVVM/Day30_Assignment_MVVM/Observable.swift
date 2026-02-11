@@ -13,13 +13,13 @@ class Observable<T> {
     
     var value: T {
         didSet {
-            print("Observable didSet", value)
+//            print("Observable didSet", value)
             action?()
         }
     }
     
     init(value: T) {
-        print("Observable Init")
+//        print("Observable Init")
         self.value = value
     }
     
