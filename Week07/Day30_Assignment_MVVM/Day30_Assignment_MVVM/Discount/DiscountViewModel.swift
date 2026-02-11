@@ -24,8 +24,11 @@ class DiscountViewModel {
     var outputText = "" {
         didSet {
             print("outputText", outputText)
+            textAction?()
         }
     }
+    
+    var textAction: (() -> Void)?
     
     private func calculate() {
         
