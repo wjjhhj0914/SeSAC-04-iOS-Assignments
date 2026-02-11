@@ -25,6 +25,11 @@ class CurrencyModel {
     
     var textAction: (() -> Void)?
     
+    init() {
+        print("viewModel Init")
+        convert()
+    }
+    
     private func convert() {
         guard let amount = Double(inputField) else {
             outputText = "올바른 금액을 입력해주세요"
