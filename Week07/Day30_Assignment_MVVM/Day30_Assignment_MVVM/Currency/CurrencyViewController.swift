@@ -56,12 +56,10 @@ class CurrencyViewController: UIViewController {
         setupConstraints()
         setupActions()
         
-        viewModel.textAction = {
+        viewModel.outputText.bind {
             print("viewModel textAction")
-            self.resultLabel.text = self.viewModel.outputText
+            self.resultLabel.text = self.viewModel.outputText.value
         }
-        
-        viewModel.textAction?()
     }
      
     private func setupUI() {
@@ -101,6 +99,6 @@ class CurrencyViewController: UIViewController {
     }
      
     @objc private func convertButtonTapped() {
-        viewModel.inputField = amountTextField.text!
+        viewModel.inputField.value = amountTextField.text!
     }
 }
