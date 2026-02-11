@@ -12,12 +12,14 @@ class DiscountViewModel {
     var inputPriceTextField = "" {
         didSet {
             print("inputPriceTextField", inputPriceTextField)
+            calculate()
         }
     }
     
     var inputPercentageTextField = "" {
         didSet {
             print("inputPercentageTextField", inputPercentageTextField)
+            calculate()
         }
     }
     

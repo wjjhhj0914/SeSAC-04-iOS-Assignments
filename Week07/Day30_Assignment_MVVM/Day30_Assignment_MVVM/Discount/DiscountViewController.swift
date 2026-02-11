@@ -33,6 +33,8 @@ class DiscountViewController: UIViewController {
         label.numberOfLines = 0
         return label
     }()
+    
+    let viewModel = DiscountViewModel()
      
     override func viewDidLoad() {
         super.viewDidLoad() 
@@ -48,63 +50,12 @@ class DiscountViewController: UIViewController {
     
     @objc private func priceChanged() {
         print(#function)
-        calculate()
+        viewModel.inputPriceTextField = priceTextField.text!
     }
     
     @objc private func percentChanged() {
         print(#function)
-        calculate()
-    }
-    
-    private func calculate() {
-        guard let priceText = priceTextField.text else {
-            return
-        }
-        guard let percentText = percentTextField.text else {
-            return
-        }
-        
-        // 1) 빈 값
-        guard !priceText.isEmpty, !percentText.isEmpty else {
-            self.resultLabel.text = "가격과 할인율을 입력해주세요"
-            self.view.backgroundColor = .systemOrange
-            return
-        }
-        
-        // 2) 숫자 변환
-        guard let price = Int(priceText),
-              let percent = Int(percentText) else {
-            self.resultLabel.text = "숫자만 입력해주세요"
-            self.view.backgroundColor = .systemOrange
-            return
-        }
-        
-        // 3) 범위 체크
-        guard price > 0 else {
-            self.resultLabel.text = "가격은 0보다 커야 합니다"
-            self.view.backgroundColor = .systemOrange
-            return
-        }
-        
-        guard percent >= 0, percent <= 100 else {
-            self.resultLabel.text = "할인율은 0~100 사이로 입력해주세요"
-            self.view.backgroundColor = .systemOrange
-            return
-        }
-        
-        // 4) 계산
-        let discount = price * percent / 100
-        let finalPrice = price - discount
-        
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        
-        let originalText = formatter.string(from: price as NSNumber)!
-        let discountText = formatter.string(from: discount as NSNumber)!
-        let finalText = formatter.string(from: finalPrice as NSNumber)!
-        
-        self.resultLabel.text = "₩\(originalText) → ₩\(discountText) 할인 → ₩\(finalText)"
-        self.view.backgroundColor = .systemGreen
+        viewModel.inputPercentageTextField = percentTextField.text!
     }
 }
 
