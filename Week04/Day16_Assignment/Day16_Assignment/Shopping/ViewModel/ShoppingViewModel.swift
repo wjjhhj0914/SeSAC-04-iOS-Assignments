@@ -12,10 +12,12 @@ final class ShoppingViewModel {
     let inputViewDidLoadTrigger = Observable(())
     let inputSearchKeyword = Observable("")
     let inputSearchButtonClicked = Observable(())
+    let inputDeleteButtonClicked: Observable<Int?> = Observable(nil)
+    let inputDeleteAllButtonClicked = Observable(())
     
     let outputSearchHistory: Observable<[String]> = Observable([])
-    let outputValidSearchKeyword = Observable<String?>(nil)
-    let outputAlertMessage = Observable<String?>(nil)
+    let outputValidSearchKeyword: Observable<String?> = Observable(nil)
+    let outputAlertMessage: Observable<String?> = Observable(nil)
     
     init () {
         print("ShoppingViewModel Init")
@@ -29,6 +31,19 @@ final class ShoppingViewModel {
             print("inputSearchButtonClicked")
             self.search()
         }
+        
+        inputDeleteButtonClicked.bind { index in
+            print("inputDeleteButtonClicked.bind")
+            if let value = index {
+                self.removeKeyword(index: value)
+            }
+        }
+        
+        inputDeleteAllButtonClicked.bind {
+            print("inputDeleteAllButtonClicked.bind")
+            UserDefaultManager.searchHistory = []
+            self.outputSearchHistory.value = []
+        }
     }
     
     private func search() {
@@ -37,7 +52,25 @@ final class ShoppingViewModel {
         if userInputText.count < 2 {
             outputAlertMessage.value = "2글자 이상 입력해주세요"
         } else {
+            let currentHistory = UserDefaultManager.searchHistory
+            var userSearchedList: [String] = [userInputText]
+            
+            for searchedItem in currentHistory {
+                if searchedItem != userInputText {
+                    userSearchedList.append(searchedItem)
+                }
+            }
+            
+            UserDefaultManager.searchHistory = userSearchedList
+            outputSearchHistory.value = userSearchedList
             outputValidSearchKeyword.value = userInputText
         }
+    }
+    
+    private func removeKeyword(index: Int) {
+        var currentKeyword = outputSearchHistory.value
+        currentKeyword.remove(at: index)
+        UserDefaultManager.searchHistory = currentKeyword
+        outputSearchHistory.value = currentKeyword
     }
 }
