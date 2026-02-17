@@ -13,14 +13,13 @@ import Kingfisher
 
 class SearchResultViewController: BaseViewController {
     
-    let totalCountLabel = UILabel()
-    let sortedByAccuracyBtn = ShoppingSortButton(titleStr: "정확도")
-    let sortedByDateBtn = ShoppingSortButton(titleStr: "날짜순")
-    let sortedByHighPriceBtn = ShoppingSortButton(titleStr: "가격높은순")
-    let sortedByLowPriceBtn = ShoppingSortButton(titleStr: "가격낮은순")
-    let sortingStackView = UIStackView()
-    
-    lazy var collectionView = {
+    private let totalCountLabel = UILabel()
+    private let sortedByAccuracyBtn = ShoppingSortButton(titleStr: "정확도")
+    private let sortedByDateBtn = ShoppingSortButton(titleStr: "날짜순")
+    private let sortedByHighPriceBtn = ShoppingSortButton(titleStr: "가격높은순")
+    private let sortedByLowPriceBtn = ShoppingSortButton(titleStr: "가격낮은순")
+    private let sortingStackView = UIStackView()
+    private lazy var collectionView = {
         let resultCollectionView = UICollectionView(frame: .zero, collectionViewLayout: SearchResultViewController.layout())
         
         resultCollectionView.backgroundColor = .black
@@ -30,37 +29,69 @@ class SearchResultViewController: BaseViewController {
         
         return resultCollectionView
     }()
+    static private func layout() -> UICollectionViewFlowLayout {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        
+        let spacing: CGFloat = 16
+        let width = (UIScreen.main.bounds.width - (spacing * 3)) / 2
+        layout.itemSize = CGSize(width: width, height: width * 1.65)
+        
+        layout.minimumLineSpacing = spacing
+        layout.minimumInteritemSpacing = spacing
+        layout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
+        
+        return layout
+    }
+    
+    let viewModel = SearchResultViewModel()
 
     var searchKeyword: String?
-    var shoppingList: [ShoppingItems] = []
-    
-    var page = 1
-    var isEnd = false
-    var currentSort = "sim"
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationItem.title = searchKeyword
-        
-        callRequest(query: searchKeyword ?? "", sort: currentSort)
-        
+        setupUI()
         configureButtonActions()
         
-        sortedByAccuracyBtn.isSelected = true
-    }
-    
-    override func configureHierarchy() {
-        view.addSubview(totalCountLabel)
-        view.addSubview(sortingStackView)
-        view.addSubview(collectionView)
+        viewModel.searchKeyword = searchKeyword ?? ""
         
-        [sortedByAccuracyBtn, sortedByDateBtn, sortedByHighPriceBtn, sortedByLowPriceBtn].forEach {
-            sortingStackView.addArrangedSubview($0)
+        print("SearchResultViewController ViewDidLoad")
+        viewModel.inputViewDidLoadTrigger.value = ()
+        sortedByAccuracyBtn.isSelected = true
+        
+        viewModel.outputNavigationTitle.bind { value in
+            print("viewModel.outputNavigationTitle.bind")
+            self.navigationItem.title = value
+        }
+        
+        viewModel.outputShoppingList.bind { _ in
+            print("viewModel.outputShoppingList.bind")
+            self.collectionView.reloadData()
+        }
+        
+        viewModel.outputTotalCountLabel.bind { value in
+            print("viewModel.outputTotalCountLabel.bind")
+            self.totalCountLabel.text = value
+        }
+        
+        viewModel.outputScrollToTop.bind { _ in
+            print("viewModel.outputScrollToTop.bind")
+            if !self.viewModel.outputShoppingList.value.isEmpty {
+                self.collectionView.setContentOffset(.zero, animated: true)
+            }
         }
     }
     
-    override func configureLayout() {
+    private func setupUI() {
+        view.backgroundColor = .black
+        view.addSubview(totalCountLabel)
+        view.addSubview(sortingStackView)
+        view.addSubview(collectionView)
+        sortingStackView.addArrangedSubview(sortedByAccuracyBtn)
+        sortingStackView.addArrangedSubview(sortedByDateBtn)
+        sortingStackView.addArrangedSubview(sortedByHighPriceBtn)
+        sortingStackView.addArrangedSubview(sortedByLowPriceBtn)
+        
         totalCountLabel.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(12)
             make.horizontalEdges.equalToSuperview().inset(16)
@@ -75,20 +106,15 @@ class SearchResultViewController: BaseViewController {
             make.top.equalTo(sortingStackView.snp.bottom).offset(12)
             make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
         }
-    }
-    
-    override func configureView() {
-        view.backgroundColor = .black
-    
+        
         totalCountLabel.textColor = UIColor(red: 26/255, green: 190/255, blue: 88/255, alpha: 1)
         totalCountLabel.font = .boldSystemFont(ofSize: 14)
-        
         sortingStackView.axis = .horizontal
         sortingStackView.spacing = 8
         sortingStackView.distribution = .fillProportionally
     }
     
-    func configureButtonActions() {
+    private func configureButtonActions() {
         let buttons = [sortedByAccuracyBtn, sortedByDateBtn, sortedByHighPriceBtn, sortedByLowPriceBtn]
         
         buttons.forEach {
@@ -96,7 +122,7 @@ class SearchResultViewController: BaseViewController {
         }
     }
     
-    @objc func sortButtonClicked(_ sender: ShoppingSortButton) {
+    @objc private func sortButtonClicked(_ sender: ShoppingSortButton) {
         let buttons = [sortedByAccuracyBtn, sortedByDateBtn, sortedByHighPriceBtn, sortedByLowPriceBtn]
         
         for btn in buttons {
@@ -105,83 +131,26 @@ class SearchResultViewController: BaseViewController {
         
         sender.isSelected = true
         
-        if sender == sortedByAccuracyBtn { currentSort = "sim" }
-        else if sender == sortedByDateBtn { currentSort = "date" }
-        else if sender == sortedByHighPriceBtn { currentSort = "dsc" }
-        else if sender == sortedByLowPriceBtn { currentSort = "asc" }
+        let sortingType: String
         
-        // 정렬이 바뀌면 페이지1부터 다시 시작
-        page = 1
-        isEnd = false
-        callRequest(query: searchKeyword ?? "", sort: currentSort)
-    }
-    
-    func scrollToTop() {
-        // 보내주는 데이터가 있을 때만
-        if !self.shoppingList.isEmpty {
-            self.collectionView.setContentOffset(.zero, animated: true)
-        }
-    }
-    
-    func callRequest(query: String, sort: String) {
-        let start = (page - 1) * 30 + 1
-        print(start)
+        if sender == sortedByAccuracyBtn { sortingType = "sim" }
+        else if sender == sortedByDateBtn { sortingType = "date" }
+        else if sender == sortedByHighPriceBtn { sortingType = "dsc" }
+        else { sortingType = "asc" }
         
-        let url = "https://openapi.naver.com/v1/search/shop.json"
-        let headers: HTTPHeaders = ["X-Naver-Client-Id": APIKey.NAVER_CLIENT_ID, "X-Naver-Client-Secret": APIKey.NAVER_CLIENT_SECRET]
-        let parameters: Parameters = ["query": query, "display": 30, "start": start, "sort": sort]
-        
-        AF.request(url, method: .get, parameters: parameters, headers: headers)
-            .responseDecodable(of: ShoppingData.self) { response in
-                switch response.result {
-                case .success(let value):
-                    // 페이지1이면 갈아끼우고, 아니면 뒤에 붙이기
-                    if self.page == 1 {
-                        self.shoppingList = value.items
-                    } else {
-                        self.shoppingList.append(contentsOf: value.items)
-                    }
-                    
-                    if self.shoppingList.count >= value.total || start >= 1000 {
-                        self.isEnd = true
-                    }
-                    
-                    self.totalCountLabel.text = "\(value.total.formatted())개의 검색 결과"
-                    self.collectionView.reloadData()
-                    
-                    if self.page == 1 { self.scrollToTop() }
-                    
-                case .failure(let error):
-                    print(error)
-                }
-            }
-    }
-    
-    static func layout() -> UICollectionViewFlowLayout {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        
-        let spacing: CGFloat = 16
-        let width = (UIScreen.main.bounds.width - (spacing * 3)) / 2
-        layout.itemSize = CGSize(width: width, height: width * 1.65)
-        
-        layout.minimumLineSpacing = spacing
-        layout.minimumInteritemSpacing = spacing
-        layout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
-        
-        return layout
+        viewModel.inputSortButtonClicked.value = sortingType
     }
 }
 
 extension SearchResultViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return shoppingList.count
+        return viewModel.outputShoppingList.value.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchResultCollectionViewCell.identifier, for: indexPath) as! SearchResultCollectionViewCell
         
-        let item = shoppingList[indexPath.item]
+        let item = viewModel.outputShoppingList.value[indexPath.item]
         
         // html 태그 제거
         let reg = item.title.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression)
@@ -200,12 +169,5 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
         }
         
         return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if indexPath.item == (shoppingList.count - 4) && isEnd == false {
-            page += 1
-            callRequest(query: searchKeyword ?? "", sort: currentSort)
-        }
     }
 }
