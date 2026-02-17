@@ -27,19 +27,19 @@ final class ShoppingViewModel {
             self.outputSearchHistory.value = UserDefaultManager.searchHistory
         }
         
-        inputSearchButtonClicked.bind {
+        inputSearchButtonClicked.lazyBind {
             print("inputSearchButtonClicked")
             self.search()
         }
         
-        inputDeleteButtonClicked.bind { index in
+        inputDeleteButtonClicked.lazyBind { index in
             print("inputDeleteButtonClicked.bind")
             if let value = index {
                 self.removeKeyword(index: value)
             }
         }
         
-        inputDeleteAllButtonClicked.bind {
+        inputDeleteAllButtonClicked.lazyBind {
             print("inputDeleteAllButtonClicked.bind")
             UserDefaultManager.searchHistory = []
             self.outputSearchHistory.value = []
