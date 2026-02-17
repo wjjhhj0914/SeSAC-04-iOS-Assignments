@@ -24,7 +24,13 @@ class Observable<T> {
     }
     
     func bind(_ closure: @escaping (T) -> Void) {
+        print("Observable Bind Method")
         closure(value)
+        self.closure = closure
+    }
+    
+    func lazyBind(_ closure: @escaping (T) -> Void) {
+        print("Observable Lazy Bind Method")
         self.closure = closure
     }
 }
