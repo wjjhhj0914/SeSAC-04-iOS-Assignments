@@ -56,7 +56,6 @@ class SearchResultViewController: BaseViewController {
         viewModel.searchKeyword = searchKeyword ?? ""
         
         print("SearchResultViewController ViewDidLoad")
-        viewModel.inputViewDidLoadTrigger.value = ()
         sortedByAccuracyBtn.isSelected = true
         
         viewModel.outputNavigationTitle.bind { value in
@@ -80,6 +79,8 @@ class SearchResultViewController: BaseViewController {
                 self.collectionView.setContentOffset(.zero, animated: true)
             }
         }
+        
+        viewModel.inputViewDidLoadTrigger.value = ()
     }
     
     private func setupUI() {
