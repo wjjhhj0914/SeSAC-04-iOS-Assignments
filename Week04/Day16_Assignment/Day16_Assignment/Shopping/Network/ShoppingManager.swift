@@ -18,7 +18,7 @@ final class ShoppingManager {
         print(#function)
         let url = "https://openapi.naver.com/v1/search/shop.json"
         let headers: HTTPHeaders = ["X-Naver-Client-Id": APIKey.NAVER_CLIENT_ID, "X-Naver-Client-Secret": APIKey.NAVER_CLIENT_SECRET]
-        let parameters: Parameters = ["query": query, "display": 30, "start": 1, "sort": sort]
+        let parameters: Parameters = ["query": query, "display": 100, "start": 1, "sort": sort]
         AF.request(url, method: .get, parameters: parameters, headers: headers)
             .responseDecodable(of: ShoppingData.self) { response in
                 switch response.result {
