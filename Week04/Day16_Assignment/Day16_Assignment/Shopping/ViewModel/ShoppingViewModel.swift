@@ -9,48 +9,62 @@ import Foundation
 
 final class ShoppingViewModel {
     
-    let inputViewDidLoadTrigger = Observable(())
-    let inputSearchKeyword = Observable("")
-    let inputSearchButtonClicked = Observable(())
-    let inputDeleteButtonClicked: Observable<Int?> = Observable(nil)
-    let inputDeleteAllButtonClicked = Observable(())
+    var input: Input
+    var output: Output
     
-    let outputSearchHistory: Observable<[String]> = Observable([])
-    let outputValidSearchKeyword: Observable<String?> = Observable(nil)
-    let outputAlertMessage: Observable<String?> = Observable(nil)
+    struct Input {
+        let viewDidLoadTrigger = Observable(())
+        let searchKeyword = Observable("")
+        let searchButtonClicked = Observable(())
+        let deleteButtonClicked: Observable<Int?> = Observable(nil)
+        let deleteAllButtonClicked = Observable(())
+    }
+    
+    struct Output {
+        let searchHistory: Observable<[String]> = Observable([])
+        let validSearchKeyword: Observable<String?> = Observable(nil)
+        let alertMessage: Observable<String?> = Observable(nil)
+    }
     
     init () {
         print("ShoppingViewModel Init")
         
-        inputViewDidLoadTrigger.bind {
+        input = Input()
+        output = Output()
+        
+        transform()
+    }
+    
+    func transform() {
+        input.viewDidLoadTrigger.bind {
             print("inputViewDidLoadTrigger 신호 받음")
-            self.outputSearchHistory.value = UserDefaultManager.searchHistory
+            self.output.searchHistory.value = UserDefaultManager.searchHistory
         }
         
-        inputSearchButtonClicked.lazyBind {
+        input.searchButtonClicked.lazyBind {
             print("inputSearchButtonClicked")
             self.search()
         }
         
-        inputDeleteButtonClicked.lazyBind { index in
+        input.deleteButtonClicked.lazyBind { index in
             print("inputDeleteButtonClicked.bind")
             if let value = index {
                 self.removeKeyword(index: value)
             }
         }
         
-        inputDeleteAllButtonClicked.lazyBind {
+        input.deleteAllButtonClicked.lazyBind {
             print("inputDeleteAllButtonClicked.bind")
             UserDefaultManager.searchHistory = []
-            self.outputSearchHistory.value = []
+            self.output.searchHistory.value = []
         }
     }
     
     private func search() {
-        let userInputText = inputSearchKeyword.value
+        let userInputText = input.searchKeyword.value
         
         if userInputText.count < 2 {
-            outputAlertMessage.value = "2글자 이상 입력해주세요"
+            output.alertMessage.value = "2글자 이상 입력해주세요"
         } else {
             let currentHistory = UserDefaultManager.searchHistory
             var userSearchedList: [String] = [userInputText]
@@ -62,15 +76,15 @@ final class ShoppingViewModel {
             }
             
             UserDefaultManager.searchHistory = userSearchedList
-            outputSearchHistory.value = userSearchedList
-            outputValidSearchKeyword.value = userInputText
+            output.searchHistory.value = userSearchedList
+            output.validSearchKeyword.value = userInputText
         }
     }
     
     private func removeKeyword(index: Int) {
-        var currentKeyword = outputSearchHistory.value
+        var currentKeyword = output.searchHistory.value
         currentKeyword.remove(at: index)
         UserDefaultManager.searchHistory = currentKeyword
-        outputSearchHistory.value = currentKeyword
+        output.searchHistory.value = currentKeyword
     }
 }
