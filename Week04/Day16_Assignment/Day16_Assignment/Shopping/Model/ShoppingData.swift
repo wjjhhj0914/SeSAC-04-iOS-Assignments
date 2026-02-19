@@ -20,4 +20,5 @@ struct ShoppingItems: Decodable {
     let lprice: String
     let hprice: String
     let mallName: String
+    let productId: String
 }
