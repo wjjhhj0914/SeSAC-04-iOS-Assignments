@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class ShoppingViewController: BaseViewController {
+final class ShoppingViewController: BaseViewController {
     
     private let shoppingSearchBar = UISearchBar()
     private let deleteAllBtn = UIButton()
@@ -24,7 +24,7 @@ class ShoppingViewController: BaseViewController {
         return recentSearchKeywordTableView
     }()
     
-    let viewModel = ShoppingViewModel()
+    private let viewModel = ShoppingViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
