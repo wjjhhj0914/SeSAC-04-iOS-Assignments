@@ -11,7 +11,7 @@ import SnapKit
 import Alamofire
 import Kingfisher
 
-class SearchResultViewController: BaseViewController {
+final class SearchResultViewController: BaseViewController {
     
     private let totalCountLabel = UILabel()
     private let sortedByAccuracyBtn = ShoppingSortButton(titleStr: "정확도")
@@ -45,7 +45,7 @@ class SearchResultViewController: BaseViewController {
         return layout
     }
     
-    let viewModel = SearchResultViewModel()
+    private let viewModel = SearchResultViewModel()
 
     var searchKeyword: String?
 
