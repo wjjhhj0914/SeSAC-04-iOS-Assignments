@@ -33,12 +33,12 @@ class ShoppingViewController: BaseViewController {
         
         print("ShoppingViewController ViewDidLoad")
         
-        viewModel.outputSearchHistory.bind { _ in
+        viewModel.output.searchHistory.bind { _ in
             print("viewModel.outputSearchHistory.bind")
             self.myTableView.reloadData()
         }
         
-        viewModel.outputAlertMessage.lazyBind { value in
+        viewModel.output.alertMessage.lazyBind { value in
             print("viewModel.outputAlertMessage.lazyBind")
             let alert = UIAlertController(title: "알림", message: value, preferredStyle: .alert)
             let ok = UIAlertAction(title: "확인", style: .default)
@@ -46,14 +46,14 @@ class ShoppingViewController: BaseViewController {
             self.present(alert, animated: true)
         }
         
-        viewModel.outputValidSearchKeyword.lazyBind { value in
+        viewModel.output.validSearchKeyword.lazyBind { value in
             print("viewModel.outputValidSearchKeyword.bind")
             let vc = SearchResultViewController()
             vc.searchKeyword = value
             self.navigationController?.pushViewController(vc, animated: true)
         }
         
-        viewModel.inputViewDidLoadTrigger.value = ()
+        viewModel.input.viewDidLoadTrigger.value = ()
     }
     
     private func setupUI() {
@@ -93,38 +93,38 @@ class ShoppingViewController: BaseViewController {
     }
     
     @objc private func deleteAllBtnClicked() {
-        viewModel.inputDeleteAllButtonClicked.value = ()
+        viewModel.input.deleteAllButtonClicked.value = ()
     }
     
     @objc private func deleteBtnClicked(_ sender: UIButton) {
-        viewModel.inputDeleteButtonClicked.value = sender.tag
+        viewModel.input.deleteButtonClicked.value = sender.tag
     }
 }
 
 extension ShoppingViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        viewModel.inputSearchKeyword.value = searchBar.text ?? ""
-        viewModel.inputSearchButtonClicked.value = ()
+        viewModel.input.searchKeyword.value = searchBar.text ?? ""
+        viewModel.input.searchButtonClicked.value = ()
         searchBar.resignFirstResponder()
     }
 }
 
 extension ShoppingViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.outputSearchHistory.value.count
+        return viewModel.output.searchHistory.value.count
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedKeyword = viewModel.outputSearchHistory.value[indexPath.row]
+        let selectedKeyword = viewModel.output.searchHistory.value[indexPath.row]
         shoppingSearchBar.text = selectedKeyword
         
-        viewModel.inputSearchKeyword.value = selectedKeyword
-        viewModel.inputSearchButtonClicked.value = ()
+        viewModel.input.searchKeyword.value = selectedKeyword
+        viewModel.input.searchButtonClicked.value = ()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: RecentSearchKeywordTableViewCell.identifier) as! RecentSearchKeywordTableViewCell
-        cell.resultLabel.text = viewModel.outputSearchHistory.value[indexPath.row]
+        cell.resultLabel.text = viewModel.output.searchHistory.value[indexPath.row]
         cell.deleteBtn.tag = indexPath.row
         cell.deleteBtn.addTarget(self, action: #selector(deleteBtnClicked), for: .touchUpInside)
         

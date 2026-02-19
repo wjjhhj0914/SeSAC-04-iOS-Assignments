@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class ShoppingViewModel {
+final class ShoppingViewModel: BaseViewModel {
     
     var input: Input
     var output: Output
