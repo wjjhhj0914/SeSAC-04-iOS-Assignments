@@ -142,6 +142,10 @@ final class SearchResultViewController: BaseViewController {
         
         viewModel.input.sortButtonClicked.value = sortingType
     }
+    
+    @objc private func likeButtonClicked(_ sender: UIButton) {
+        viewModel.input.likeButtonClicked.value = sender.tag
+    }
 }
 
 extension SearchResultViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -153,6 +157,17 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchResultCollectionViewCell.identifier, for: indexPath) as! SearchResultCollectionViewCell
         
         let item = viewModel.output.shoppingList.value[indexPath.item]
+        
+        let isLiked = UserDefaultManager.likedProduct.contains(item.productId)
+        let likeImage: UIImage?
+        if isLiked {
+            likeImage = UIImage(systemName: "heart.fill")
+        } else {
+            likeImage = UIImage(systemName: "heart")
+        }
+        cell.likeButton.setImage(likeImage, for: .normal)
+        cell.likeButton.tag = indexPath.item
+        cell.likeButton.addTarget(self, action: #selector(likeButtonClicked), for: .touchUpInside)
         
         // html 태그 제거
         let reg = item.title.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression)

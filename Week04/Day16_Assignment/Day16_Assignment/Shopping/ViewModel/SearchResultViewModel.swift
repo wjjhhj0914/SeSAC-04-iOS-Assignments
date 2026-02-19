@@ -15,6 +15,7 @@ final class SearchResultViewModel: BaseViewModel {
     struct Input {
         let viewDidLoadTrigger = Observable(())
         let sortButtonClicked = Observable("sim")
+        let likeButtonClicked: Observable<Int?> = Observable(nil)
     }
     
     struct Output {
@@ -37,14 +38,32 @@ final class SearchResultViewModel: BaseViewModel {
     
     func transform() {
         input.viewDidLoadTrigger.bind {
-            print("inputViewDidLoadTrigger.bind")
+            print("input.viewDidLoadTrigger.bind")
             self.output.navigationTitle.value = self.searchKeyword
             self.callRequest(sortingType: "sim")
         }
         
         input.sortButtonClicked.bind { sortingType in
-            print("inputSortButtonClicked.bind")
+            print("input.sortButtonClicked.bind")
             self.callRequest(sortingType: sortingType)
+        }
+        
+        input.likeButtonClicked.bind { index in
+            print("input.likeButtonClicked.bind")
+            if let value = index {
+                let productId = self.output.shoppingList.value[value].productId
+                
+                var currentLikes = UserDefaultManager.likedProduct
+                
+                if currentLikes.contains(productId) {
+                    currentLikes = currentLikes.filter { $0 != productId}
+                } else {
+                    currentLikes.append(productId)
+                }
+                
+                UserDefaultManager.likedProduct = currentLikes
+                self.output.shoppingList.value = self.output.shoppingList.value
+            }
         }
     }
     
