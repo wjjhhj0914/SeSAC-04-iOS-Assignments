@@ -7,28 +7,42 @@
 
 import Foundation
 
-final class SearchResultViewModel {
+final class SearchResultViewModel: BaseViewModel {
     
-    let inputViewDidLoadTrigger = Observable(())
-    let inputSortButtonClicked = Observable("sim")
+    var input: Input
+    var output: Output
     
-    let outputShoppingList: Observable<[ShoppingItems]> = Observable([])
-    let outputTotalCountLabel = Observable("")
-    let outputNavigationTitle = Observable("")
-    let outputScrollToTop = Observable(())
+    struct Input {
+        let viewDidLoadTrigger = Observable(())
+        let sortButtonClicked = Observable("sim")
+    }
+    
+    struct Output {
+        let shoppingList: Observable<[ShoppingItems]> = Observable([])
+        let totalCountLabel = Observable("")
+        let navigationTitle = Observable("")
+        let scrollToTop = Observable(())
+    }
     
     var searchKeyword: String = ""
     
     init() {
         print("SearchResultViewModel Init")
         
-        inputViewDidLoadTrigger.bind {
+        input = Input()
+        output = Output()
+        
+        transform()
+    }
+    
+    func transform() {
+        input.viewDidLoadTrigger.bind {
             print("inputViewDidLoadTrigger.bind")
-            self.outputNavigationTitle.value = self.searchKeyword
+            self.output.navigationTitle.value = self.searchKeyword
             self.callRequest(sortingType: "sim")
         }
         
-        inputSortButtonClicked.bind { sortingType in
+        input.sortButtonClicked.bind { sortingType in
             print("inputSortButtonClicked.bind")
             self.callRequest(sortingType: sortingType)
         }
@@ -37,9 +51,9 @@ final class SearchResultViewModel {
     private func callRequest(sortingType: String) {
         print(">")
         ShoppingManager.shared.callRequest(query: searchKeyword, sort: sortingType) { value in
-            self.outputShoppingList.value = value.items
-            self.outputTotalCountLabel.value = "\(value.total.formatted())개의 검색 결과"
-            self.outputScrollToTop.value = ()
+            self.output.shoppingList.value = value.items
+            self.output.totalCountLabel.value = "\(value.total.formatted())개의 검색 결과"
+            self.output.scrollToTop.value = ()
         }
     }
 }

@@ -29,6 +29,7 @@ class SearchResultViewController: BaseViewController {
         
         return resultCollectionView
     }()
+    
     static private func layout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -58,29 +59,29 @@ class SearchResultViewController: BaseViewController {
         print("SearchResultViewController ViewDidLoad")
         sortedByAccuracyBtn.isSelected = true
         
-        viewModel.outputNavigationTitle.bind { value in
+        viewModel.output.navigationTitle.bind { value in
             print("viewModel.outputNavigationTitle.bind")
             self.navigationItem.title = value
         }
         
-        viewModel.outputShoppingList.bind { _ in
+        viewModel.output.shoppingList.bind { _ in
             print("viewModel.outputShoppingList.bind")
             self.collectionView.reloadData()
         }
         
-        viewModel.outputTotalCountLabel.bind { value in
+        viewModel.output.totalCountLabel.bind { value in
             print("viewModel.outputTotalCountLabel.bind")
             self.totalCountLabel.text = value
         }
         
-        viewModel.outputScrollToTop.bind { _ in
+        viewModel.output.scrollToTop.bind { _ in
             print("viewModel.outputScrollToTop.bind")
-            if !self.viewModel.outputShoppingList.value.isEmpty {
+            if !self.viewModel.output.shoppingList.value.isEmpty {
                 self.collectionView.setContentOffset(.zero, animated: true)
             }
         }
         
-        viewModel.inputViewDidLoadTrigger.value = ()
+        viewModel.input.viewDidLoadTrigger.value = ()
     }
     
     private func setupUI() {
@@ -139,19 +140,19 @@ class SearchResultViewController: BaseViewController {
         else if sender == sortedByHighPriceBtn { sortingType = "dsc" }
         else { sortingType = "asc" }
         
-        viewModel.inputSortButtonClicked.value = sortingType
+        viewModel.input.sortButtonClicked.value = sortingType
     }
 }
 
 extension SearchResultViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.outputShoppingList.value.count
+        return viewModel.output.shoppingList.value.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchResultCollectionViewCell.identifier, for: indexPath) as! SearchResultCollectionViewCell
         
-        let item = viewModel.outputShoppingList.value[indexPath.item]
+        let item = viewModel.output.shoppingList.value[indexPath.item]
         
         // html 태그 제거
         let reg = item.title.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression)
