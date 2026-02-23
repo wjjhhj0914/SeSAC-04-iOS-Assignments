@@ -70,6 +70,19 @@ final class HomeworkViewController: UIViewController {
                 cell.label.text = element
             }
             .disposed(by: disposeBag)
+        
+        searchBar.rx.searchButtonClicked
+            .subscribe(with: self) { owner, _ in
+                guard let text = owner.searchBar.text, !text.isEmpty else { return }
+                
+                let newUser = SampleUser(name: text, age: 20)
+                owner.userArray.insert(newUser, at: 0)
+                owner.userList.onNext(owner.userArray)
+                
+                owner.searchBar.text = ""
+                owner.view.endEditing(true)
+            }
+            .disposed(by: disposeBag)
     }
     
     private func configure() {
