@@ -31,7 +31,7 @@ final class HomeworkViewController: UIViewController {
     private let tableView = UITableView()
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
     private let searchBar = UISearchBar()
-     
+    
     private let disposeBag = DisposeBag()
     
     private var userArray = userData
@@ -39,13 +39,13 @@ final class HomeworkViewController: UIViewController {
     
     private lazy var userList = BehaviorSubject(value: userArray)
     private lazy var selectedUser = BehaviorSubject<[String]>(value: selectedArray)
-     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
         bind()
     }
-     
+    
     private func bind() {
         collectionView.backgroundColor = .lightGray
         
@@ -54,6 +54,20 @@ final class HomeworkViewController: UIViewController {
             .drive(tableView.rx.items(cellIdentifier: PersonTableViewCell.identifier, cellType: PersonTableViewCell.self)) { row, element, cell in
                 cell.usernameLabel.text = element.name
                 cell.profileImageView.image = UIImage(systemName: "person.crop.circle")
+            }
+            .disposed(by: disposeBag)
+        
+        tableView.rx.modelSelected(SampleUser.self)
+            .subscribe(with: self) { owner, user in
+                owner.selectedArray.insert(user.name, at: 0)
+                owner.selectedUser.onNext(owner.selectedArray)
+            }
+            .disposed(by: disposeBag)
+        
+        selectedUser
+            .observe(on: MainScheduler.instance)
+            .bind(to: collectionView.rx.items(cellIdentifier: UserCollectionViewCell.identifier, cellType: UserCollectionViewCell.self)) { item, element, cell in
+                cell.label.text = element
             }
             .disposed(by: disposeBag)
     }
@@ -65,7 +79,7 @@ final class HomeworkViewController: UIViewController {
         view.addSubview(searchBar)
         
         navigationItem.titleView = searchBar
-         
+        
         collectionView.register(UserCollectionViewCell.self, forCellWithReuseIdentifier: UserCollectionViewCell.identifier)
         collectionView.backgroundColor = .lightGray
         collectionView.snp.makeConstraints { make in
@@ -90,7 +104,7 @@ final class HomeworkViewController: UIViewController {
         return layout
     }
 }
- 
+
 class UserCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "UserCollectionViewCell"
@@ -145,7 +159,7 @@ final class PersonTableViewCell: UITableViewCell {
         button.layer.cornerRadius = 16
         return button
     }()
-      
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -156,7 +170,7 @@ final class PersonTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-     
+    
     
     private func configure() {
         contentView.addSubview(usernameLabel)
