@@ -16,6 +16,16 @@ struct SampleUser {
     let age: Int
 }
 
+private let userData = [
+    SampleUser(name: "Steven", age: 20),
+    SampleUser(name: "Mike", age: 21),
+    SampleUser(name: "Emma", age: 22),
+    SampleUser(name: "James", age: 23),
+    SampleUser(name: "Lisa", age: 24),
+    SampleUser(name: "John", age: 25),
+    SampleUser(name: "Sarah", age: 26)
+]
+
 final class HomeworkViewController: UIViewController {
     
     private let tableView = UITableView()
@@ -23,6 +33,12 @@ final class HomeworkViewController: UIViewController {
     private let searchBar = UISearchBar()
      
     private let disposeBag = DisposeBag()
+    
+    private var userArray = userData
+    private var selectedArray: [String] = []
+    
+    private lazy var userList = BehaviorSubject(value: userArray)
+    private lazy var selectedUser = BehaviorSubject<[String]>(value: selectedArray)
      
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,8 +47,15 @@ final class HomeworkViewController: UIViewController {
     }
      
     private func bind() {
-        tableView.backgroundColor = .blue
         collectionView.backgroundColor = .lightGray
+        
+        userList
+            .asDriver(onErrorJustReturn: [])
+            .drive(tableView.rx.items(cellIdentifier: PersonTableViewCell.identifier, cellType: PersonTableViewCell.self)) { row, element, cell in
+                cell.usernameLabel.text = element.name
+                cell.profileImageView.image = UIImage(systemName: "person.crop.circle")
+            }
+            .disposed(by: disposeBag)
     }
     
     private func configure() {
@@ -52,7 +75,6 @@ final class HomeworkViewController: UIViewController {
         }
         
         tableView.register(PersonTableViewCell.self, forCellReuseIdentifier: PersonTableViewCell.identifier)
-        tableView.backgroundColor = .systemGreen
         tableView.rowHeight = 100
         tableView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(50)
@@ -67,7 +89,6 @@ final class HomeworkViewController: UIViewController {
         layout.scrollDirection = .horizontal
         return layout
     }
-
 }
  
 class UserCollectionViewCell: UICollectionViewCell {
@@ -93,7 +114,6 @@ class UserCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }
 
 final class PersonTableViewCell: UITableViewCell {
@@ -163,6 +183,3 @@ final class PersonTableViewCell: UITableViewCell {
         }
     }
 }
-
-
-
