@@ -18,6 +18,8 @@ class NumbersViewController: BaseViewController {
     private let plusLabel = UILabel()
     private let separator = UIView()
     private let result = UILabel()
+    
+    private let viewModel = NumbersViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,11 +80,11 @@ class NumbersViewController: BaseViewController {
     }
     
     override func bind() {
-        Observable.combineLatest(number1.rx.text.orEmpty, number2.rx.text.orEmpty, number3.rx.text.orEmpty) { textValue1, textValue2, textValue3 -> Int in
-            return (Int(textValue1) ?? 0) + (Int(textValue2) ?? 0) + (Int(textValue3) ?? 0)
-        }
-        .map(\.description)
-        .bind(to: result.rx.text)
-        .disposed(by: disposeBag)
+        let input = NumbersViewModel.Input(number1: number1.rx.text.orEmpty, number2: number2.rx.text.orEmpty, number3: number3.rx.text.orEmpty)
+        let output = viewModel.transform(input: input)
+        
+        output.resultText
+            .bind(to: result.rx.text)
+            .disposed(by: disposeBag)
     }
 }
