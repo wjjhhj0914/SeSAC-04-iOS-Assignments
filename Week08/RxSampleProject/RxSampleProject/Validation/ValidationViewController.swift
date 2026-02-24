@@ -10,9 +10,6 @@ import RxSwift
 import RxCocoa
 import SnapKit
 
-private let minimalUsernameLength = 5
-private let minimalPasswordLength = 5
-
 class ValidationViewController: BaseViewController {
     
     private let usernameTitleLabel = {
@@ -62,6 +59,8 @@ class ValidationViewController: BaseViewController {
         button.setTitleColor(.white, for: .normal)
         return button
     }()
+    
+    private let viewModel = ValidationViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,35 +111,33 @@ class ValidationViewController: BaseViewController {
     }
     
     override func bind() {
-        let usernameValid = usernameTextField.rx.text.orEmpty
-            .map { $0.count >= minimalUsernameLength }
-            .share(replay: 1)
+        let input = ValidationViewModel.Input(
+            textInputTap: doSomethingButton.rx.tap,
+            usernameText: usernameTextField.rx.text.orEmpty,
+            passwordText: passwordTextField.rx.text.orEmpty)
         
-        let passwordValid = passwordTextField.rx.text.orEmpty
-            .map { $0.count >= minimalPasswordLength }
-            .share(replay: 1)
+        let output = viewModel.transform(input: input)
         
-        let everythingValid = Observable.combineLatest(usernameValid, passwordValid) { $0 && $1 }
-            .share(replay: 1)
-        
-        usernameValid
+        output.isUsernameValid
             .bind(to: passwordTextField.rx.isEnabled)
             .disposed(by: disposeBag)
         
-        usernameValid
+        output.isUsernameValid
             .bind(to: usernameValidLabel.rx.isHidden)
             .disposed(by: disposeBag)
         
-        passwordValid
+        output.isPasswordValid
             .bind(to: passwordValidLabel.rx.isHidden)
             .disposed(by: disposeBag)
         
-        everythingValid
+        output.isButtonEnabled
             .bind(to: doSomethingButton.rx.isEnabled)
             .disposed(by: disposeBag)
         
-        doSomethingButton.rx.tap
-            .subscribe(onNext: { [weak self] _ in self?.alert(title: "알림", message: "환영합니다!") })
+        output.showAlert
+            .bind(with: self, onNext: { owner, _ in
+                owner.alert(title: "알림", message: "환영합니다!")
+            })
             .disposed(by: disposeBag)
     }
     
