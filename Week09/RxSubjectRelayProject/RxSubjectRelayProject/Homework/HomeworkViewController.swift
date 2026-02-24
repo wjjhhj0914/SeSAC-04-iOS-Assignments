@@ -11,21 +11,6 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
-struct SampleUser {
-    let name: String
-    let age: Int
-}
-
-private let userData = [
-    SampleUser(name: "Steven", age: 20),
-    SampleUser(name: "Mike", age: 21),
-    SampleUser(name: "Emma", age: 22),
-    SampleUser(name: "James", age: 23),
-    SampleUser(name: "Lisa", age: 24),
-    SampleUser(name: "John", age: 25),
-    SampleUser(name: "Sarah", age: 26)
-]
-
 final class HomeworkViewController: UIViewController {
     
     private let tableView = UITableView()
@@ -33,12 +18,7 @@ final class HomeworkViewController: UIViewController {
     private let searchBar = UISearchBar()
     
     private let disposeBag = DisposeBag()
-    
-    private var userArray = userData
-    private var selectedArray: [String] = []
-    
-    private lazy var userList = BehaviorSubject(value: userArray)
-    private lazy var selectedUser = BehaviorSubject<[String]>(value: selectedArray)
+    private let viewModel = HomeworkViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,40 +27,23 @@ final class HomeworkViewController: UIViewController {
     }
     
     private func bind() {
-        collectionView.backgroundColor = .lightGray
+        let input = HomeworkViewModel.Input(
+            searchButtonTap: searchBar.rx.searchButtonClicked,
+            searchText: searchBar.rx.text,
+            cellSelected: tableView.rx.modelSelected(SampleUser.self))
         
-        userList
-            .asDriver(onErrorJustReturn: [])
-            .drive(tableView.rx.items(cellIdentifier: PersonTableViewCell.identifier, cellType: PersonTableViewCell.self)) { row, element, cell in
+        let output = viewModel.transform(input: input)
+        
+        output.userList
+            .bind(to: tableView.rx.items(cellIdentifier: PersonTableViewCell.identifier, cellType: PersonTableViewCell.self)) { row, element, cell in
                 cell.usernameLabel.text = element.name
                 cell.profileImageView.image = UIImage(systemName: "person.crop.circle")
             }
             .disposed(by: disposeBag)
         
-        tableView.rx.modelSelected(SampleUser.self)
-            .subscribe(with: self) { owner, user in
-                owner.selectedArray.insert(user.name, at: 0)
-                owner.selectedUser.onNext(owner.selectedArray)
-            }
-            .disposed(by: disposeBag)
-        
-        selectedUser
-            .observe(on: MainScheduler.instance)
+        output.selectedUser
             .bind(to: collectionView.rx.items(cellIdentifier: UserCollectionViewCell.identifier, cellType: UserCollectionViewCell.self)) { item, element, cell in
                 cell.label.text = element
-            }
-            .disposed(by: disposeBag)
-        
-        searchBar.rx.searchButtonClicked
-            .subscribe(with: self) { owner, _ in
-                guard let text = owner.searchBar.text, !text.isEmpty else { return }
-                
-                let newUser = SampleUser(name: text, age: 20)
-                owner.userArray.insert(newUser, at: 0)
-                owner.userList.onNext(owner.userArray)
-                
-                owner.searchBar.text = ""
-                owner.view.endEditing(true)
             }
             .disposed(by: disposeBag)
     }
