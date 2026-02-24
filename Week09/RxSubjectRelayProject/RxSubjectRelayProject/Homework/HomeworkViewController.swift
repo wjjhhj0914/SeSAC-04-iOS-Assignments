@@ -38,6 +38,14 @@ final class HomeworkViewController: UIViewController {
             .bind(to: tableView.rx.items(cellIdentifier: PersonTableViewCell.identifier, cellType: PersonTableViewCell.self)) { row, element, cell in
                 cell.usernameLabel.text = element.name
                 cell.profileImageView.image = UIImage(systemName: "person.crop.circle")
+                
+                cell.detailButton.rx.tap
+                    .bind(with: self) { owner, _ in
+                        let vc = ViewController()
+                        vc.navigationItem.title = element.name
+                        owner.navigationController?.pushViewController(vc, animated: true)
+                    }
+                    .disposed(by: cell.disposeBag)
             }
             .disposed(by: disposeBag)
         
@@ -147,6 +155,13 @@ final class PersonTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    var disposeBag = DisposeBag()
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        disposeBag = DisposeBag()
+    }
     
     private func configure() {
         contentView.addSubview(usernameLabel)
