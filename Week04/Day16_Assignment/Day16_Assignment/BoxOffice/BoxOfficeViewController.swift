@@ -67,6 +67,19 @@ class BoxOfficeViewController: UIViewController {
                 return cell
             }
             .disposed(by: disposeBag)
+        
+        output.errorMessage
+            .bind(with: self) { owner, message in
+                owner.alert(title: "에러", message: message)
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    private func alert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let ok = UIAlertAction(title: "확인", style: .default)
+        alert.addAction(ok)
+        self.present(alert, animated: true)
     }
 }
 
