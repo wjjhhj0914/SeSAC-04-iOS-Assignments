@@ -9,6 +9,8 @@ import UIKit
 
 import SnapKit
 import Alamofire
+import RxSwift
+import RxCocoa
 
 class BoxOfficeViewController: UIViewController {
     
@@ -21,20 +23,13 @@ class BoxOfficeViewController: UIViewController {
         let boxOfficeTableView = UITableView()
         
         boxOfficeTableView.backgroundColor = .clear
-        boxOfficeTableView.delegate = self
-        boxOfficeTableView.dataSource = self
         boxOfficeTableView.register(BoxOfficeTableViewCell.self, forCellReuseIdentifier: BoxOfficeTableViewCell.identifier)
         
         return boxOfficeTableView
     }()
     
-    var boxOfficeList: [BoxOfficeData] = []
-    
-//    func getYesterdayDate() -> String {
-//        // 1단계: 현재 날짜에서 하루를 뺀다.
-//        let today = Date()
-//        
-//    }
+    private let disposeBag = DisposeBag()
+    private let viewModel = BoxOfficeViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,57 +38,35 @@ class BoxOfficeViewController: UIViewController {
         configureLayout()
         configureView()
         
-        callRequest(targetDt: "20260120")
-        
-        searchTextField.addTarget(self, action: #selector(searchTextFieldReturn), for: .editingDidEndOnExit)
-        searchBtn.addTarget(self, action: #selector(searchBtnClicked), for: .touchUpInside)
+        bind()
     }
     
-    @objc func searchBtnClicked() {
-        if let userInputText = searchTextField.text, !userInputText.isEmpty {
-            callRequest(targetDt: userInputText)
-        }
+    func bind() {
+        let searchTap = PublishRelay<Void>()
         
-        view.endEditing(true)
-    }
-
-    @objc func searchTextFieldReturn() {
-        searchBtnClicked()
-    }
-    
-    func callRequest(targetDt: String) {
-        let url = "https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=\(APIKey.KOFIC)&targetDt=\(targetDt)"
-        AF.request(url, method: .get)
-            .responseDecodable(of: BoxOfficeResponse.self) { response in
-                switch response.result {
-                case .success(let value):
-                    self.boxOfficeList = value.boxOfficeResult.dailyBoxOfficeList
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                    }
-                case .failure(let error):
-                    print(error)
-                }
+        searchBtn.rx.tap
+            .bind(to: searchTap)
+            .disposed(by: disposeBag)
+        
+        searchTextField.rx.controlEvent(.editingDidEndOnExit)
+            .bind(to: searchTap)
+            .disposed(by: disposeBag)
+        
+        let input = BoxOfficeViewModel.Input(
+            searchTap: searchTap.asObservable(),
+            searchText: searchTextField.rx.text.orEmpty.asObservable())
+        
+        let output = viewModel.transform(input: input)
+        
+        output.movieList
+            .drive(tableView.rx.items) { (tableView, row, element) in
+                let cell = tableView.dequeueReusableCell(withIdentifier: BoxOfficeTableViewCell.identifier) as! BoxOfficeTableViewCell
+                cell.boxOfficeRankLabel.text = element.rank
+                cell.movieTitleLabel.text = element.movieNm
+                cell.dateLabel.text = element.openDt
+                return cell
             }
-    }
-}
-
-extension BoxOfficeViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return boxOfficeList.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: BoxOfficeTableViewCell.identifier, for: indexPath) as! BoxOfficeTableViewCell
-        
-        let movie = boxOfficeList[indexPath.row]
-        print(movie)
-        
-        cell.boxOfficeRankLabel.text = movie.rank
-        cell.movieTitleLabel.text = movie.movieNm
-        cell.dateLabel.text = movie.openDt
-        
-        return cell
+            .disposed(by: disposeBag)
     }
 }
 
@@ -142,5 +115,3 @@ extension BoxOfficeViewController: ViewDesignProtocol {
         tableView.allowsSelection = false
     }
 }
-
-
