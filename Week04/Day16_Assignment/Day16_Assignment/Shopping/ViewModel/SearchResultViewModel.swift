@@ -13,16 +13,16 @@ final class SearchResultViewModel: BaseViewModel {
     var output: Output
     
     struct Input {
-        let viewDidLoadTrigger = Observable(())
-        let sortButtonClicked = Observable("sim")
-        let likeButtonClicked: Observable<Int?> = Observable(nil)
+        let viewDidLoadTrigger = MyObservable(())
+        let sortButtonClicked = MyObservable("sim")
+        let likeButtonClicked: MyObservable<Int?> = MyObservable(nil)
     }
     
     struct Output {
-        let shoppingList: Observable<[ShoppingItems]> = Observable([])
-        let totalCountLabel = Observable("")
-        let navigationTitle = Observable("")
-        let scrollToTop = Observable(())
+        let shoppingList: MyObservable<[ShoppingItems]> = MyObservable([])
+        let totalCountLabel = MyObservable("")
+        let navigationTitle = MyObservable("")
+        let scrollToTop = MyObservable(())
     }
     
     var searchKeyword: String = ""

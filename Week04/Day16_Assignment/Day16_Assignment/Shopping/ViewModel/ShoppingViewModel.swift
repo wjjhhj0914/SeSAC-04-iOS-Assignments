@@ -13,17 +13,17 @@ final class ShoppingViewModel: BaseViewModel {
     var output: Output
     
     struct Input {
-        let viewDidLoadTrigger = Observable(())
-        let searchKeyword = Observable("")
-        let searchButtonClicked = Observable(())
-        let deleteButtonClicked: Observable<Int?> = Observable(nil)
-        let deleteAllButtonClicked = Observable(())
+        let viewDidLoadTrigger = MyObservable(())
+        let searchKeyword = MyObservable("")
+        let searchButtonClicked = MyObservable(())
+        let deleteButtonClicked: MyObservable<Int?> = MyObservable(nil)
+        let deleteAllButtonClicked = MyObservable(())
     }
     
     struct Output {
-        let searchHistory: Observable<[String]> = Observable([])
-        let validSearchKeyword: Observable<String?> = Observable(nil)
-        let alertMessage: Observable<String?> = Observable(nil)
+        let searchHistory: MyObservable<[String]> = MyObservable([])
+        let validSearchKeyword: MyObservable<String?> = MyObservable(nil)
+        let alertMessage: MyObservable<String?> = MyObservable(nil)
     }
     
     init () {
